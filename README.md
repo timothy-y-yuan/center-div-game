@@ -1,69 +1,107 @@
-# React + TypeScript + Vite
+# Center Div Game 🎯
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **⚠️ DISCLAIMER: This is 100% vibe-coded experimental fun! ⚠️**  
+> This project was built purely for entertainment and learning CSS centering techniques. It's not meant to showcase production-quality code or best practices - just a playful experiment thrown together for fun. Please don't judge my actual coding skills based on this silly little game! 😅
 
-Currently, two official plugins are available:
+A fun, interactive CSS game that teaches you different techniques for centering HTML elements. Master the art of CSS centering through hands-on challenges!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎮 What is this?
 
-## Expanding the ESLint configuration
+Ever wondered how many ways there are to center a div? This game takes you through various CSS centering techniques, from basic margins to modern flexbox and grid layouts. Each level presents a unique centering challenge with helpful hints and detailed explanations.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🎯 Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Progressive Learning**: Start with simple techniques and work your way up to advanced methods
+- **Live Code Editor**: Write CSS in a Monaco-based editor with syntax highlighting
+- **Real-time Preview**: See your changes instantly as you code
+- **Interactive Hints**: Get helpful tips when you're stuck (with a chatbot interface!)
+- **Multiple Solutions**: Learn different approaches for each centering challenge
+- **Progress Tracking**: Your completed levels are saved locally
+- **Responsive Design**: Play on desktop or mobile devices
+- **Theme Support**: Choose from multiple visual themes
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🏆 Levels Include
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **Baby's First Center** - Horizontal centering with margins
+2. **Add Vertical Too** - Two-axis centering with flexbox
+3. **Grid Power** - Centering with CSS Grid
+4. **Absolute Beginner** - Positioning and transforms
+5. **Text-Align Hack** - Old-school inline-block techniques
+6. **Flexbox Pro** - Advanced flexbox layouts
+7. **Grid Master** - Complex grid centering scenarios
+
+## 🚀 Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Run tests
+npm test
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **Monaco Editor** - Code editor component
+- **React Resizable Panels** - Adjustable layout panels
+- **Vitest** - Testing framework
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🎨 How to Play
+
+1. **Read the Challenge**: Each level describes what you need to center
+2. **Write CSS**: Use the code editor to write your centering solution
+3. **See Results**: The preview pane shows your changes in real-time
+4. **Get Hints**: Click the hint button if you need help
+5. **Complete & Learn**: When you succeed, read the explanation to understand the technique
+6. **Progress**: Move on to the next challenge!
+
+## 🧪 Testing
+
+The game includes comprehensive tests for all components and utilities:
+
+```bash
+# Run tests in watch mode
+npm test
+
+# Run tests with UI
+npm test:ui
+
+# Run tests once
+npm test:run
 ```
+
+## 📚 Learning Objectives
+
+By completing this game, you'll master:
+
+- **Margin-based centering** (`margin: 0 auto`)
+- **Flexbox centering** (`display: flex`, `justify-content`, `align-items`)
+- **Grid centering** (`display: grid`, `place-items`)
+- **Absolute positioning** with transforms
+- **Text-align techniques** for inline elements
+- **Vertical-align methods**
+- **Modern CSS best practices**
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+
+- Add new levels or challenges
+- Improve the UI/UX
+- Fix bugs or add features
+- Enhance the hint system
+- Add more themes
+
+## 📄 License
+
+MIT License - feel free to use this project for learning or teaching CSS!
