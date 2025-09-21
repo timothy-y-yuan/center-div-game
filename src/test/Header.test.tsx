@@ -57,8 +57,8 @@ describe('Header Component', () => {
     }
     render(<Header {...propsWithProgress} />)
 
-    // Should show: 🤓 3 • 😭 2 • 5 left (10 total - 3 completed - 2 failed = 5 remaining)
-    expect(screen.getByText(/🤓 3 • 😭 2 • 5 left/)).toBeInTheDocument()
+    // Should show: 🎉 3 • 😭 2 • 5 left (10 total - 3 completed - 2 failed = 5 remaining)
+    expect(screen.getByText(/🎉 3 • 😭 2 • 5 left/)).toBeInTheDocument()
   })
 
   it('should render current level description', () => {

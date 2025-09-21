@@ -58,7 +58,7 @@ describe('App Component', () => {
     renderWithTheme(<App />)
 
     expect(screen.getByText(/Can You Center The/)).toBeInTheDocument()
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument()
+    expect(screen.getAllByTestId('monaco-editor')).toHaveLength(2) // HTML and CSS editors
     expect(screen.getByText('Check')).toBeInTheDocument()
     expect(screen.getByText('Hint')).toBeInTheDocument()
   })
@@ -71,7 +71,7 @@ describe('App Component', () => {
   })
 
   it('should load saved progress from localStorage', () => {
-    // Set up localStorage with saved progress
+    // Set localStorage data BEFORE rendering the component
     localStorage.setItem('currentLevel', '2')
     localStorage.setItem('completedLevels', '[0,1]')
     localStorage.setItem('failedLevels', '[3]')
@@ -79,7 +79,7 @@ describe('App Component', () => {
     renderWithTheme(<App />)
 
     // Should start at level 2 with 2 completed levels
-    expect(screen.getByText('Stack Overflow Searcher')).toBeInTheDocument() // Title for 2 completed
+    expect(screen.getByText('3: Grid Power')).toBeInTheDocument()
     expect(screen.getByText(/🎉 2 • 😭 1/)).toBeInTheDocument()
   })
 
@@ -88,7 +88,7 @@ describe('App Component', () => {
 
     // Open level dropdown and select level 1
     fireEvent.click(screen.getByText('1: Baby\'s First Center'))
-    fireEvent.click(screen.getByText('2: Margin Madness'))
+    fireEvent.click(screen.getByText('2: Add Vertical Too'))
 
     expect(localStorage.getItem('currentLevel')).toBe('1')
   })
@@ -148,8 +148,8 @@ describe('App Component', () => {
       expect(screen.getByText(/🎉 0 • 😭 0/)).toBeInTheDocument()
     })
 
-    // Should clear localStorage
-    expect(localStorage.getItem('currentLevel')).toBeNull()
+    // Should reset localStorage to initial state
+    expect(localStorage.getItem('currentLevel')).toBe('0')
     expect(localStorage.getItem('completedLevels')).toBeNull()
     expect(localStorage.getItem('failedLevels')).toBeNull()
   })
@@ -194,22 +194,24 @@ describe('App Component', () => {
     fireEvent.click(screen.getByText('Next Level'))
 
     // Should advance to level 1
-    expect(screen.getByText('2: Margin Madness')).toBeInTheDocument()
+    expect(screen.getByText('2: Add Vertical Too')).toBeInTheDocument()
     expect(localStorage.getItem('currentLevel')).toBe('1')
   })
 
   it('should update CSS editor when level changes', () => {
     renderWithTheme(<App />)
 
-    const editor = screen.getByTestId('monaco-editor')
-    expect(editor).toHaveValue(expect.stringContaining('.container'))
+    const editors = screen.getAllByTestId('monaco-editor')
+    const cssEditor = editors[1] // CSS is the second editor
+    // Level 0 should contain .target selector
+    expect(cssEditor.value).toContain('.target')
 
     // Change level
     fireEvent.click(screen.getByText('1: Baby\'s First Center'))
-    fireEvent.click(screen.getByText('2: Margin Madness'))
+    fireEvent.click(screen.getByText('2: Add Vertical Too'))
 
-    // Editor should update with new level's CSS
-    expect(editor).toHaveValue(expect.stringContaining('.container'))
+    // Editor should update with new level's editable CSS
+    expect(cssEditor.value).toContain('.container')
   })
 
   it('should handle theme changes', () => {
@@ -250,10 +252,11 @@ describe('App Component', () => {
   it('should handle editor changes', () => {
     renderWithTheme(<App />)
 
-    const editor = screen.getByTestId('monaco-editor')
-    fireEvent.change(editor, { target: { value: '.container { background: red; }' } })
+    const editors = screen.getAllByTestId('monaco-editor')
+    const cssEditor = editors[1] // CSS is the second editor
+    fireEvent.change(cssEditor, { target: { value: '.target { margin: 0 auto; }' } })
 
-    expect(editor).toHaveValue('.container { background: red; }')
+    expect(cssEditor).toHaveValue('.target { margin: 0 auto; }')
   })
 
   it('should persist completed levels correctly', () => {

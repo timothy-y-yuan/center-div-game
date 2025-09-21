@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, waitFor } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { render, waitFor, act } from '@testing-library/react'
 import ConfettiEffect from '../components/ConfettiEffect'
 
 // Mock createPortal to render in place for testing
@@ -43,8 +43,10 @@ describe('ConfettiEffect Component', () => {
     const mockOnComplete = vi.fn()
     render(<ConfettiEffect isVisible={true} onComplete={mockOnComplete} />)
 
-    // Fast-forward time by 3 seconds
-    vi.advanceTimersByTime(3000)
+    // Fast-forward time by 3 seconds wrapped in act
+    act(() => {
+      vi.advanceTimersByTime(3000)
+    })
 
     expect(mockOnComplete).toHaveBeenCalledTimes(1)
   })
@@ -53,7 +55,9 @@ describe('ConfettiEffect Component', () => {
     const mockOnComplete = vi.fn()
     render(<ConfettiEffect isVisible={false} onComplete={mockOnComplete} />)
 
-    vi.advanceTimersByTime(3000)
+    act(() => {
+      vi.advanceTimersByTime(3000)
+    })
 
     expect(mockOnComplete).not.toHaveBeenCalled()
   })
@@ -89,7 +93,9 @@ describe('ConfettiEffect Component', () => {
   it('should handle missing onComplete callback', () => {
     expect(() => {
       render(<ConfettiEffect isVisible={true} />)
-      vi.advanceTimersByTime(3000)
+      act(() => {
+        vi.advanceTimersByTime(3000)
+      })
     }).not.toThrow()
   })
 
@@ -112,16 +118,10 @@ describe('ConfettiEffect Component', () => {
     expect(confettiContainer).toHaveClass('fixed', 'inset-0', 'pointer-events-none', 'z-[10000]', 'overflow-hidden')
   })
 
-  it('should render both emoji and colored pieces', async () => {
+  it('should render both emoji and colored pieces', () => {
     const { container } = render(<ConfettiEffect isVisible={true} onComplete={vi.fn()} />)
 
-    // Wait for pieces to be created
-    await waitFor(() => {
-      const pieces = container.querySelectorAll('.absolute')
-      expect(pieces.length).toBeGreaterThan(0)
-    })
-
-    // Should have a mix of emoji and colored div pieces
+    // Pieces should be created immediately when isVisible becomes true
     const pieces = container.querySelectorAll('.absolute')
     expect(pieces.length).toBe(50) // Component creates 50 pieces
   })

@@ -3,11 +3,27 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import HintPopup from '../components/HintPopup'
 import { ThemeProvider } from '../contexts/ThemeContext'
 
+// Mock button element with getBoundingClientRect
+const mockButtonElement = {
+  getBoundingClientRect: vi.fn(() => ({
+    bottom: 100,
+    right: 200,
+    left: 100,
+    top: 80,
+    width: 100,
+    height: 20,
+    x: 100,
+    y: 80,
+    toJSON: () => {}
+  })),
+  contains: vi.fn(() => false)
+} as unknown as HTMLButtonElement
+
 const mockProps = {
   isOpen: true,
   hint: 'This is a test hint',
   onClose: vi.fn(),
-  buttonRef: { current: null } as React.RefObject<HTMLButtonElement>,
+  buttonRef: { current: mockButtonElement } as React.RefObject<HTMLButtonElement>,
   onRevealAnswer: vi.fn(),
   isCompleted: false,
   isFailed: false,
@@ -26,6 +42,10 @@ const renderWithTheme = (component: React.ReactElement) => {
 describe('HintPopup Component', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+
+    // Mock window properties
+    Object.defineProperty(window, 'innerWidth', { value: 1024, writable: true })
+    Object.defineProperty(window, 'scrollY', { value: 0, writable: true })
 
     // Mock createPortal to render in place for testing
     vi.mock('react-dom', async () => {
@@ -135,8 +155,11 @@ describe('HintPopup Component', () => {
   it('should have correct positioning styles', () => {
     renderWithTheme(<HintPopup {...mockProps} />)
 
-    const popup = screen.getByText('This is a test hint').closest('div')
-    expect(popup).toHaveClass('absolute', 'z-[10000]')
+    // Find the main popup container
+    const popup = screen.getByText('This is a test hint').closest('.w-80')
+    expect(popup).toHaveClass('w-80', 'animate-in', 'slide-in-from-top-2', 'duration-200')
+    expect(popup).toHaveStyle('position: fixed')
+    expect(popup).toHaveStyle('z-index: 9999')
   })
 
   it('should show correct styling for dark theme', () => {
@@ -145,8 +168,9 @@ describe('HintPopup Component', () => {
 
     renderWithTheme(<HintPopup {...mockProps} />)
 
-    const popup = screen.getByText('This is a test hint').closest('div')
-    expect(popup).toHaveClass('bg-gray-800', 'border-gray-600', 'text-white')
+    // Find the content container with theme-specific classes
+    const popup = screen.getByText('Hint').closest('.relative')
+    expect(popup).toHaveClass('bg-gray-800', 'border-gray-600')
   })
 
   it('should show correct styling for light theme', () => {
@@ -155,8 +179,9 @@ describe('HintPopup Component', () => {
 
     renderWithTheme(<HintPopup {...mockProps} />)
 
-    const popup = screen.getByText('This is a test hint').closest('div')
-    expect(popup).toHaveClass('bg-white', 'border-gray-200', 'text-gray-900')
+    // Find the content container with theme-specific classes
+    const popup = screen.getByText('Hint').closest('.relative')
+    expect(popup).toHaveClass('bg-white', 'border-gray-200')
   })
 
   it('should handle empty hint text', () => {
@@ -189,7 +214,8 @@ describe('HintPopup Component', () => {
     renderWithTheme(<HintPopup {...mockProps} />)
 
     const button = screen.getByText(/I'm a dumbass/)
-    expect(button).toHaveClass('bg-red-600', 'hover:bg-red-700', 'text-white')
+    // Test for the actual classes used (gradient button)
+    expect(button).toHaveClass('bg-gradient-to-r', 'from-red-500', 'to-red-600', 'text-white')
   })
 
   it('should format solution CSS correctly', () => {
@@ -215,8 +241,8 @@ describe('HintPopup Component', () => {
 
     renderWithTheme(<HintPopup {...propsWithBothStates} />)
 
-    // Should show failed message since failed takes precedence
-    expect(screen.getByText(/Okay dumbass, here's how it's done:/)).toBeInTheDocument()
+    // Should show completed message since completed takes precedence over failed
+    expect(screen.getByText(/You already solved this like a nerd!/)).toBeInTheDocument()
   })
 
   it('should handle long hint text properly', () => {

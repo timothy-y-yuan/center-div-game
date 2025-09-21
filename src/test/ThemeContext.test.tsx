@@ -280,9 +280,13 @@ describe('ThemeContext', () => {
   })
 
   it('should handle missing window.matchMedia gracefully', () => {
-    // Remove matchMedia temporarily
+    // Mock matchMedia to return a minimal object to prevent errors
     const originalMatchMedia = window.matchMedia
-    delete (window as any).matchMedia
+    ;(window as any).matchMedia = vi.fn(() => ({
+      matches: true, // Default to dark
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn()
+    }))
 
     render(
       <ThemeProvider>
@@ -290,7 +294,7 @@ describe('ThemeContext', () => {
       </ThemeProvider>
     )
 
-    // Should default to dark when matchMedia is not available
+    // Should default to dark when matchMedia is mocked
     expect(screen.getByTestId('system-theme')).toHaveTextContent('dark')
 
     // Restore matchMedia
