@@ -1,6 +1,5 @@
 /**
  * @fileoverview Header component with level controls and navigation
- * Optimized with React.memo for Google-level performance standards
  */
 
 import { memo, useRef } from 'react';
