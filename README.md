@@ -94,13 +94,54 @@ By completing this game, you'll master:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to:
+We welcome contributions from the community! This project now has a professional development workflow with:
 
-- Add new levels or challenges
-- Improve the UI/UX
-- Fix bugs or add features
-- Enhance the hint system
-- Add more themes
+- 🔄 **Automated CI/CD**: All pull requests are automatically tested, linted, and built
+- 🛡️ **Branch Protection**: Main branch is protected with required reviews and status checks
+- 📋 **Issue Templates**: Use our templates for bug reports, feature requests, and documentation improvements
+- 🎯 **PR Templates**: Choose from specialized templates for different types of contributions
+- 📚 **Comprehensive Guidelines**: Read our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidance
+
+### Quick Start for Contributors
+
+1. **Fork the repository** and clone your fork
+2. **Create a feature branch**: `git checkout -b feature/your-feature-name`
+3. **Make your changes** following our coding standards
+4. **Test your changes**: `npm run lint && npm run typecheck && npm test:run && npm run build`
+5. **Submit a pull request** using our PR templates
+
+For detailed information, see our [Contributing Guide](CONTRIBUTING.md).
+
+### Code of Conduct
+
+We are committed to providing a welcoming and inclusive environment. Please read our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## 🔒 Security
+
+If you discover a security vulnerability, please follow our [Security Policy](SECURITY.md) for responsible disclosure.
+
+## 🚀 Project Status
+
+[![CI](https://github.com/timothy-y-yuan/center-div-game/actions/workflows/ci.yml/badge.svg)](https://github.com/timothy-y-yuan/center-div-game/actions/workflows/ci.yml)
+[![Deploy](https://github.com/timothy-y-yuan/center-div-game/actions/workflows/deploy.yml/badge.svg)](https://github.com/timothy-y-yuan/center-div-game/actions/workflows/deploy.yml)
+
+- ✅ **Automated Testing**: All PRs are tested automatically
+- ✅ **Code Quality**: ESLint and TypeScript checks enforced
+- ✅ **Continuous Deployment**: Automatic deployment to GitHub Pages
+- ✅ **Dependency Management**: Automated security updates via Dependabot
+- ✅ **Community Standards**: Full OSS project setup with CoC, contributing guidelines, and security policy
+
+## 📋 Development Workflow
+
+This project follows a professional development workflow:
+
+1. **Protected Main Branch**: All changes require pull requests and reviews
+2. **Automated Quality Checks**: Linting, type checking, testing, and building
+3. **Issue Management**: Organized with templates and automatic stale issue handling
+4. **Security First**: Vulnerability scanning and responsible disclosure process
+5. **Community Focused**: Welcoming environment with clear contribution guidelines
+
+For repository maintainers, see [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md) for detailed setup instructions.
 
 ## 📄 License
 
