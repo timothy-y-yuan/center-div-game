@@ -7,11 +7,13 @@ This is a **CSS centering game** built with React 19, TypeScript, and modern web
 ## Architecture & Tech Stack
 
 - **Frontend**: React 19 + TypeScript + Vite
+- **Architecture**: Service layer pattern with custom hooks
 - **Styling**: Tailwind CSS v4 (uses `@import "tailwindcss"` syntax)
 - **Code Editor**: Monaco Editor with Victor Mono font and ligatures
 - **Testing**: Vitest with comprehensive test coverage
 - **Layout**: react-resizable-panels for split-screen experience
 - **Build**: Vite with ESLint and TypeScript checking
+- **State Management**: Custom hooks with service layer abstraction
 
 ## Development Guidelines
 
@@ -52,10 +54,21 @@ src/
 │   └── ...              # Other UI components
 ├── contexts/
 │   └── ThemeContext.tsx # Theme management
+├── services/            # Service layer
+│   ├── GameStateService.ts  # Game state management logic
+│   └── StorageService.ts    # LocalStorage abstraction
+├── hooks/               # Custom React hooks
+│   ├── useGameState.ts  # Main game state hook
+│   ├── useProgress.ts   # Progress tracking hook
+│   ├── useLevelCompletion.ts # Level completion logic
+│   └── useLevelContent.ts   # Level content management
+├── constants/           # Configuration constants
+│   └── index.ts         # UI, game, and educational constants
 ├── data/
 │   └── levels.ts        # Game level definitions (10 levels)
 ├── test/                # Comprehensive test suite
 ├── utils/               # Utility functions
+│   └── typeHelpers.ts   # Type safety helpers with branded types
 └── types.ts            # TypeScript interfaces
 ```
 
@@ -75,10 +88,30 @@ src/
 
 ### Game State Management
 
-- Comprehensive progress tracking with localStorage persistence
-- Level completion detection via real-time iframe DOM measurement
-- Player progression system with dynamic titles
-- Confetti effects on level completion
+- **Service Layer**: Centralized game logic in `GameStateService.ts` and `StorageService.ts`
+- **Custom Hooks**: Domain-specific hooks for different aspects of game state
+- **Branded Types**: Type-safe IDs and measurements using branded types from `typeHelpers.ts`
+- **Comprehensive progress tracking** with localStorage persistence
+- **Level completion detection** via real-time iframe DOM measurement
+- **Player progression system** with dynamic titles
+- **Confetti effects** on level completion
+
+### Service Layer Architecture
+
+The project uses a clean service layer pattern:
+
+```typescript
+// Services handle business logic
+import { gameStateService } from '../services/GameStateService';
+import { storageService } from '../services/StorageService';
+
+// Hooks provide React integration
+import { useGameState } from '../hooks/useGameState';
+import { useProgress } from '../hooks/useProgress';
+
+// Types are branded for safety
+import { createLevelId, createTimestampMs } from '../utils/typeHelpers';
+```
 
 ### Testing Strategy
 
@@ -88,6 +121,57 @@ src/
 - Component testing with React Testing Library
 
 ## Critical Patterns
+
+### Service Layer Usage
+
+Always use the service layer for business logic:
+
+```typescript
+// ✅ Good - Use services for business logic
+import { gameStateService } from '../services/GameStateService';
+
+const handleLevelComplete = () => {
+  gameStateService.markLevelCompleted(levelId);
+  storageService.saveProgress(progress);
+};
+
+// ❌ Avoid - Don't put business logic in components
+const handleLevelComplete = () => {
+  setCompletedLevels(new Set([...completedLevels, levelIndex]));
+  localStorage.setItem('completedLevels', JSON.stringify([...completedLevels, levelIndex]));
+};
+```
+
+### Custom Hook Patterns
+
+Use domain-specific hooks for React state management:
+
+```typescript
+// ✅ Good - Use custom hooks
+function GameComponent() {
+  const gameState = useGameState(levels);
+  const progress = useProgress();
+  const completion = useLevelCompletion(currentLevel);
+  
+  return <GameUI {...gameState} />;
+}
+```
+
+### Branded Types
+
+Use branded types from `typeHelpers.ts` for type safety:
+
+```typescript
+// ✅ Good - Use branded types
+import { createLevelId, createTimestampMs } from '../utils/typeHelpers';
+
+const levelId = createLevelId(1);
+const timestamp = createTimestampMs();
+
+// ❌ Avoid - Raw primitives
+const levelId = 1;
+const timestamp = Date.now();
+```
 
 ### Component Props
 
@@ -100,17 +184,6 @@ interface ComponentProps {
   data: SpecificType[];
   isActive: boolean;
 }
-```
-
-### State Updates
-
-Follow existing patterns for localStorage persistence:
-
-```typescript
-// Update state AND persist
-setCompletedLevels(new Set([...completedLevels, levelIndex]));
-localStorage.setItem('completedLevels', JSON.stringify([...completedLevels, levelIndex]));
-```
 
 ### CSS Class Patterns
 
@@ -138,6 +211,12 @@ const mockProps: ComponentProps = {
   data: mockData,
   isActive: false
 };
+
+// Test service layer integration
+import { gameStateService } from '../services/GameStateService';
+
+vi.mock('../services/GameStateService');
+const mockGameStateService = vi.mocked(gameStateService);
 
 // Test user interactions
 fireEvent.click(screen.getByRole('button', { name: /action/i }));
