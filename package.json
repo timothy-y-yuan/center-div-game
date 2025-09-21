@@ -3,14 +3,51 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "An interactive CSS centering game that teaches 10 different techniques through progressive levels. Built with React 19, TypeScript, Vite, and Monaco Editor.",
+  "keywords": [
+    "css",
+    "centering",
+    "game",
+    "interactive",
+    "education",
+    "learn-css",
+    "web-development",
+    "react",
+    "typescript",
+    "vite",
+    "monaco-editor",
+    "frontend",
+    "css-grid",
+    "flexbox"
+  ],
+  "homepage": "https://timothy-y-yuan.github.io/center-div-game",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timothy-y-yuan/center-div-game.git"
+  },
+  "bugs": {
+    "url": "https://github.com/timothy-y-yuan/center-div-game/issues"
+  },
+  "author": {
+    "name": "Timothy Yuan",
+    "url": "https://github.com/timothy-y-yuan"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "type-check": "tsc -b --noEmit"
   },
   "dependencies": {
     "react": "^19.1.1",
@@ -27,6 +64,7 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.35.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
