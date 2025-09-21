@@ -1,23 +1,22 @@
 /**
  * @fileoverview Monaco Editor component with validation and theming
- * Optimized with React.memo for Google-level performance standards
  */
 
-import { memo } from 'react';
 import Editor from '@monaco-editor/react';
+import { memo } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import type { Level, CSSValidationResult } from '../types';
+import type { CSSValidationResult, Level } from '../types';
 
 interface CodeEditorProps {
-  value: string
-  language: 'html' | 'css'
-  onChange: (value: string) => void
-  title: string
-  emoji: string
-  headerClass: string
-  readOnly?: boolean
-  level?: Level
-  validation?: CSSValidationResult
+  value: string;
+  language: 'html' | 'css';
+  onChange: (value: string) => void;
+  title: string;
+  emoji: string;
+  headerClass: string;
+  readOnly?: boolean;
+  level?: Level;
+  validation?: CSSValidationResult;
 }
 
 const handleEditorWillMount = (monaco: any) => {
@@ -27,42 +26,61 @@ const handleEditorWillMount = (monaco: any) => {
     rules: [],
     colors: {},
   });
-}
+};
 
 const handleEditorDidMount = (editor: any, _monaco: any) => {
   editor.updateOptions({
-    fontFamily: '"Victor Mono", "SF Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, "Courier New", monospace',
+    fontFamily:
+      '"Victor Mono", "SF Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, "Courier New", monospace',
     fontSize: 14,
     fontWeight: 'normal',
-    fontLigatures: true
+    fontLigatures: true,
   });
-}
+};
 
 /**
  * Monaco Editor component with validation feedback
  * Memoized to prevent unnecessary re-renders of the heavy Monaco instance
  */
-const CodeEditor = memo(function CodeEditor({ value, language, onChange, title, emoji, headerClass, readOnly = false, level, validation }: CodeEditorProps) {
-  const { actualTheme } = useTheme()
+const CodeEditor = memo(function CodeEditor({
+  value,
+  language,
+  onChange,
+  title,
+  emoji,
+  headerClass,
+  readOnly = false,
+  level,
+  validation,
+}: CodeEditorProps) {
+  const { actualTheme } = useTheme();
 
   return (
     <>
       <div className={`${headerClass} p-4`}>
         <h3 className="font-bold text-lg flex items-center gap-3">
           <span className="text-2xl">{emoji}</span>
-          <span className={
-            language === 'html'
-              ? 'text-blue-700 dark:text-blue-200'
-              : 'text-purple-700 dark:text-purple-200'
-          }>{title}</span>
+          <span
+            className={
+              language === 'html'
+                ? 'text-blue-700 dark:text-blue-200'
+                : 'text-purple-700 dark:text-purple-200'
+            }
+          >
+            {title}
+          </span>
         </h3>
 
         {/* Show constraints for CSS editor */}
         {level && language === 'css' && (
           <div className="mt-2 text-sm">
             <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
-              <div className="font-medium text-blue-800 dark:text-blue-200 mb-1">Constraints:</div>
-              <div className="text-blue-700 dark:text-blue-300">{level.constraints}</div>
+              <div className="font-medium text-blue-800 dark:text-blue-200 mb-1">
+                Constraints:
+              </div>
+              <div className="text-blue-700 dark:text-blue-300">
+                {level.constraints}
+              </div>
             </div>
           </div>
         )}
@@ -71,9 +89,13 @@ const CodeEditor = memo(function CodeEditor({ value, language, onChange, title, 
         {validation && !validation.isValid && (
           <div className="mt-2 text-sm">
             <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
-              <div className="font-medium text-red-800 dark:text-red-200 mb-1">Validation Errors:</div>
+              <div className="font-medium text-red-800 dark:text-red-200 mb-1">
+                Validation Errors:
+              </div>
               {validation.errors.map((error, index) => (
-                <div key={index} className="text-red-700 dark:text-red-300">• {error}</div>
+                <div key={index} className="text-red-700 dark:text-red-300">
+                  • {error}
+                </div>
               ))}
             </div>
           </div>
@@ -93,13 +115,14 @@ const CodeEditor = memo(function CodeEditor({ value, language, onChange, title, 
             fontSize: 14,
             lineNumbers: 'on',
             wordWrap: 'on',
-            fontFamily: '"Victor Mono", "SF Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, "Courier New", monospace',
+            fontFamily:
+              '"Victor Mono", "SF Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, "Courier New", monospace',
             padding: { top: 16, bottom: 16 },
             lineHeight: 1.5,
             scrollBeyondLastLine: false,
             automaticLayout: true,
             fontLigatures: false,
-            readOnly: readOnly
+            readOnly: readOnly,
           }}
         />
       </div>

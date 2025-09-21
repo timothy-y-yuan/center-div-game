@@ -133,7 +133,7 @@ export const EDUCATIONAL_CONTENT = {
 
   /** Completion messages for different achievement levels */
   COMPLETION_MESSAGES: {
-    PERFECT: 'Flawless! You\'re a CSS master!',
+    PERFECT: "Flawless! You're a CSS master!",
     GOOD: 'Great job! You nailed it!',
     OKAY: 'Nice work! You got it!',
     WITH_HINTS: 'Good job! (with a little help)',
@@ -280,5 +280,5 @@ export const FEATURE_FLAGS = {
 
 // Export types for the constants to ensure type safety
 export type StorageKey = keyof typeof STORAGE_KEYS;
-export type ThemeMode = typeof THEME_CONFIG.THEMES[number];
+export type ThemeMode = (typeof THEME_CONFIG.THEMES)[number];
 export type PlayerTitle = keyof typeof EDUCATIONAL_CONTENT.PLAYER_TITLES;
