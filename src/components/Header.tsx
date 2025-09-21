@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import type { Level, UserProgress } from '../types';
+import type { Level } from '../types';
 import HintPopup from './HintPopup';
 import LevelDropdown from './LevelDropdown';
 import SettingsDropdown from './SettingsDropdown';
@@ -10,7 +10,6 @@ interface HeaderProps {
   completedLevels: Set<number>;
   failedLevels: Set<number>;
   showHint: boolean;
-  userProgress: UserProgress;
   onToggleHint: () => void;
   onCheck: () => void;
   onLevelSelect: (index: number) => void;
@@ -25,7 +24,6 @@ export default function Header({
   completedLevels,
   failedLevels,
   showHint,
-  userProgress,
   onToggleHint,
   onCheck,
   onLevelSelect,
