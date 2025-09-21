@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Live preview component with iframe rendering
+ * Optimized with React.memo for Google-level performance standards
+ */
+
+import { memo } from 'react';
+
 interface PreviewProps {
   content: string
   isCompleted: boolean
@@ -6,7 +13,11 @@ interface PreviewProps {
   onNextLevel: () => void
 }
 
-export default function Preview({ content, isCompleted, currentLevel, totalLevels, onNextLevel }: PreviewProps) {
+/**
+ * Live preview component showing the rendered HTML/CSS
+ * Memoized to prevent unnecessary iframe re-renders
+ */
+const Preview = memo(function Preview({ content, isCompleted, currentLevel, totalLevels, onNextLevel }: PreviewProps) {
   return (
     <div className="h-full flex flex-col glass rounded-2xl overflow-hidden ml-2">
       <div className="header-preview p-4">
@@ -46,5 +57,7 @@ export default function Preview({ content, isCompleted, currentLevel, totalLevel
         </div>
       )}
     </div>
-  )
-}
+  );
+});
+
+export default Preview;

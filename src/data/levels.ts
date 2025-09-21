@@ -1,4 +1,5 @@
-import type { Level } from '../types'
+import type { Level } from '../types';
+import { createLevelId } from '../utils/typeHelpers';
 
 export const levels: Level[] = [
   {
