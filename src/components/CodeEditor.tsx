@@ -1,6 +1,12 @@
-import Editor from '@monaco-editor/react'
-import { useTheme } from '../contexts/ThemeContext'
-import type { Level, CSSValidationResult } from '../types'
+/**
+ * @fileoverview Monaco Editor component with validation and theming
+ * Optimized with React.memo for Google-level performance standards
+ */
+
+import { memo } from 'react';
+import Editor from '@monaco-editor/react';
+import { useTheme } from '../contexts/ThemeContext';
+import type { Level, CSSValidationResult } from '../types';
 
 interface CodeEditorProps {
   value: string
@@ -32,7 +38,11 @@ const handleEditorDidMount = (editor: any, _monaco: any) => {
   });
 }
 
-export default function CodeEditor({ value, language, onChange, title, emoji, headerClass, readOnly = false, level, validation }: CodeEditorProps) {
+/**
+ * Monaco Editor component with validation feedback
+ * Memoized to prevent unnecessary re-renders of the heavy Monaco instance
+ */
+const CodeEditor = memo(function CodeEditor({ value, language, onChange, title, emoji, headerClass, readOnly = false, level, validation }: CodeEditorProps) {
   const { actualTheme } = useTheme()
 
   return (
@@ -94,5 +104,7 @@ export default function CodeEditor({ value, language, onChange, title, emoji, he
         />
       </div>
     </>
-  )
-}
+  );
+});
+
+export default CodeEditor;

@@ -1,5 +1,10 @@
-import { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
+/**
+ * @fileoverview Confetti animation component for celebrations
+ * Optimized with React.memo for Google-level performance standards
+ */
+
+import { memo, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ConfettiEffectProps {
   isVisible: boolean
@@ -22,7 +27,11 @@ interface ConfettiPiece {
 const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#98d8c8']
 const emojis = ['🎉', '✨', '🌟', '💫', '🎊', '🥳']
 
-export default function ConfettiEffect({ isVisible, onComplete }: ConfettiEffectProps) {
+/**
+ * Confetti animation component for celebration effects
+ * Memoized to prevent unnecessary re-renders of animation state
+ */
+const ConfettiEffect = memo(function ConfettiEffect({ isVisible, onComplete }: ConfettiEffectProps) {
   const [pieces, setPieces] = useState<ConfettiPiece[]>([])
 
   useEffect(() => {
@@ -106,5 +115,7 @@ export default function ConfettiEffect({ isVisible, onComplete }: ConfettiEffect
       ))}
     </div>,
     document.body
-  )
-}
+  );
+});
+
+export default ConfettiEffect;

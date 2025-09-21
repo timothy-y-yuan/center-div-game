@@ -1,4 +1,9 @@
-import { useRef } from 'react';
+/**
+ * @fileoverview Header component with level controls and navigation
+ * Optimized with React.memo for Google-level performance standards
+ */
+
+import { memo, useRef } from 'react';
 import type { Level } from '../types';
 import HintPopup from './HintPopup';
 import LevelDropdown from './LevelDropdown';
@@ -18,7 +23,11 @@ interface HeaderProps {
   onNextLevel: () => void;
 }
 
-export default function Header({
+/**
+ * Header component with level navigation and controls
+ * Memoized for optimal performance with shallow comparison
+ */
+const Header = memo(function Header({
   levels,
   currentLevelIndex,
   completedLevels,
@@ -163,4 +172,6 @@ export default function Header({
       />
     </header>
   );
-}
+});
+
+export default Header;
