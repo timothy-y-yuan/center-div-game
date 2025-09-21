@@ -1,0 +1,109 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with the game
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the form below to help us understand and fix the issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe what you expected to happen vs what actually happened
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Game Level
+      description: Which level were you playing when this happened?
+      options:
+        - "Level 1 - Baby's First Center"
+        - "Level 2 - Add Vertical Too"
+        - "Level 3 - Grid Power"
+        - "Level 4 - Absolute Beginner"
+        - "Level 5 - Text-Align Hack"
+        - "Level 6 - Flexbox Pro"
+        - "Level 7 - Grid Master"
+        - "Level 8 - Advanced Centering"
+        - "Level 9 - Complex Layout"
+        - "Level 10 - CSS Ninja"
+        - "All levels"
+        - "Not level-specific"
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: What browser are you using?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser Version
+      description: What version of the browser are you using?
+      placeholder: e.g., Chrome 118.0.5993.117
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device Type
+      description: What device are you using?
+      options:
+        - Desktop
+        - Mobile
+        - Tablet
+
+  - type: textarea
+    id: console-errors
+    attributes:
+      label: Console Errors
+      description: Any console errors or warnings? (Open Developer Tools → Console)
+      render: text
+      placeholder: Paste any console errors here
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or information about the problem here.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to ensure this is not a duplicate
+          required: true
+        - label: I have checked the console for any error messages
+          required: false
+        - label: I can reproduce this issue consistently
+          required: false

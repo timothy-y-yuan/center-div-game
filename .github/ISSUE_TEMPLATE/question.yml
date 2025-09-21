@@ -1,0 +1,74 @@
+name: ❓ Question
+description: Ask a question about the game or CSS centering techniques
+title: "[Question]: "
+labels: ["question", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about the Center Div Game or CSS centering techniques? We're here to help!
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Question Type
+      description: What type of question is this?
+      options:
+        - "Game Usage/How-to"
+        - "CSS Centering Technique"
+        - "Level-Specific Help"
+        - "Technical/Development"
+        - "Educational Content"
+        - "General"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Please describe your question in detail
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Related Level (if applicable)
+      description: Is this question about a specific game level?
+      options:
+        - "Not level-specific"
+        - "Level 1 - Baby's First Center"
+        - "Level 2 - Add Vertical Too"
+        - "Level 3 - Grid Power"
+        - "Level 4 - Absolute Beginner"
+        - "Level 5 - Text-Align Hack"
+        - "Level 6 - Flexbox Pro"
+        - "Level 7 - Grid Master"
+        - "Level 8 - Advanced Centering"
+        - "Level 9 - Complex Layout"
+        - "Level 10 - CSS Ninja"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any additional information that might help us answer your question
+      placeholder: |
+        - What have you already tried?
+        - Are there any error messages?
+        - Screenshots (if applicable)
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues and discussions for similar questions
+          required: true
+        - label: I have read the README and documentation
+          required: false
