@@ -1,0 +1,60 @@
+version: 2
+updates:
+  # Enable version updates for npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "04:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "timothy-y-yuan"
+    assignees:
+      - "timothy-y-yuan"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    # Group minor and patch updates together
+    groups:
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+    # Ignore specific packages that need manual review
+    ignore:
+      # React 19 is cutting edge, handle manually
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      # TypeScript updates can break builds
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # ESLint major updates need careful review
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "04:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "timothy-y-yuan"
+    assignees:
+      - "timothy-y-yuan"
+    commit-message:
+      prefix: "ci"
+      include: "scope"

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/timothy-y-yuan/center-div-game/discussions
+    about: Ask questions and discuss the game with the community
+  - name: 🔒 Security Issue
+    url: https://github.com/timothy-y-yuan/center-div-game/security/advisories/new
+    about: Report a security vulnerability privately
