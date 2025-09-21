@@ -1,9 +1,11 @@
 # Center Div Game - Claude AI Project Documentation
 
 ## Project Overview
-"Can You Center The <div>?" - A modern, interactive web game for learning CSS centering techniques. Built with React + TypeScript + Tailwind CSS v4, featuring a split-screen Monaco code editor and live preview.
+
+"Can You Center The <div>?" - A comprehensive, interactive web game for mastering CSS centering techniques. Now featuring **10 progressive levels**, complete progress persistence, advanced UI components, and multiple themes. Built with React 19 + TypeScript + Tailwind CSS v4.
 
 ## Quick Start Commands
+
 ```bash
 # Install dependencies
 npm install
@@ -17,31 +19,49 @@ npm run build
 # Preview production build
 npm run preview
 
-# Run linting (if configured)
-npm run lint
+# Run tests
+npm run test
 
-# Run type checking
+# Run tests with UI
+npm run test:ui
+
+# Run tests once
+npm run test:run
+
+# Run type checking (if available)
 npm run typecheck
 ```
 
 ## Architecture & Components
 
 ### Core Files
-- `src/App.tsx` - Main app component with game state management
-- `src/components/Header.tsx` - Top bar with title, level info, and controls
-- `src/components/CodeEditor.tsx` - Monaco Editor wrapper with custom font config
-- `src/components/Preview.tsx` - Live preview iframe with completion UI
-- `src/data/levels.ts` - Game level definitions and progression
-- `src/types.ts` - TypeScript interfaces
+
+- `src/App.tsx` - Main app component with comprehensive game state and progress persistence
+- `src/components/Header.tsx` - Advanced header with level selection, progress tracking, and player titles
+- `src/components/CodeEditor.tsx` - Monaco Editor wrapper with Victor Mono font and syntax highlighting
+- `src/components/Preview.tsx` - Live preview iframe with completion detection and confetti effects
+- `src/components/ConfettiEffect.tsx` - Celebration animations for level completion
+- `src/components/HintPopup.tsx` - Advanced hint system with positioning and animations
+- `src/components/LevelDropdown.tsx` - Level navigation with completion status indicators
+- `src/components/SettingsDropdown.tsx` - Game settings and progress management
+- `src/components/ThemeDropdown.tsx` - Theme selection and customization
+- `src/components/ChatbotHint.tsx` - Interactive chatbot-style hint interface
+- `src/data/levels.ts` - **10 comprehensive levels** with detailed explanations and solutions
+- `src/types.ts` - Comprehensive TypeScript interfaces for levels, progress, and user data
+- `src/contexts/ThemeContext.tsx` - Theme management context
 
 ### Key Technologies
-- **React 18** with TypeScript
-- **Vite** as build tool
+
+- **React 19** with TypeScript
+- **Vite 5.4** as build tool and dev server
 - **Tailwind CSS v4** (uses `@import "tailwindcss"` syntax)
-- **Monaco Editor** for code editing
-- **react-resizable-panels** for draggable layouts
+- **Monaco Editor** for advanced code editing with ligatures
+- **react-resizable-panels** for draggable split-screen layouts
+- **Vitest** for comprehensive testing
+- **ESLint** with TypeScript support for code quality
 
 ### Styling Notes
+
 - Uses Tailwind v4 with new syntax in `src/index.css`
 - Custom CSS overrides for Monaco Editor fonts (Victor Mono)
 - Material 3 Expressive design patterns
@@ -49,76 +69,136 @@ npm run typecheck
 
 ## Game Mechanics
 
-### Level Progression
-1. **Level 1**: Horizontal centering only (`margin: 0 auto`)
-2. **Level 2**: Full centering with Flexbox
-3. **Level 3**: Centering with CSS Grid
+### Level Progression (10 Levels)
+
+1. **Level 1**: "Baby's First Center" - Horizontal centering with `margin: 0 auto`
+2. **Level 2**: "Add Vertical Too" - Full centering with Flexbox
+3. **Level 3**: "Grid Power" - Centering with CSS Grid's `place-items`
+4. **Level 4**: "Absolute Beginner" - Absolute positioning with transforms
+5. **Level 5**: "Text-Align Hack" - Old-school inline-block with pseudo-elements
+6. **Level 6**: "Table Cell Vibes" - Table-cell display centering
+7. **Level 7**: "CSS Calc() Wizard" - Mathematical positioning with calc()
+8. **Level 8**: "Margin Auto Magic" - Absolute positioning with all-sides margin auto
+9. **Level 9**: "Multiple Targets" - Centering multiple elements with flexbox
+10. **Level 10**: "CSS Ninja Final Boss" - Advanced responsive centering with clamp()
+
+### Advanced Progress System
+
+- **Comprehensive persistence**: All progress saved to localStorage
+- **Detailed tracking**: Completion time, attempts, hint usage per level
+- **Player progression**: Dynamic titles based on completion count (from "0.001x Engineer" to "CSS Ninja")
+- **Failed levels**: Tracks when users reveal answers (prevents completion credit)
+- **Statistics**: Total play time, average completion time, attempt counts
 
 ### Completion Logic
-- Located in `src/App.tsx:15-46` (`checkCompletion` function)
-- Measures center positions via iframe DOM access
-- Level 1 only requires horizontal centering
-- Levels 2-3 require both horizontal and vertical centering
-- 5px tolerance for "close enough" centering
+
+- Located in `src/App.tsx:59-100` (`checkCompletion` function)
+- Real-time iframe DOM measurement for precise centering detection
+- Level 1 only requires horizontal centering (5px tolerance)
+- Levels 2-10 require both horizontal and vertical centering (5px tolerance)
+- Confetti effects trigger on first-time completion
+- Progress immediately persisted to localStorage
 
 ## Development Notes
 
 ### Font Configuration
+
 Monaco Editor uses Victor Mono with aggressive CSS overrides in `src/index.css`:
+
 ```css
 .monaco-editor .view-lines .view-line,
 .monaco-editor .view-lines .view-line span {
-  font-family: "Victor Mono", "SF Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, "Courier New", monospace !important;
+  font-family: 'Victor Mono', 'SF Mono', Monaco, Menlo, 'Ubuntu Mono', Consolas,
+    'Courier New', monospace !important;
   font-variant-ligatures: normal !important;
-  font-feature-settings: "liga" 1, "calt" 1 !important;
+  font-feature-settings: 'liga' 1, 'calt' 1 !important;
 }
 ```
 
 ### Tailwind v4 Setup
+
 - Uses `@tailwindcss/vite` plugin in `vite.config.ts`
 - Import statement: `@import "tailwindcss";` (not v3 syntax)
 - Content scanning configured in `tailwind.config.js`
 
 ### State Management
-Game state is managed in App.tsx:
-- `currentLevel` - Current level index (0-based)
-- `html/css` - Current code editor values
-- `isCompleted` - Whether current level is solved
+
+Comprehensive game state managed in App.tsx:
+
+- `currentLevel` - Current level index (0-based, persisted)
+- `html/css` - Current code editor values (auto-loads from level data)
+- `isCompleted` - Whether current level is solved (checks failed status)
 - `showHint` - Hint visibility toggle
+- `completedLevels` - Set of completed level indices (persisted)
+- `failedLevels` - Set of failed level indices (persisted)
+- `showConfetti` - Confetti animation trigger
+- `userProgress` - Detailed progress tracking (NEW in recent implementation)
 
 ## Known Issues & Solutions
 
 ### Common Problems
+
 1. **Tailwind not working**: Ensure using v4 syntax `@import "tailwindcss"`
 2. **Monaco fonts wrong**: Check CSS overrides in index.css
 3. **Dev server cache**: Clear with `rm -rf node_modules/.vite`
 
 ### Browser Compatibility
+
 - Requires modern browsers for CSS Grid and Flexbox
 - Monaco Editor needs ES6+ support
 - iframe srcDoc used for live preview
 
+## Recent Major Updates
+
+- ✅ **Expanded to 10 levels** with comprehensive CSS centering techniques
+- ✅ **Complete progress persistence** system with localStorage
+- ✅ **Advanced UI components** (dropdowns, hints, confetti, themes)
+- ✅ **Player progression system** with dynamic titles
+- ✅ **Detailed progress tracking** (attempts, timing, hints used)
+- ✅ **Testing framework** with Vitest
+- ✅ **Theme system** with multiple visual options
+
 ## Future Enhancements
-- Additional centering techniques (absolute positioning, transforms)
-- More complex layouts and challenges
-- User progress persistence
+
+- Additional centering techniques (CSS transforms, logical properties)
+- More complex multi-element layout challenges
+- User accounts with cloud progress sync
 - Mobile responsive design improvements
 - Accessibility features for screen readers
+- Level editor for custom challenges
+- Multiplayer/competitive modes
+- Integration with CSS learning platforms
 
 ## File Structure
+
 ```
 src/
 ├── components/
-│   ├── Header.tsx
-│   ├── CodeEditor.tsx
-│   └── Preview.tsx
+│   ├── Header.tsx              # Advanced header with level navigation
+│   ├── CodeEditor.tsx          # Monaco editor wrapper
+│   ├── Preview.tsx             # Live preview with completion detection
+│   ├── ConfettiEffect.tsx      # Celebration animations
+│   ├── HintPopup.tsx          # Positioned hint overlay
+│   ├── LevelDropdown.tsx      # Level selection with progress indicators
+│   ├── SettingsDropdown.tsx   # Game settings and progress reset
+│   ├── ThemeDropdown.tsx      # Theme selection interface
+│   └── ChatbotHint.tsx        # Interactive hint chatbot
+├── contexts/
+│   └── ThemeContext.tsx       # Theme state management
 ├── data/
-│   └── levels.ts
-├── types.ts
-├── App.tsx
-├── index.css
-└── main.tsx
+│   └── levels.ts              # 10 comprehensive level definitions
+├── hooks/                     # (empty, reserved for future)
+├── utils/                     # (empty, reserved for future)
+├── test/                      # Vitest test files
+├── types.ts                   # Comprehensive TypeScript interfaces
+├── App.tsx                    # Main game component with state
+├── index.css                  # Tailwind v4 + custom styles
+├── main.tsx                   # React root and setup
+└── vite-env.d.ts             # Vite type definitions
 ```
 
-Last updated: Session with component refactoring completed
-Dev server running on: http://localhost:5174/
+---
+
+**Last updated:** Session with comprehensive progress system implementation completed
+**Dev server:** http://localhost:5173/
+**Current status:** Fully functional 10-level CSS centering game with persistence
