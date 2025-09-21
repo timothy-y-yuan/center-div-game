@@ -101,6 +101,35 @@ npm run typecheck
 
 ## Development Notes
 
+### ⚠️ IMPORTANT: Always Run Tests After Changes
+
+**CRITICAL REMINDER**: After making ANY code changes, always run the test suite:
+
+```bash
+# Quick test run to catch failures
+npm run test:run
+
+# Or run tests in watch mode during development
+npm test
+```
+
+**Why this matters:**
+- Tests catch breaking changes immediately
+- Architectural changes often require test updates
+- Component interface changes break existing tests
+- Better to catch issues locally than in CI/CD
+
+**Test failure workflow:**
+1. Run tests after changes: `npm run test:run`
+2. If tests fail, update them to match new interfaces/behavior
+3. Ensure new functionality has appropriate test coverage
+4. Re-run tests until all pass
+5. Only then commit changes
+
+**Branching reminder:**
+- ALWAYS create new branches from `main`, never from feature branches
+- Use: `git checkout main && git checkout -b feature/your-feature-name`
+
 ### Font Configuration
 
 Monaco Editor uses Victor Mono with aggressive CSS overrides in `src/index.css`:
