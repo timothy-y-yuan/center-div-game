@@ -5,6 +5,7 @@ import CodeEditor from './components/CodeEditor'
 import Preview from './components/Preview'
 import ConfettiEffect from './components/ConfettiEffect'
 import { levels } from './data/levels'
+import { generateCompleteCSS, getInitialEditableCSS, validateUserCSS } from './utils/cssValidator'
 
 // Persistence helpers
 const getCompletedLevels = (): Set<number> => {
@@ -49,12 +50,13 @@ const saveCurrentLevel = (level: number) => {
 function App() {
   const [currentLevel, setCurrentLevel] = useState(getCurrentLevel)
   const [html, setHtml] = useState(levels[currentLevel].initialHTML)
-  const [css, setCss] = useState(levels[currentLevel].initialCSS)
+  const [editableCSS, setEditableCSS] = useState(getInitialEditableCSS(levels[currentLevel]))
   const [isCompleted, setIsCompleted] = useState(false)
   const [showHint, setShowHint] = useState(false)
   const [completedLevels, setCompletedLevels] = useState(getCompletedLevels)
   const [failedLevels, setFailedLevels] = useState(getFailedLevels)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [cssValidation, setCssValidation] = useState(validateUserCSS('', levels[currentLevel]))
 
   const checkCompletion = () => {
     const iframe = document.getElementById('preview') as HTMLIFrameElement
@@ -106,8 +108,9 @@ function App() {
     setFailedLevels(newFailed)
     saveFailedLevels(newFailed)
 
-    // Show the solution
-    setCss(levels[currentLevel].solutionCSS)
+    // Show the solution by setting the full solution CSS as editable
+    // This is a special case where we override constraints
+    setEditableCSS(levels[currentLevel].solutionCSS)
     setShowHint(false)
   }
 
@@ -115,9 +118,10 @@ function App() {
     if (newLevel >= 0 && newLevel < levels.length) {
       setCurrentLevel(newLevel)
       setHtml(levels[newLevel].initialHTML)
-      setCss(levels[newLevel].initialCSS)
+      setEditableCSS(getInitialEditableCSS(levels[newLevel]))
       setIsCompleted(completedLevels.has(newLevel) && !failedLevels.has(newLevel))
       setShowHint(false)
+      setCssValidation(validateUserCSS('', levels[newLevel]))
       saveCurrentLevel(newLevel)
     }
   }
@@ -140,11 +144,21 @@ function App() {
     changeLevel(0) // Go back to first level
   }
 
+  const handleCSSChange = (newEditableCSS: string) => {
+    setEditableCSS(newEditableCSS)
+    // Validate the CSS against level constraints
+    const validation = validateUserCSS(newEditableCSS, levels[currentLevel])
+    setCssValidation(validation)
+  }
+
+  // Generate complete CSS for preview (locked + editable)
+  const completeCSS = generateCompleteCSS(editableCSS, levels[currentLevel])
+
   const previewContent = `
     <!DOCTYPE html>
     <html>
     <head>
-      <style>${css}</style>
+      <style>${completeCSS}</style>
     </head>
     <body>
       ${html}
@@ -199,12 +213,14 @@ function App() {
                 <Panel defaultSize={75} minSize={30}>
                   <div className="h-full flex flex-col">
                     <CodeEditor
-                      value={css}
+                      value={editableCSS}
                       language="css"
-                      onChange={setCss}
+                      onChange={handleCSSChange}
                       title="CSS"
                       emoji="🎨"
                       headerClass="header-css"
+                      level={levels[currentLevel]}
+                      validation={cssValidation}
                     />
                   </div>
                 </Panel>

@@ -1,12 +1,32 @@
+export interface EditableSelector {
+  /** CSS properties that cannot be changed or removed */
+  lockedProperties: string[];
+  /** CSS properties that can be added or modified */
+  allowedProperties: string[];
+  /** Starting CSS properties for this selector (user-editable) */
+  initialEditableCSS: string;
+}
+
 export interface Level {
   id: number;
   title: string;
   description: string;
   initialHTML: string;
-  initialCSS: string;
+  /** CSS that cannot be modified by the user */
+  lockedCSS: string;
+  /** Selectors and their editing constraints */
+  editableSelectors: Record<string, EditableSelector>;
+  /** Human-readable explanation of what can be edited */
+  constraints: string;
   hint: string;
   solutionCSS: string;
   explanation: string;
+}
+
+export interface CSSValidationResult {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
 }
 
 export interface LevelProgress {

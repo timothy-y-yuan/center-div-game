@@ -1,5 +1,6 @@
 import Editor from '@monaco-editor/react'
 import { useTheme } from '../contexts/ThemeContext'
+import type { Level, CSSValidationResult } from '../types'
 
 interface CodeEditorProps {
   value: string
@@ -9,6 +10,8 @@ interface CodeEditorProps {
   emoji: string
   headerClass: string
   readOnly?: boolean
+  level?: Level
+  validation?: CSSValidationResult
 }
 
 const handleEditorWillMount = (monaco: any) => {
@@ -29,7 +32,7 @@ const handleEditorDidMount = (editor: any, _monaco: any) => {
   });
 }
 
-export default function CodeEditor({ value, language, onChange, title, emoji, headerClass, readOnly = false }: CodeEditorProps) {
+export default function CodeEditor({ value, language, onChange, title, emoji, headerClass, readOnly = false, level, validation }: CodeEditorProps) {
   const { actualTheme } = useTheme()
 
   return (
@@ -43,6 +46,28 @@ export default function CodeEditor({ value, language, onChange, title, emoji, he
               : 'text-purple-700 dark:text-purple-200'
           }>{title}</span>
         </h3>
+
+        {/* Show constraints for CSS editor */}
+        {level && language === 'css' && (
+          <div className="mt-2 text-sm">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
+              <div className="font-medium text-blue-800 dark:text-blue-200 mb-1">Constraints:</div>
+              <div className="text-blue-700 dark:text-blue-300">{level.constraints}</div>
+            </div>
+          </div>
+        )}
+
+        {/* Show validation errors */}
+        {validation && !validation.isValid && (
+          <div className="mt-2 text-sm">
+            <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
+              <div className="font-medium text-red-800 dark:text-red-200 mb-1">Validation Errors:</div>
+              {validation.errors.map((error, index) => (
+                <div key={index} className="text-red-700 dark:text-red-300">• {error}</div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex-1">
         <Editor

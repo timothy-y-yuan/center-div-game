@@ -6,18 +6,16 @@ import { ThemeProvider } from '../contexts/ThemeContext'
 // Mock Monaco Editor
 const mockOnChange = vi.fn()
 
-const MockedEditor = vi.fn(({ onChange, value, options }: any) => (
-  <textarea
-    data-testid="monaco-editor"
-    value={value}
-    onChange={(e) => onChange?.(e.target.value)}
-    readOnly={options?.readOnly}
-    placeholder={options?.language}
-  />
-))
-
 vi.mock('@monaco-editor/react', () => ({
-  default: MockedEditor
+  default: ({ onChange, value, options }: any) => (
+    <textarea
+      data-testid="monaco-editor"
+      value={value}
+      onChange={(e) => onChange?.(e.target.value)}
+      readOnly={options?.readOnly}
+      placeholder={options?.language}
+    />
+  )
 }))
 
 const renderWithTheme = (component: React.ReactElement) => {
