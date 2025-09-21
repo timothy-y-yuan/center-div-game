@@ -38,11 +38,27 @@ check_directory() {
 
 # Function to check npm script
 check_npm_script() {
-    if npm run "$1" --silent >/dev/null 2>&1; then
-        echo -e "${GREEN}✅ npm run $1${NC}"
-        return 0
+    if ! command -v jq >/dev/null 2>&1; then
+        echo -e "${YELLOW}⚠️  jq is not installed. Skipping npm script existence check. Attempting to run the script...${NC}"
+        if npm run "$1" --silent >/dev/null 2>&1; then
+            echo -e "${GREEN}✅ npm run $1${NC}"
+            return 0
+        else
+            echo -e "${RED}❌ npm run $1 failed${NC}"
+            return 1
+        fi
+    fi
+
+    if jq -e --arg script "$1" '.scripts[$script]' package.json >/dev/null 2>&1; then
+        if npm run "$1" --silent >/dev/null 2>&1; then
+            echo -e "${GREEN}✅ npm run $1${NC}"
+            return 0
+        else
+            echo -e "${RED}❌ npm run $1 failed${NC}"
+            return 1
+        fi
     else
-        echo -e "${RED}❌ npm run $1 failed${NC}"
+        echo -e "${RED}❌ npm script \"$1\" not found in package.json${NC}"
         return 1
     fi
 }
