@@ -1,0 +1,67 @@
+name: Mark stale issues and PRs
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Run every Monday at 9 AM UTC
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Issues configuration
+          days-before-stale: 60
+          days-before-close: 7
+          stale-issue-message: |
+            This issue has been automatically marked as stale because it has had no activity for 60 days. 
+            It will be closed in 7 days if no further activity occurs.
+            
+            If you believe this issue is still relevant, please:
+            - Add a comment explaining why it should remain open
+            - Remove the "stale" label
+            - Add any additional context that might help
+            
+            Thank you for your contributions to Center Div Game! 🎯
+          close-issue-message: |
+            This issue was automatically closed due to inactivity. 
+            If you believe this issue should be reopened, please create a new issue with:
+            - A reference to this closed issue
+            - Updated context and information
+            - Current relevance to the project
+          stale-issue-label: 'stale'
+          exempt-issue-labels: 'enhancement,bug,help wanted,good first issue,priority: high,priority: critical'
+          
+          # Pull requests configuration
+          days-before-pr-stale: 30
+          days-before-pr-close: 7
+          stale-pr-message: |
+            This pull request has been automatically marked as stale because it has had no activity for 30 days.
+            It will be closed in 7 days if no further activity occurs.
+            
+            If this PR is still relevant, please:
+            - Rebase or merge the latest changes from the target branch
+            - Respond to any review comments
+            - Remove the "stale" label
+            - Add a comment with an update on the status
+            
+            Thank you for your contribution! 🚀
+          close-pr-message: |
+            This pull request was automatically closed due to inactivity.
+            If you'd like to continue working on this, please:
+            - Reopen this PR or create a new one
+            - Ensure it's up to date with the latest changes
+            - Address any outstanding review comments
+          stale-pr-label: 'stale'
+          exempt-pr-labels: 'priority: high,priority: critical,work in progress,blocked'
+          
+          # Operation limits
+          operations-per-run: 30
+          remove-stale-when-updated: true
+          debug-only: false

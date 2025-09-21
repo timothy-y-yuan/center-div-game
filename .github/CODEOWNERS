@@ -1,0 +1,36 @@
+# Code ownership for Center Div Game
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owners - these users will be requested for review for any changes
+* @timothy-y-yuan
+
+# Frontend components and UI
+/src/components/ @timothy-y-yuan
+/src/contexts/ @timothy-y-yuan
+/src/index.css @timothy-y-yuan
+
+# Game logic and data
+/src/data/ @timothy-y-yuan
+/src/types.ts @timothy-y-yuan
+/src/App.tsx @timothy-y-yuan
+
+# Build configuration and CI/CD
+/.github/ @timothy-y-yuan
+/vite.config.ts @timothy-y-yuan
+/package.json @timothy-y-yuan
+/package-lock.json @timothy-y-yuan
+/eslint.config.js @timothy-y-yuan
+/tailwind.config.js @timothy-y-yuan
+/tsconfig*.json @timothy-y-yuan
+
+# Tests
+/src/test/ @timothy-y-yuan
+
+# Documentation
+*.md @timothy-y-yuan
+/docs/ @timothy-y-yuan
+
+# Security-sensitive files
+SECURITY.md @timothy-y-yuan
+CODE_OF_CONDUCT.md @timothy-y-yuan
+/.github/dependabot.yml @timothy-y-yuan

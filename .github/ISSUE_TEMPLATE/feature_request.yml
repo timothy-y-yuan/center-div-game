@@ -1,0 +1,93 @@
+name: ✨ Feature Request
+description: Suggest an idea for the Center Div Game
+title: "[FEATURE]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! 🎮✨
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Prerequisites
+      description: By submitting this issue, you confirm that
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem? 🤔
+      description: A clear and concise description of what the problem is
+      placeholder: I'm always frustrated when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like ✨
+      description: A clear and concise description of what you want to happen
+      placeholder: I would love it if...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions 🔄
+      description: Describe any alternative solutions or features you've considered
+      placeholder: I've also thought about...
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: What type of feature is this? 🎯
+      description: Select the category that best fits your request
+      options:
+        - New CSS level/challenge
+        - UI/UX improvement
+        - Game mechanics enhancement
+        - Performance optimization
+        - Accessibility improvement
+        - Developer experience
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level 📈
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would improve experience
+        - High - Really needed
+        - Critical - Blocking my usage
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context 📋
+      description: |
+        Add any other context, mockups, or examples about the feature request here.
+        
+        Tips:
+        - Screenshots or mockups are very helpful!
+        - Links to similar features in other apps
+        - Use cases and user stories
+      placeholder: Any additional information...
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Would you like to work on this? 🙋‍♀️
+      options:
+        - label: I'd like to work on implementing this feature
