@@ -1,42 +1,66 @@
-import type { Level } from '../types'
-import SettingsDropdown from './SettingsDropdown'
-import LevelDropdown from './LevelDropdown'
+import { useRef } from 'react';
+import type { Level, UserProgress } from '../types';
+import HintPopup from './HintPopup';
+import LevelDropdown from './LevelDropdown';
+import SettingsDropdown from './SettingsDropdown';
 
 interface HeaderProps {
-  levels: Level[]
-  currentLevelIndex: number
-  completedLevels: Set<number>
-  failedLevels: Set<number>
-  onCheck: () => void
-  onLevelSelect: (index: number) => void
-  onResetProgress: () => void
-  onNextLevel: () => void
+  levels: Level[];
+  currentLevelIndex: number;
+  completedLevels: Set<number>;
+  failedLevels: Set<number>;
+  showHint: boolean;
+  userProgress: UserProgress;
+  onToggleHint: () => void;
+  onCheck: () => void;
+  onLevelSelect: (index: number) => void;
+  onRevealAnswer: () => void;
+  onResetProgress: () => void;
+  onNextLevel: () => void;
 }
 
-export default function Header({ levels, currentLevelIndex, completedLevels, failedLevels, onCheck, onLevelSelect, onResetProgress, onNextLevel }: HeaderProps) {
-  const currentLevel = levels[currentLevelIndex]
+export default function Header({
+  levels,
+  currentLevelIndex,
+  completedLevels,
+  failedLevels,
+  showHint,
+  userProgress,
+  onToggleHint,
+  onCheck,
+  onLevelSelect,
+  onRevealAnswer,
+  onResetProgress,
+  onNextLevel,
+}: HeaderProps) {
+  const currentLevel = levels[currentLevelIndex];
+  const hintButtonRef = useRef<HTMLButtonElement>(null);
 
   const getPlayerTitle = (completedCount: number) => {
     const titles = [
-      "0.001x Engineer",
-      "Copy-Paste Rookie",
-      "Stack Overflow Searcher",
-      "Margin Margin Margin",
-      "Flexbox Fumbler",
-      "CSS Semicolon Forgetter",
-      "Div Soup Chef",
-      "Bootstrap Dependent",
-      "CSS Grid Apprentice",
-      "Layout Learner",
-      "CSS Ninja"
-    ]
-    return titles[Math.min(completedCount, titles.length - 1)]
-  }
+      '0.001x Engineer',
+      'Copy-Paste Rookie',
+      'Stack Overflow Searcher',
+      'Margin Margin Margin',
+      'Flexbox Fumbler',
+      'CSS Semicolon Forgetter',
+      'Div Soup Chef',
+      'Bootstrap Dependent',
+      'CSS Grid Apprentice',
+      'Layout Learner',
+      'CSS Ninja',
+    ];
+    return titles[Math.min(completedCount, titles.length - 1)];
+  };
 
-  const playerTitle = getPlayerTitle(completedLevels.size)
-  const isCurrentLevelCompleted = completedLevels.has(currentLevelIndex) && !failedLevels.has(currentLevelIndex)
-  const isCurrentLevelFailed = failedLevels.has(currentLevelIndex)
-  const showNextButton = (isCurrentLevelCompleted || isCurrentLevelFailed) && currentLevelIndex < levels.length - 1
+  const playerTitle = getPlayerTitle(completedLevels.size);
+  const isCurrentLevelCompleted =
+    completedLevels.has(currentLevelIndex) &&
+    !failedLevels.has(currentLevelIndex);
+  const isCurrentLevelFailed = failedLevels.has(currentLevelIndex);
+  const showNextButton =
+    (isCurrentLevelCompleted || isCurrentLevelFailed) &&
+    currentLevelIndex < levels.length - 1;
 
   return (
     <header className="relative z-10 glass border-b border-gray-200 dark:border-white border-opacity-10 dark:border-opacity-10 px-6 py-4">
@@ -100,17 +124,22 @@ export default function Header({ levels, currentLevelIndex, completedLevels, fai
               <div className="h-full flex">
                 <div
                   className="bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-500"
-                  style={{ width: `${(completedLevels.size / levels.length) * 100}%` }}
+                  style={{
+                    width: `${(completedLevels.size / levels.length) * 100}%`,
+                  }}
                 />
                 <div
                   className="bg-gradient-to-r from-red-400 to-red-500 transition-all duration-500"
-                  style={{ width: `${(failedLevels.size / levels.length) * 100}%` }}
+                  style={{
+                    width: `${(failedLevels.size / levels.length) * 100}%`,
+                  }}
                 />
               </div>
             </div>
           </div>
           <div className="text-xs text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
-            🎉 {completedLevels.size} • 😭 {failedLevels.size} • {levels.length - completedLevels.size - failedLevels.size} left
+            🎉 {completedLevels.size} • 😭 {failedLevels.size} •{' '}
+            {levels.length - completedLevels.size - failedLevels.size} left
           </div>
         </div>
 
@@ -124,13 +153,16 @@ export default function Header({ levels, currentLevelIndex, completedLevels, fai
         isOpen={showHint}
         hint={currentLevel.hint}
         onClose={onToggleHint}
-        buttonRef={hintButtonRef}
+        buttonRef={hintButtonRef as React.RefObject<HTMLButtonElement>}
         onRevealAnswer={onRevealAnswer}
-        isCompleted={completedLevels.has(currentLevelIndex) && !failedLevels.has(currentLevelIndex)}
+        isCompleted={
+          completedLevels.has(currentLevelIndex) &&
+          !failedLevels.has(currentLevelIndex)
+        }
         isFailed={failedLevels.has(currentLevelIndex)}
         solutionCSS={currentLevel.solutionCSS}
         explanation={currentLevel.explanation}
       />
     </header>
-  )
+  );
 }
