@@ -12,9 +12,16 @@
       "Bash(npm run test:run:*)",
       "Bash(npm test:*)",
       "Bash(git add:*)",
-      "Bash(npx vitest run:*)"
+      "Bash(npx vitest run:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "outputStyle": "default"
 }

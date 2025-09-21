@@ -1,170 +1,97 @@
-import { useState, useEffect } from 'react'
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
-import Header from './components/Header'
-import CodeEditor from './components/CodeEditor'
-import Preview from './components/Preview'
-import ConfettiEffect from './components/ConfettiEffect'
-import { levels } from './data/levels'
-import { generateCompleteCSS, getInitialEditableCSS, validateUserCSS } from './utils/cssValidator'
+/**
+ * @fileoverview Main application component
+ * Orchestrates the Center Div Game with clean architecture and custom hooks
+ */
 
-// Persistence helpers
-const getCompletedLevels = (): Set<number> => {
-  try {
-    const stored = localStorage.getItem('completedLevels')
-    return stored ? new Set(JSON.parse(stored)) : new Set()
-  } catch {
-    return new Set()
-  }
-}
+import { useMemo } from 'react';
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+import Header from './components/Header';
+import CodeEditor from './components/CodeEditor';
+import Preview from './components/Preview';
+import ConfettiEffect from './components/ConfettiEffect';
+import { levels } from './data/levels';
+import { useGameState, useLevelContent } from './hooks';
 
-const saveCompletedLevels = (completed: Set<number>) => {
-  localStorage.setItem('completedLevels', JSON.stringify([...completed]))
-}
+// ============================================================================
+// MAIN APPLICATION COMPONENT
+// ============================================================================
 
-const getFailedLevels = (): Set<number> => {
-  try {
-    const stored = localStorage.getItem('failedLevels')
-    return stored ? new Set(JSON.parse(stored)) : new Set()
-  } catch {
-    return new Set()
-  }
-}
-
-const saveFailedLevels = (failed: Set<number>) => {
-  localStorage.setItem('failedLevels', JSON.stringify([...failed]))
-}
-
-const getCurrentLevel = (): number => {
-  try {
-    const stored = localStorage.getItem('currentLevel')
-    return stored ? parseInt(stored, 10) : 0
-  } catch {
-    return 0
-  }
-}
-
-const saveCurrentLevel = (level: number) => {
-  localStorage.setItem('currentLevel', level.toString())
-}
-
+/**
+ * Main application component providing the Center Div Game interface
+ * Uses custom hooks for clean separation of concerns
+ */
 function App() {
-  const [currentLevel, setCurrentLevel] = useState(getCurrentLevel)
-  const [html, setHtml] = useState(levels[currentLevel].initialHTML)
-  const [editableCSS, setEditableCSS] = useState(getInitialEditableCSS(levels[currentLevel]))
-  const [isCompleted, setIsCompleted] = useState(false)
-  const [showHint, setShowHint] = useState(false)
-  const [completedLevels, setCompletedLevels] = useState(getCompletedLevels)
-  const [failedLevels, setFailedLevels] = useState(getFailedLevels)
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [cssValidation, setCssValidation] = useState(validateUserCSS('', levels[currentLevel]))
+  // ============================================================================
+  // HOOK INTEGRATION
+  // ============================================================================
 
-  const checkCompletion = () => {
-    const iframe = document.getElementById('preview') as HTMLIFrameElement
-    if (!iframe?.contentWindow) return
+  // Game state management
+  const gameState = useGameState();
 
-    try {
-      const doc = iframe.contentDocument || iframe.contentWindow.document
-      const container = doc.querySelector('.container') as HTMLElement
-      const target = doc.querySelector('.target') as HTMLElement
+  // Current level reference
+  const currentLevel = useMemo(
+    () => levels[gameState.currentLevel],
+    [gameState.currentLevel]
+  );
 
-      if (!container || !target) return
+  // Level content management
+  const levelContent = useLevelContent(currentLevel);
 
-      const containerRect = container.getBoundingClientRect()
-      const targetRect = target.getBoundingClientRect()
+  // Completion checking (removed unused variable)
 
-      const containerCenterX = containerRect.left + containerRect.width / 2
-      const containerCenterY = containerRect.top + containerRect.height / 2
-      const targetCenterX = targetRect.left + targetRect.width / 2
-      const targetCenterY = targetRect.top + targetRect.height / 2
+  // ============================================================================
+  // EVENT HANDLERS
+  // ============================================================================
 
-      const isHorizontallyCentered = Math.abs(containerCenterX - targetCenterX) < 5
-      const isVerticallyCentered = Math.abs(containerCenterY - targetCenterY) < 5
+  /**
+   * Handles level completion checking with enhanced feedback
+   */
+  const handleCheckCompletion = () => {
+    gameState.checkCompletion(currentLevel, 'preview');
+  };
 
-      // Level 1 only requires horizontal centering, others require both
-      const completed = currentLevel === 0
-        ? isHorizontallyCentered
-        : isHorizontallyCentered && isVerticallyCentered
+  /**
+   * Handles revealing the answer for the current level
+   */
+  const handleRevealAnswer = () => {
+    gameState.revealAnswer();
+    levelContent.setSolutionCSS(currentLevel);
+  };
 
-      if (completed && !isCompleted && !failedLevels.has(currentLevel)) {
-        // Only allow completion if level wasn't failed
-        // Trigger confetti on first completion
-        setShowConfetti(true)
-        // Mark level as completed
-        const newCompleted = new Set(completedLevels)
-        newCompleted.add(currentLevel)
-        setCompletedLevels(newCompleted)
-        saveCompletedLevels(newCompleted)
-      }
-      setIsCompleted(completed && !failedLevels.has(currentLevel))
-    } catch (error) {
-      console.error('Error checking completion:', error)
+  /**
+   * Handles level selection with content reset
+   */
+  const handleLevelChange = (newLevelIndex: number) => {
+    if (newLevelIndex >= 0 && newLevelIndex < levels.length) {
+      gameState.changeLevel(newLevelIndex);
+      levelContent.resetForLevel(levels[newLevelIndex]);
     }
-  }
+  };
 
-  const revealAnswer = () => {
-    // Mark level as failed
-    const newFailed = new Set(failedLevels)
-    newFailed.add(currentLevel)
-    setFailedLevels(newFailed)
-    saveFailedLevels(newFailed)
-
-    // Show the solution by setting the full solution CSS as editable
-    // This is a special case where we override constraints
-    setEditableCSS(levels[currentLevel].solutionCSS)
-    setShowHint(false)
-  }
-
-  const changeLevel = (newLevel: number) => {
-    if (newLevel >= 0 && newLevel < levels.length) {
-      setCurrentLevel(newLevel)
-      setHtml(levels[newLevel].initialHTML)
-      setEditableCSS(getInitialEditableCSS(levels[newLevel]))
-      setIsCompleted(completedLevels.has(newLevel) && !failedLevels.has(newLevel))
-      setShowHint(false)
-      setCssValidation(validateUserCSS('', levels[newLevel]))
-      saveCurrentLevel(newLevel)
+  /**
+   * Handles moving to the next level
+   */
+  const handleNextLevel = () => {
+    gameState.nextLevel(levels.length);
+    if (gameState.currentLevel < levels.length - 1) {
+      levelContent.resetForLevel(levels[gameState.currentLevel + 1]);
     }
-  }
+  };
 
-  const nextLevel = () => {
-    if (currentLevel < levels.length - 1) {
-      changeLevel(currentLevel + 1)
-    }
-  }
+  /**
+   * Handles resetting all progress
+   */
+  const handleResetProgress = () => {
+    gameState.resetProgress();
+    levelContent.resetForLevel(levels[0]);
+  };
 
-  const resetProgress = () => {
-    // Clear all localStorage data
-    localStorage.removeItem('completedLevels')
-    localStorage.removeItem('failedLevels')
-    localStorage.removeItem('currentLevel')
-
-    // Reset state
-    setCompletedLevels(new Set())
-    setFailedLevels(new Set())
-    changeLevel(0) // Go back to first level
-  }
-
+  /**
+   * Handles CSS changes with validation
+   */
   const handleCSSChange = (newEditableCSS: string) => {
-    setEditableCSS(newEditableCSS)
-    // Validate the CSS against level constraints
-    const validation = validateUserCSS(newEditableCSS, levels[currentLevel])
-    setCssValidation(validation)
-  }
-
-  // Generate complete CSS for preview (locked + editable)
-  const completeCSS = generateCompleteCSS(editableCSS, levels[currentLevel])
-
-  const previewContent = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <style>${completeCSS}</style>
-    </head>
-    <body>
-      ${html}
-    </body>
-    </html>
-  `
+    levelContent.updateCSS(newEditableCSS);
+  };
 
   return (
     <div className="h-screen bg-main text-gray-900 dark:text-white flex flex-col relative overflow-hidden">
@@ -174,16 +101,16 @@ function App() {
 
       <Header
         levels={levels}
-        currentLevelIndex={currentLevel}
-        completedLevels={completedLevels}
-        failedLevels={failedLevels}
-        showHint={showHint}
-        onToggleHint={() => setShowHint(!showHint)}
-        onCheck={checkCompletion}
-        onLevelSelect={changeLevel}
-        onRevealAnswer={revealAnswer}
-        onResetProgress={resetProgress}
-        onNextLevel={nextLevel}
+        currentLevelIndex={gameState.currentLevel}
+        completedLevels={new Set(Array.from(gameState.completedLevels).map(id => id as number))}
+        failedLevels={new Set(Array.from(gameState.failedLevels).map(id => id as number))}
+        showHint={gameState.showHint}
+        onToggleHint={gameState.toggleHint}
+        onCheck={handleCheckCompletion}
+        onLevelSelect={handleLevelChange}
+        onRevealAnswer={handleRevealAnswer}
+        onResetProgress={handleResetProgress}
+        onNextLevel={handleNextLevel}
       />
 
       <div className="flex-1 relative z-10 p-4">
@@ -194,7 +121,7 @@ function App() {
                 <Panel defaultSize={25} minSize={15}>
                   <div className="h-full flex flex-col">
                     <CodeEditor
-                      value={html}
+                      value={levelContent.html}
                       language="html"
                       onChange={() => {}} // No-op - HTML is read-only
                       title="HTML"
@@ -213,14 +140,14 @@ function App() {
                 <Panel defaultSize={75} minSize={30}>
                   <div className="h-full flex flex-col">
                     <CodeEditor
-                      value={editableCSS}
+                      value={levelContent.editableCSS}
                       language="css"
                       onChange={handleCSSChange}
                       title="CSS"
                       emoji="🎨"
                       headerClass="header-css"
-                      level={levels[currentLevel]}
-                      validation={cssValidation}
+                      level={currentLevel}
+                      validation={levelContent.cssValidation}
                     />
                   </div>
                 </Panel>
@@ -235,19 +162,19 @@ function App() {
 
           <Panel defaultSize={50} minSize={30}>
             <Preview
-              content={previewContent}
-              isCompleted={isCompleted}
-              currentLevel={currentLevel}
+              content={levelContent.previewContent}
+              isCompleted={gameState.isCompleted}
+              currentLevel={gameState.currentLevel}
               totalLevels={levels.length}
-              onNextLevel={nextLevel}
+              onNextLevel={handleNextLevel}
             />
           </Panel>
         </PanelGroup>
       </div>
 
       <ConfettiEffect
-        isVisible={showConfetti}
-        onComplete={() => setShowConfetti(false)}
+        isVisible={gameState.showConfetti}
+        onComplete={gameState.clearConfetti}
       />
     </div>
   )
