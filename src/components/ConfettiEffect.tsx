@@ -1,47 +1,57 @@
 /**
  * @fileoverview Confetti animation component for celebrations
- * Optimized with React.memo for Google-level performance standards
  */
 
 import { memo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ConfettiEffectProps {
-  isVisible: boolean
-  onComplete?: () => void
+  isVisible: boolean;
+  onComplete?: () => void;
 }
 
 interface ConfettiPiece {
-  id: number
-  x: number
-  y: number
-  vx: number
-  vy: number
-  rotation: number
-  rotationSpeed: number
-  color: string
-  size: number
-  emoji?: string
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  rotation: number;
+  rotationSpeed: number;
+  color: string;
+  size: number;
+  emoji?: string;
 }
 
-const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#98d8c8']
-const emojis = ['🎉', '✨', '🌟', '💫', '🎊', '🥳']
+const colors = [
+  '#ff6b6b',
+  '#4ecdc4',
+  '#45b7d1',
+  '#96ceb4',
+  '#ffeaa7',
+  '#dda0dd',
+  '#98d8c8',
+];
+const emojis = ['🎉', '✨', '🌟', '💫', '🎊', '🥳'];
 
 /**
  * Confetti animation component for celebration effects
  * Memoized to prevent unnecessary re-renders of animation state
  */
-const ConfettiEffect = memo(function ConfettiEffect({ isVisible, onComplete }: ConfettiEffectProps) {
-  const [pieces, setPieces] = useState<ConfettiPiece[]>([])
+const ConfettiEffect = memo(function ConfettiEffect({
+  isVisible,
+  onComplete,
+}: ConfettiEffectProps) {
+  const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
 
   useEffect(() => {
     if (!isVisible) {
-      setPieces([])
-      return
+      setPieces([]);
+      return;
     }
 
     // Create confetti pieces
-    const newPieces: ConfettiPiece[] = []
+    const newPieces: ConfettiPiece[] = [];
     for (let i = 0; i < 50; i++) {
       newPieces.push({
         id: i,
@@ -53,42 +63,47 @@ const ConfettiEffect = memo(function ConfettiEffect({ isVisible, onComplete }: C
         rotationSpeed: (Math.random() - 0.5) * 6,
         color: colors[Math.floor(Math.random() * colors.length)],
         size: Math.random() * 8 + 4,
-        emoji: Math.random() < 0.3 ? emojis[Math.floor(Math.random() * emojis.length)] : undefined
-      })
+        emoji:
+          Math.random() < 0.3
+            ? emojis[Math.floor(Math.random() * emojis.length)]
+            : undefined,
+      });
     }
-    setPieces(newPieces)
+    setPieces(newPieces);
 
     // Animation loop
     const animate = () => {
-      setPieces(currentPieces =>
-        currentPieces.map(piece => ({
-          ...piece,
-          x: piece.x + piece.vx,
-          y: piece.y + piece.vy,
-          rotation: piece.rotation + piece.rotationSpeed,
-          vy: piece.vy + 0.1 // gravity
-        })).filter(piece => piece.y < window.innerHeight + 50)
-      )
-    }
+      setPieces((currentPieces) =>
+        currentPieces
+          .map((piece) => ({
+            ...piece,
+            x: piece.x + piece.vx,
+            y: piece.y + piece.vy,
+            rotation: piece.rotation + piece.rotationSpeed,
+            vy: piece.vy + 0.1, // gravity
+          }))
+          .filter((piece) => piece.y < window.innerHeight + 50)
+      );
+    };
 
-    const interval = setInterval(animate, 16) // ~60fps
+    const interval = setInterval(animate, 16); // ~60fps
 
     // Auto-complete after 3 seconds
     const timeout = setTimeout(() => {
-      onComplete?.()
-    }, 3000)
+      onComplete?.();
+    }, 3000);
 
     return () => {
-      clearInterval(interval)
-      clearTimeout(timeout)
-    }
-  }, [isVisible, onComplete])
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [isVisible, onComplete]);
 
-  if (!isVisible || pieces.length === 0) return null
+  if (!isVisible || pieces.length === 0) return null;
 
   return createPortal(
     <div className="fixed inset-0 pointer-events-none z-[10000] overflow-hidden">
-      {pieces.map(piece => (
+      {pieces.map((piece) => (
         <div
           key={piece.id}
           className="absolute"
@@ -96,7 +111,7 @@ const ConfettiEffect = memo(function ConfettiEffect({ isVisible, onComplete }: C
             left: piece.x,
             top: piece.y,
             transform: `rotate(${piece.rotation}deg)`,
-            fontSize: piece.emoji ? `${piece.size * 2}px` : undefined
+            fontSize: piece.emoji ? `${piece.size * 2}px` : undefined,
           }}
         >
           {piece.emoji ? (
@@ -107,7 +122,7 @@ const ConfettiEffect = memo(function ConfettiEffect({ isVisible, onComplete }: C
               style={{
                 width: piece.size,
                 height: piece.size,
-                backgroundColor: piece.color
+                backgroundColor: piece.color,
               }}
             />
           )}
