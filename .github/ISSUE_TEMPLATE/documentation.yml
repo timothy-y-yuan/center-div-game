@@ -1,0 +1,68 @@
+name: 📚 Documentation Issue
+description: Report an issue with documentation or suggest improvements
+title: "[Docs]: "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us improve our documentation! Whether it's unclear instructions, missing information, or suggestions for better explanations.
+  
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: What type of documentation issue is this?
+      options:
+        - README needs improvement
+        - Code comments are unclear
+        - API documentation missing
+        - Installation instructions unclear
+        - Game level explanations confusing
+        - Development setup documentation
+        - Contributing guidelines
+        - TypeScript types not documented
+        - Other
+    validations:
+      required: true
+      
+  - type: textarea
+    id: current-docs
+    attributes:
+      label: Current Documentation Issue
+      description: Describe what's wrong with the current documentation or what's missing.
+      placeholder: The current documentation says... but it should say...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: suggested-improvement
+    attributes:
+      label: Suggested Improvement
+      description: How would you improve this documentation?
+      placeholder: I think it would be clearer if...
+      
+  - type: textarea
+    id: location
+    attributes:
+      label: Documentation Location
+      description: Where is this documentation located? (file path, URL, section)
+      placeholder: README.md line 50, or src/components/Header.tsx comments, etc.
+      
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Target Audience
+      options:
+        - New users trying the game
+        - Developers contributing to the project
+        - Teachers/educators using this in curriculum
+        - Students learning CSS
+        - All users
+    validations:
+      required: true
+      
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context about the documentation issue.

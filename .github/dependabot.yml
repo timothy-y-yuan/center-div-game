@@ -1,0 +1,36 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+    reviewers:
+      - "timothy-y-yuan"
+    # Group related updates
+    groups:
+      dev-dependencies:
+        patterns:
+          - "@types/*"
+          - "@testing-library/*"
+          - "eslint*"
+          - "typescript*"
+          - "vitest*"
+          - "@vitejs/*"
+      react-ecosystem:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@vitejs/plugin-react"
+      build-tools:
+        patterns:
+          - "vite"
+          - "tailwindcss"
+          - "@tailwindcss/*"

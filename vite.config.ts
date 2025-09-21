@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/center-div-game/' : '/',
   plugins: [react(), tailwindcss()],
   test: {
     globals: true,

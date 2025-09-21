@@ -94,8 +94,18 @@ By completing this game, you'll master:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to:
+Contributions are welcome! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md) for detailed guidelines.
 
+**Quick Start for Contributors:**
+```bash
+git clone https://github.com/timothy-y-yuan/center-div-game.git
+cd center-div-game
+npm install
+npm run test:run  # Always run tests before contributing!
+npm run dev      # Start development server
+```
+
+Ideas for contributions:
 - Add new levels or challenges
 - Improve the UI/UX
 - Fix bugs or add features

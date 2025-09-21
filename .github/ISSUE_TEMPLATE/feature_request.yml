@@ -1,0 +1,71 @@
+name: ✨ Feature Request
+description: Suggest an idea for the Center Div Game
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide as much detail as possible.
+  
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: A clear and concise description of what the problem is.
+      placeholder: I'm always frustrated when...
+      
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      options:
+        - New Game Level
+        - UI/UX Improvement
+        - Accessibility Enhancement
+        - Performance Optimization
+        - Theme/Styling
+        - Code Editor Enhancement
+        - Progress Tracking
+        - Educational Content
+        - Mobile Support
+        - Other
+    validations:
+      required: true
+      
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+      
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation Details (if you have thoughts)
+      options:
+        - label: This would require new dependencies
+        - label: This would affect existing game levels
+        - label: This would require database/storage changes
+        - label: This would require UI redesign
+        - label: I'm willing to help implement this
+        
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups or Examples
+      description: If applicable, add mockups, examples, or links to similar features.
+      
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or examples about the feature request here.
