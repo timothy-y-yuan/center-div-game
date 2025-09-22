@@ -183,7 +183,7 @@ npm install                   # Set timeout 60+ seconds
 
 **Always validate changes immediately:**
 - Code changes → run tests → start dev server → test manually
-- Component changes → check all related tests still pass  
+- Component changes → check all related tests still pass
 - Type changes → expect build failures but verify dev server works
 - UI changes → take screenshot to document visual impact
 
@@ -198,3 +198,44 @@ npm install                   # Set timeout 60+ seconds
 - Changes appear immediately in browser at http://localhost:5173/
 - No need to restart dev server for most changes
 - Monaco editor and game state preserved across reloads
+
+## Code Quality & Readability Standards
+
+**CRITICAL: This project maintains exceptionally high readability standards:**
+
+**Code Quality Requirements:**
+- All code must be written with obsessive attention to readability and clarity
+- TypeScript must be used properly with comprehensive type safety
+- Every function, interface, and complex logic must have clear, descriptive names
+- Comments should explain *why*, not *what* (the code should be self-documenting)
+- Prefer longer, descriptive variable names over cryptic abbreviations
+- Break complex logic into smaller, well-named functions
+- Use consistent patterns and conventions throughout the codebase
+
+**Pull Request Requirements:**
+Before any pull request can be approved, ALL of the following must pass:
+
+1. **Build Success**: `npm run build` must complete without errors
+2. **Test Coverage**: `npm run test:run` must pass all tests (174+ tests)
+3. **Linting**: `npm run lint` must pass without warnings
+4. **Type Checking**: TypeScript compilation must succeed
+5. **Manual Testing**: Core game functionality must be verified working
+
+**Code Review Checklist:**
+- [ ] Code builds successfully (`npm run build`)
+- [ ] All tests pass (`npm run test:run`)
+- [ ] Linting passes (`npm run lint`)
+- [ ] Types are comprehensive and accurate
+- [ ] Variable and function names are descriptive and clear
+- [ ] Complex logic is broken into small, well-named functions
+- [ ] No code smells (long functions, deep nesting, unclear intent)
+- [ ] Consistent with existing codebase patterns
+- [ ] Game functionality manually verified in browser
+
+**Automatic Rejection Criteria:**
+Pull requests will be automatically rejected if:
+- Build fails with TypeScript errors
+- Any tests fail or are broken
+- ESLint warnings exist
+- Code contains unclear variable names or functions
+- Code lacks type safety or uses `any` types inappropriately
