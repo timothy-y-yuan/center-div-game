@@ -7,6 +7,18 @@ import type {
 import { createValidationError } from './typeHelpers';
 
 /**
+ * Checks if the given CSS contains any !important declarations
+ * Returns true if !important is found anywhere in the CSS
+ */
+export function containsImportant(css: string): boolean {
+  // Remove comments first to avoid false positives
+  const cleanCSS = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  
+  // Check for !important declarations (case insensitive)
+  return /!\s*important/i.test(cleanCSS);
+}
+
+/**
  * Parses CSS text into a simple object structure
  * Returns: { selector: { property: value } }
  */
@@ -55,6 +67,21 @@ export function validateUserCSS(
   const warnings: ValidationMessage[] = [];
 
   try {
+    // Check for !important usage first - this should fail validation
+    if (containsImportant(userCSS)) {
+      errors.push(
+        createValidationError(
+          'Using !important is not allowed in this game. Try to solve the level using proper CSS techniques instead!'
+        )
+      );
+      return {
+        isValid: false,
+        errors,
+        warnings,
+        info: [],
+      };
+    }
+
     const parsedCSS = parseCSS(userCSS);
 
     // Check each selector in user CSS
