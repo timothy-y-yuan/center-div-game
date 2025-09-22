@@ -16,7 +16,7 @@ npm install
 
 # Start development server (ready in ~1 second)
 npm run dev
-# → Access at http://localhost:5173/
+# → Access at http://localhost:5173/center-div-game/
 # → Game loads immediately with Monaco editor and live preview
 
 # Run tests - NEVER CANCEL: All 174 tests complete in 6 seconds
@@ -53,7 +53,7 @@ npm run format:check
 **Primary development workflow:**
 
 1. Start dev server: `npm run dev`
-2. Navigate to http://localhost:5173/
+2. Navigate to http://localhost:5173/center-div-game/
 3. Make changes in src/ directory
 4. Test automatically with hot reload
 5. Run test suite: `npm run test:run`
@@ -70,7 +70,7 @@ npm run format:check
 
 **ALWAYS test these user scenarios after making changes:**
 
-1. **Game Loading**: Navigate to http://localhost:5173/ and verify:
+1. **Game Loading**: Navigate to http://localhost:5173/center-div-game/ and verify:
    - Game title "Can You Center The <div>?" displays
    - Level dropdown shows "1: Baby's First Center"
    - Monaco editors load with "Loading..." then show code
@@ -144,8 +144,8 @@ npm run format:check
 
 **Build & Development**: Vite 5.4
 
-- Dev server: `npm run dev` → http://localhost:5173/
-- Preview: `npm run preview` → http://localhost:4173/ (requires successful build)
+- Dev server: `npm run dev` → http://localhost:5173/center-div-game/
+- Preview: `npm run preview` → http://localhost:4173/center-div-game/ (requires successful build)
 - Hot module replacement enabled
 
 **Styling**: Tailwind CSS v4
@@ -173,7 +173,7 @@ Before completing any change:
 1. **Run and pass**: `npm run test:run` (NEVER CANCEL - 6 seconds)
 2. **Check formatting**: `npm run format:check` (2 seconds)
 3. **Start successfully**: `npm run dev` (NEVER CANCEL - 2 seconds)
-4. **Load application**: Navigate to http://localhost:5173/
+4. **Load application**: Navigate to http://localhost:5173/center-div-game/
 5. **Test core functionality**: Complete at least level 1 of the game
 6. **Check responsive design**: Test different viewport sizes
 7. **Validate no regressions**: Ensure existing features still work
@@ -222,7 +222,7 @@ npm install                   # Set timeout 60+ seconds
 **Hot reload development:**
 
 - Make changes in `src/` directory
-- Changes appear immediately in browser at http://localhost:5173/
+- Changes appear immediately in browser at http://localhost:5173/center-div-game/
 - No need to restart dev server for most changes
 - Monaco editor and game state preserved across reloads
 

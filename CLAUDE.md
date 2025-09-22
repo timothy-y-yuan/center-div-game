@@ -317,5 +317,5 @@ This project maintains exceptionally high readability and code quality standards
 ---
 
 **Last updated:** Session with comprehensive progress system implementation completed
-**Dev server:** http://localhost:5173/
+**Dev server:** http://localhost:5173/center-div-game/
 **Current status:** Fully functional 10-level CSS centering game with persistence
