@@ -235,10 +235,51 @@ npm install                   # Set timeout 60+ seconds
 - All code must be written with obsessive attention to readability and clarity
 - TypeScript must be used properly with comprehensive type safety
 - Every function, interface, and complex logic must have clear, descriptive names
-- Comments should explain _why_, not _what_ (the code should be self-documenting)
+- **CRITICAL: Comments should explain _why_, not _what_ (the code should be self-documenting)**
 - Prefer longer, descriptive variable names over cryptic abbreviations
 - Break complex logic into smaller, well-named functions
 - Use consistent patterns and conventions throughout the codebase
+
+**AI Comment Guidelines - STRICTLY ENFORCED:**
+
+AI-generated code must NOT include comments that merely describe what the code obviously does. This is a critical code quality issue.
+
+**❌ NEVER write these types of useless comments:**
+
+- `/** Whether the user is logged in */` on `isLoggedIn: boolean`
+- `/** The user's email address */` on `email: string`
+- `/** Array of items */` on `items: Item[]`
+- `// Increment the counter` above `counter++;`
+- `// Return the result` above `return result;`
+
+**✅ ONLY write comments that explain:**
+
+- **Why** a particular approach was chosen over alternatives
+- **When** or under what conditions something should be used
+- **Complex business logic** that isn't obvious from reading the code
+- **Browser compatibility workarounds** with specific reasoning
+- **Performance optimizations** with measurable impact
+- **Security considerations** that affect implementation
+
+**✅ GOOD comment examples:**
+
+```typescript
+// Using setTimeout instead of requestAnimationFrame because we need
+// this to run even when the tab is not visible (for background persistence)
+setTimeout(saveProgress, 1000);
+
+// Level 1 only requires horizontal centering to ease new players into the game
+if (level === 1) {
+  return checkHorizontalCenteringOnly(element);
+}
+```
+
+**✅ BEST: Self-documenting code that needs no comments:**
+
+```typescript
+const hasCompletedMoreThanHalfTheLevels = completedCount > TOTAL_LEVELS / 2;
+const shouldShowAdvancedHints = hasCompletedMoreThanHalfTheLevels;
+```
 
 **Pull Request Requirements:**
 Before any pull request can be approved, ALL of the following must pass:
@@ -272,3 +313,4 @@ Pull requests will be automatically rejected if:
 - Prettier formatting violations exist (run `npm run format` to fix)
 - Code contains unclear variable names or functions
 - Code lacks type safety or uses `any` types inappropriately
+- **Code contains useless comments that merely describe what the code obviously does**
