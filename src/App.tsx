@@ -10,7 +10,7 @@ import CodeEditor from './components/CodeEditor';
 import Preview from './components/Preview';
 import ConfettiEffect from './components/ConfettiEffect';
 import ImportantModal from './components/ImportantModal';
-import { levels } from './data/levels';
+import { levels, SECRET_IMPORTANT_LEVEL } from './data/levels';
 import { useGameState, useLevelContent } from './hooks';
 import { containsImportant } from './utils/cssValidator';
 import CodeDisplay from './components/CodeDisplay';
@@ -34,11 +34,42 @@ function App() {
   // Modal state for !important detection
   const [showImportantModal, setShowImportantModal] = useState(false);
 
-  // Current level reference
-  const currentLevel = useMemo(
-    () => levels[gameState.currentLevel],
-    [gameState.currentLevel]
-  );
+  // Combined levels array that includes secret level when unlocked
+  const allLevels = useMemo(() => {
+    const baseLevels = [...levels];
+    if (gameState.isSecretLevelUnlocked) {
+      baseLevels.push(SECRET_IMPORTANT_LEVEL);
+    }
+    return baseLevels;
+  }, [gameState.isSecretLevelUnlocked]);
+
+  // Current level reference - handle both regular levels and secret level
+  const currentLevel = useMemo(() => {
+    // Handle secret level (index 999)
+    if (gameState.currentLevel === 999) {
+      // Only return secret level if it's actually unlocked
+      if (gameState.isSecretLevelUnlocked) {
+        return SECRET_IMPORTANT_LEVEL;
+      }
+      // If secret level is not unlocked but currentLevel is 999, fallback to first level
+      return levels[0];
+    }
+    // Handle normal levels
+    if (gameState.currentLevel >= 0 && gameState.currentLevel < levels.length) {
+      return levels[gameState.currentLevel];
+    }
+    // Fallback to first level
+    return levels[0];
+  }, [gameState.currentLevel, gameState.isSecretLevelUnlocked]);
+
+  // Current level index for Header component - convert secret level to array index
+  const currentLevelIndex = useMemo(() => {
+    if (gameState.currentLevel === 999 && gameState.isSecretLevelUnlocked) {
+      // Secret level is at the end of allLevels array
+      return allLevels.length - 1;
+    }
+    return gameState.currentLevel;
+  }, [gameState.currentLevel, gameState.isSecretLevelUnlocked, allLevels.length]);
 
   // Level content management
   const levelContent = useLevelContent(currentLevel);
@@ -68,6 +99,14 @@ function App() {
    * Handles level selection with content reset
    */
   const handleLevelChange = (newLevelIndex: number) => {
+    // Check if this is the secret level (last item in allLevels when unlocked)
+    if (gameState.isSecretLevelUnlocked && newLevelIndex === allLevels.length - 1) {
+      gameState.changeLevel(999);
+      levelContent.resetForLevel(SECRET_IMPORTANT_LEVEL);
+      return;
+    }
+    
+    // Handle normal level selection
     if (newLevelIndex >= 0 && newLevelIndex < levels.length) {
       gameState.changeLevel(newLevelIndex);
       levelContent.resetForLevel(levels[newLevelIndex]);
@@ -78,6 +117,11 @@ function App() {
    * Handles moving to the next level
    */
   const handleNextLevel = () => {
+    // If we're on the secret level, there's no next level
+    if (gameState.currentLevel === 999) {
+      return;
+    }
+    
     gameState.nextLevel(levels.length);
     if (gameState.currentLevel < levels.length - 1) {
       levelContent.resetForLevel(levels[gameState.currentLevel + 1]);
@@ -96,15 +140,25 @@ function App() {
    * Handles CSS changes with validation and !important detection
    */
   const handleCSSChange = (newEditableCSS: string) => {
-    // Check for !important usage first
+    // Check for !important usage
     if (containsImportant(newEditableCSS)) {
-      // Instantly fail the level
+      // If we're on the secret level, allow !important usage
+      if (gameState.currentLevel === 999) {
+        levelContent.updateCSS(newEditableCSS);
+        return;
+      }
+
+      // If we're on a normal level, unlock secret level and switch to it
+      // Instantly fail the current level
       gameState.revealAnswer();
 
       // Show the modal
       setShowImportantModal(true);
 
-      // Don't update the CSS - reject the change
+      // Unlock the secret level and switch to it
+      gameState.unlockSecretLevel();
+
+      // Don't update the CSS for the current level
       return;
     }
 
@@ -126,8 +180,8 @@ function App() {
       <div className='absolute bottom-0 right-1/4 w-96 h-96 bg-orb-pink rounded-full'></div>
 
       <Header
-        levels={levels}
-        currentLevelIndex={gameState.currentLevel}
+        levels={allLevels}
+        currentLevelIndex={currentLevelIndex}
         completedLevels={
           new Set(Array.from(gameState.completedLevels).map(id => id as number))
         }

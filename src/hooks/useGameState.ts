@@ -32,6 +32,9 @@ export interface UseGameStateResult {
   /** Set of failed level IDs */
   readonly failedLevels: ReadonlySet<LevelId>;
 
+  /** Whether the secret level has been unlocked */
+  readonly isSecretLevelUnlocked: boolean;
+
   /** Changes to a specific level */
   readonly changeLevel: (levelIndex: number) => void;
 
@@ -52,6 +55,9 @@ export interface UseGameStateResult {
 
   /** Clears confetti animation */
   readonly clearConfetti: () => void;
+
+  /** Unlocks secret level and switches to it */
+  readonly unlockSecretLevel: () => void;
 }
 
 // ============================================================================
@@ -78,6 +84,10 @@ export function useGameState(): UseGameStateResult {
 
   const [failedLevels, setFailedLevels] = useState(() =>
     storageService.getFailedLevels()
+  );
+
+  const [isSecretLevelUnlocked, setIsSecretLevelUnlocked] = useState(() =>
+    storageService.getSecretLevelUnlocked()
   );
 
   // ============================================================================
@@ -183,6 +193,23 @@ export function useGameState(): UseGameStateResult {
     setShowConfetti(false);
   }, []);
 
+  /**
+   * Unlocks the secret level and immediately switches to it
+   */
+  const unlockSecretLevel = useCallback(() => {
+    // Mark secret level as unlocked
+    setIsSecretLevelUnlocked(true);
+    storageService.setSecretLevelUnlocked(true);
+
+    // Change to the secret level (index 999 represents the secret level)
+    setCurrentLevel(999);
+    setShowHint(false);
+    setIsCompleted(false);
+
+    // Persist the level change
+    storageService.setCurrentLevel(createLevelId(999));
+  }, []);
+
   // ============================================================================
   // RETURN INTERFACE
   // ============================================================================
@@ -194,6 +221,7 @@ export function useGameState(): UseGameStateResult {
     showConfetti,
     completedLevels,
     failedLevels,
+    isSecretLevelUnlocked,
     changeLevel,
     nextLevel,
     toggleHint,
@@ -201,5 +229,6 @@ export function useGameState(): UseGameStateResult {
     resetProgress,
     checkCompletion,
     clearConfetti,
+    unlockSecretLevel,
   };
 }

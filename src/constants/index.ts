@@ -58,6 +58,9 @@ export const STORAGE_KEYS = {
 
   /** Settings and preferences */
   SETTINGS: 'settings',
+
+  /** Secret level unlocked status */
+  SECRET_LEVEL_UNLOCKED: 'secretLevelUnlocked',
 } as const;
 
 // ============================================================================

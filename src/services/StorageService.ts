@@ -74,6 +74,8 @@ export interface IStorageService {
   setFailedLevels(levelIds: ReadonlySet<LevelId>): void;
   getUserProgress(): UserProgress | null;
   setUserProgress(progress: UserProgress): void;
+  getSecretLevelUnlocked(): boolean;
+  setSecretLevelUnlocked(unlocked: boolean): void;
   clearAllData(): void;
   isStorageAvailable(): boolean;
 }
@@ -337,6 +339,34 @@ export class StorageService implements IStorageService {
     this.safeSetItem(STORAGE_KEYS.USER_PROGRESS, JSON.stringify(progress));
   }
 
+  /**
+   * Gets whether the secret level has been unlocked
+   * @returns Boolean indicating if secret level is unlocked
+   */
+  getSecretLevelUnlocked(): boolean {
+    const data = this.safeGetItem(STORAGE_KEYS.SECRET_LEVEL_UNLOCKED);
+    
+    try {
+      const unlocked = this.parseAndValidate(
+        data,
+        (data: unknown): data is boolean => typeof data === 'boolean',
+        STORAGE_KEYS.SECRET_LEVEL_UNLOCKED
+      );
+      return unlocked ?? false;
+    } catch (error) {
+      console.warn('Invalid secret level unlock status in storage:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Sets whether the secret level has been unlocked
+   * @param unlocked - Boolean indicating if secret level should be unlocked
+   */
+  setSecretLevelUnlocked(unlocked: boolean): void {
+    this.safeSetItem(STORAGE_KEYS.SECRET_LEVEL_UNLOCKED, JSON.stringify(unlocked));
+  }
+
   // ============================================================================
   // UTILITY METHODS
   // ============================================================================
@@ -469,6 +499,10 @@ export function createMockStorageService(): IStorageService {
     },
     getUserProgress: () => null,
     setUserProgress: () => {
+      /* no-op */
+    },
+    getSecretLevelUnlocked: () => false,
+    setSecretLevelUnlocked: () => {
       /* no-op */
     },
     clearAllData: () => {
