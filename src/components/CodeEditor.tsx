@@ -2,10 +2,11 @@
  * @fileoverview Monaco Editor component with validation and theming
  */
 
-import Editor from '@monaco-editor/react';
+import Editor, { type Monaco } from '@monaco-editor/react';
 import { memo } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 import type { CSSValidationResult, Level } from '../types';
+import type { editor } from 'monaco-editor';
 
 interface CodeEditorProps {
   value: string;
@@ -19,7 +20,7 @@ interface CodeEditorProps {
   validation?: CSSValidationResult;
 }
 
-const handleEditorWillMount = (monaco: any) => {
+const handleEditorWillMount = (monaco: Monaco) => {
   monaco.editor.defineTheme('customDark', {
     base: 'vs-dark',
     inherit: true,
@@ -28,7 +29,7 @@ const handleEditorWillMount = (monaco: any) => {
   });
 };
 
-const handleEditorDidMount = (editor: any, _monaco: any) => {
+const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor) => {
   editor.updateOptions({
     fontFamily:
       '"Victor Mono", "SF Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, "Courier New", monospace',

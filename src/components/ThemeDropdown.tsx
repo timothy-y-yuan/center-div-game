@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { Theme } from '../contexts/ThemeContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 
 function getSystemTheme(): 'light' | 'dark' {
   if (typeof window !== 'undefined' && window.matchMedia) {

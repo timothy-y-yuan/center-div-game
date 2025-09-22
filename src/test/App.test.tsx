@@ -10,7 +10,7 @@ vi.mock('canvas-confetti', () => ({
 
 // Mock monaco editor
 vi.mock('@monaco-editor/react', () => ({
-  default: ({ onChange, value }: any) => (
+  default: ({ onChange, value }: { onChange?: (value: string) => void; value?: string }) => (
     <textarea
       data-testid="monaco-editor"
       value={value}
@@ -21,8 +21,8 @@ vi.mock('@monaco-editor/react', () => ({
 
 // Mock react-resizable-panels
 vi.mock('react-resizable-panels', () => ({
-  Panel: ({ children }: any) => <div data-testid="panel">{children}</div>,
-  PanelGroup: ({ children }: any) => <div data-testid="panel-group">{children}</div>,
+  Panel: ({ children }: { children: React.ReactNode }) => <div data-testid="panel">{children}</div>,
+  PanelGroup: ({ children }: { children: React.ReactNode }) => <div data-testid="panel-group">{children}</div>,
   PanelResizeHandle: () => <div data-testid="panel-resize-handle" />
 }))
 

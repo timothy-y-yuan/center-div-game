@@ -10,6 +10,7 @@ import type {
   LevelProgress,
   ProgressStats,
   TimestampMs,
+  DurationMs,
 } from '../types';
 import { createTimestampMs } from '../utils/typeHelpers';
 import { storageService } from '../services/StorageService';
@@ -116,8 +117,8 @@ export function useProgress(): UseProgressResult {
     if (!userProgress) {
       return {
         totalLevelsCompleted: 0,
-        totalPlayTime: 0 as any,
-        averageCompletionTime: 0 as any,
+        totalPlayTime: 0 as DurationMs,
+        averageCompletionTime: 0 as DurationMs,
         totalAttempts: 0,
         totalHintsUsed: 0,
         totalAnswersRevealed: 0,

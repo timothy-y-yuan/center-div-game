@@ -87,7 +87,7 @@ export function validateUserCSS(
       warnings,
       info: []
     };
-  } catch (error) {
+  } catch {
     return {
       isValid: false,
       errors: [createValidationError('Invalid CSS syntax')],

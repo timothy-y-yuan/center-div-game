@@ -3,8 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import Header from '../components/Header'
 import { levels } from '../data/levels'
 
-// Mock the ThemeContext
-vi.mock('../contexts/ThemeContext', () => ({
+// Mock the useTheme hook
+vi.mock('../hooks/useTheme', () => ({
   useTheme: () => ({
     theme: 'light',
     setTheme: vi.fn(),
