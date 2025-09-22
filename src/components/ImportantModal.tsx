@@ -76,7 +76,7 @@ export default function ImportantModal({
           shake ? 'animate-bounce' : ''
         }`}
         style={{
-          filter: 'drop-shadow(0 0 20px red) drop-shadow(0 0 40px orange)'
+          filter: 'drop-shadow(0 0 20px red) drop-shadow(0 0 40px orange)',
         }}
       >
         {/* Modal content with dramatic styling */}
@@ -97,7 +97,7 @@ export default function ImportantModal({
               inset 0 0 20px rgba(255, 0, 0, 0.3)
             `,
             border: '4px solid red',
-            animation: 'pulse 0.5s infinite alternate'
+            animation: 'pulse 0.5s infinite alternate',
           }}
         >
           {/* Dramatic pulsing header with gradients */}
@@ -140,10 +140,13 @@ export default function ImportantModal({
                   actualTheme === 'dark' ? 'text-red-200' : 'text-red-800'
                 }`}
                 style={{
-                  textShadow: '0 0 10px currentColor, 0 0 20px red, 0 0 30px orange'
+                  textShadow:
+                    '0 0 10px currentColor, 0 0 20px red, 0 0 30px orange',
                 }}
               >
-                <span className='text-3xl mr-2 animate-spin inline-block'>🛑</span>
+                <span className='text-3xl mr-2 animate-spin inline-block'>
+                  🛑
+                </span>
                 <strong>STOP RIGHT THERE, CSS CRIMINAL!</strong> Using{' '}
                 <code
                   className={`px-3 py-2 rounded-md font-bold text-lg animate-bounce ${
@@ -152,13 +155,16 @@ export default function ImportantModal({
                       : 'bg-red-100 text-red-900 border-2 border-red-500'
                   }`}
                   style={{
-                    boxShadow: '0 0 20px red, 0 0 40px orange, inset 0 0 10px rgba(255,0,0,0.3)'
+                    boxShadow:
+                      '0 0 20px red, 0 0 40px orange, inset 0 0 10px rgba(255,0,0,0.3)',
                   }}
                 >
                   !important
                 </code>{' '}
                 is like using a NUCLEAR WEAPON to swat a fly!
-                <span className='text-3xl ml-2 animate-ping inline-block'>💥</span>
+                <span className='text-3xl ml-2 animate-ping inline-block'>
+                  💥
+                </span>
               </p>
 
               <div
@@ -173,12 +179,19 @@ export default function ImportantModal({
                       : 'text-orange-800'
                   }`}
                 >
-                  <strong>🎓 EDUCATIONAL NUCLEAR MELTDOWN:</strong> The ENTIRE point of
-                  this game is to learn <em>proper</em> CSS techniques! Using <code>!important</code>{' '}
-                  is like cheating on your homework while the teacher is staring right at you!
-                  <br/><br/>
-                  <span className='text-2xl animate-spin inline-block'>🤯</span> You've just activated CSS HARD MODE! 
-                  <span className='text-2xl animate-bounce inline-block ml-2'>💀</span>
+                  <strong>🎓 EDUCATIONAL NUCLEAR MELTDOWN:</strong> The ENTIRE
+                  point of this game is to learn <em>proper</em> CSS techniques!
+                  Using <code>!important</code> is like cheating on your
+                  homework while the teacher is staring right at you!
+                  <br />
+                  <br />
+                  <span className='text-2xl animate-spin inline-block'>
+                    🤯
+                  </span>{' '}
+                  You've just activated CSS HARD MODE!
+                  <span className='text-2xl animate-bounce inline-block ml-2'>
+                    💀
+                  </span>
                 </p>
               </div>
 
@@ -193,10 +206,20 @@ export default function ImportantModal({
                   }`}
                 >
                   <span className='text-base mr-1'>💡</span>
-                  <strong>Pro tip:</strong> <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>!important</code> breaks CSS's natural cascade and specificity rules, making your code harder to maintain and debug. 
-                  It creates a hierarchy where only more <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>!important</code> rules can override it, leading to "!important wars" in your codebase. 
-                  Instead, master specificity, understand the cascade, and use proper CSS architecture - 
-                  your future self (and your team) will thank you!
+                  <strong>Pro tip:</strong>{' '}
+                  <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
+                    !important
+                  </code>{' '}
+                  breaks CSS's natural cascade and specificity rules, making
+                  your code harder to maintain and debug. It creates a hierarchy
+                  where only more{' '}
+                  <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
+                    !important
+                  </code>{' '}
+                  rules can override it, leading to "!important wars" in your
+                  codebase. Instead, master specificity, understand the cascade,
+                  and use proper CSS architecture - your future self (and your
+                  team) will thank you!
                   <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
                     !important
                   </code>
@@ -214,13 +237,21 @@ export default function ImportantModal({
                       : 'bg-gradient-to-r from-red-500 via-red-600 to-red-500 hover:from-red-400 hover:to-red-500 text-white shadow-lg hover:shadow-red-500/50'
                   }`}
                   style={{
-                    boxShadow: '0 8px 32px rgba(239, 68, 68, 0.8), 0 0 20px red, 0 0 40px orange',
-                    textShadow: '0 0 10px white'
+                    boxShadow:
+                      '0 8px 32px rgba(239, 68, 68, 0.8), 0 0 20px red, 0 0 40px orange',
+                    textShadow: '0 0 10px white',
                   }}
                 >
-                  <span className='mr-3 text-2xl animate-bounce inline-block'>😤</span>
+                  <span className='mr-3 text-2xl animate-bounce inline-block'>
+                    😤
+                  </span>
                   I'LL CODE IT PROPERLY!
-                  <span className='ml-3 text-2xl animate-bounce inline-block' style={{animationDelay: '0.2s'}}>💪</span>
+                  <span
+                    className='ml-3 text-2xl animate-bounce inline-block'
+                    style={{ animationDelay: '0.2s' }}
+                  >
+                    💪
+                  </span>
                 </button>
               </div>
             </div>

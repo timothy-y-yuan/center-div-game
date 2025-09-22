@@ -26,7 +26,9 @@ describe('Enhanced ImportantModal - Stage 2', () => {
     renderWithTheme(<ImportantModal isOpen={true} onClose={mockOnClose} />);
 
     // Check for enhanced title text
-    expect(screen.getByText('🔥💀 !IMPORTANT NUCLEAR ALERT! 💀🔥')).toBeInTheDocument();
+    expect(
+      screen.getByText('🔥💀 !IMPORTANT NUCLEAR ALERT! 💀🔥')
+    ).toBeInTheDocument();
 
     // Check for enhanced warning emojis
     expect(screen.getAllByText('🚨')).toHaveLength(2);
@@ -49,7 +51,9 @@ describe('Enhanced ImportantModal - Stage 2', () => {
     renderWithTheme(<ImportantModal isOpen={true} onClose={mockOnClose} />);
 
     // Check for educational moment section
-    expect(screen.getByText('🎓 EDUCATIONAL NUCLEAR MELTDOWN:')).toBeInTheDocument();
+    expect(
+      screen.getByText('🎓 EDUCATIONAL NUCLEAR MELTDOWN:')
+    ).toBeInTheDocument();
     expect(
       screen.getByText(/The ENTIRE point of this game is to learn/)
     ).toBeInTheDocument();
@@ -60,7 +64,9 @@ describe('Enhanced ImportantModal - Stage 2', () => {
     // Check for pro tip section
     expect(screen.getByText('💡')).toBeInTheDocument();
     expect(screen.getByText(/Pro tip:/)).toBeInTheDocument();
-    expect(screen.getByText(/breaks CSS's natural cascade/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/breaks CSS's natural cascade/)
+    ).toBeInTheDocument();
   });
 
   it('should have animations and state management', async () => {
@@ -69,7 +75,9 @@ describe('Enhanced ImportantModal - Stage 2', () => {
     renderWithTheme(<ImportantModal isOpen={true} onClose={mockOnClose} />);
 
     // The modal should be visible
-    expect(screen.getByText('🔥💀 !IMPORTANT NUCLEAR ALERT! 💀🔥')).toBeInTheDocument();
+    expect(
+      screen.getByText('🔥💀 !IMPORTANT NUCLEAR ALERT! 💀🔥')
+    ).toBeInTheDocument();
 
     // Fast-forward animations
     act(() => {
@@ -78,7 +86,9 @@ describe('Enhanced ImportantModal - Stage 2', () => {
 
     // Check that animations would have been triggered
     // (In a real test, we'd check for CSS classes or animation states)
-    expect(screen.getByText('🔥💀 !IMPORTANT NUCLEAR ALERT! 💀🔥')).toBeInTheDocument();
+    expect(
+      screen.getByText('🔥💀 !IMPORTANT NUCLEAR ALERT! 💀🔥')
+    ).toBeInTheDocument();
   });
 
   it('should not render when closed', () => {
@@ -126,11 +136,11 @@ describe('Enhanced ImportantModal - Stage 2', () => {
     renderWithTheme(<ImportantModal isOpen={true} onClose={mockOnClose} />);
 
     // Check for educational content about specificity - text may be split across elements
-    expect(screen.getByText(/breaks CSS's natural cascade/)).toBeInTheDocument();
-    expect(screen.getByText(/understand the cascade/)).toBeInTheDocument();
     expect(
-      screen.getByText(/master specificity/)
+      screen.getByText(/breaks CSS's natural cascade/)
     ).toBeInTheDocument();
+    expect(screen.getByText(/understand the cascade/)).toBeInTheDocument();
+    expect(screen.getByText(/master specificity/)).toBeInTheDocument();
     expect(screen.getByText(/!important wars/)).toBeInTheDocument();
 
     // Check for anti-cheating message
