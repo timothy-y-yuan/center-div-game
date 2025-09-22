@@ -1,7 +1,3 @@
-/**
- * @fileoverview Confetti animation component for celebrations
- */
-
 import { memo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -34,10 +30,6 @@ const colors = [
 ];
 const emojis = ['🎉', '✨', '🌟', '💫', '🎊', '🥳'];
 
-/**
- * Confetti animation component for celebration effects
- * Memoized to prevent unnecessary re-renders of animation state
- */
 const ConfettiEffect = memo(function ConfettiEffect({
   isVisible,
   onComplete,

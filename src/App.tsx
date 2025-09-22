@@ -1,8 +1,3 @@
-/**
- * @fileoverview Main application component
- * Orchestrates the Center Div Game with clean architecture and custom hooks
- */
-
 import { useMemo, useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import Header from './components/Header';
@@ -15,58 +10,27 @@ import { useGameState, useLevelContent } from './hooks';
 import { containsImportant } from './utils/cssValidator';
 import CodeDisplay from './components/CodeDisplay';
 
-// ============================================================================
-// MAIN APPLICATION COMPONENT
-// ============================================================================
-
-/**
- * Main application component providing the Center Div Game interface
- * Uses custom hooks for clean separation of concerns
- */
 function App() {
-  // ============================================================================
-  // HOOK INTEGRATION
-  // ============================================================================
-
-  // Game state management
   const gameState = useGameState();
 
-  // Modal state for !important detection
   const [showImportantModal, setShowImportantModal] = useState(false);
 
-  // Current level reference
   const currentLevel = useMemo(
     () => levels[gameState.currentLevel],
     [gameState.currentLevel]
   );
 
-  // Level content management
   const levelContent = useLevelContent(currentLevel);
 
-  // Completion checking (removed unused variable)
-
-  // ============================================================================
-  // EVENT HANDLERS
-  // ============================================================================
-
-  /**
-   * Handles level completion checking with enhanced feedback
-   */
   const handleCheckCompletion = () => {
     gameState.checkCompletion(currentLevel, 'preview');
   };
 
-  /**
-   * Handles revealing the answer for the current level
-   */
   const handleRevealAnswer = () => {
     gameState.revealAnswer();
     levelContent.setSolutionCSS(currentLevel);
   };
 
-  /**
-   * Handles level selection with content reset
-   */
   const handleLevelChange = (newLevelIndex: number) => {
     if (newLevelIndex >= 0 && newLevelIndex < levels.length) {
       gameState.changeLevel(newLevelIndex);
@@ -74,9 +38,6 @@ function App() {
     }
   };
 
-  /**
-   * Handles moving to the next level
-   */
   const handleNextLevel = () => {
     gameState.nextLevel(levels.length);
     if (gameState.currentLevel < levels.length - 1) {
@@ -84,17 +45,11 @@ function App() {
     }
   };
 
-  /**
-   * Handles resetting all progress
-   */
   const handleResetProgress = () => {
     gameState.resetProgress();
     levelContent.resetForLevel(levels[0]);
   };
 
-  /**
-   * Handles CSS changes with validation and !important detection
-   */
   const handleCSSChange = (newEditableCSS: string) => {
     // Check for !important usage first
     if (containsImportant(newEditableCSS)) {
@@ -112,9 +67,6 @@ function App() {
     levelContent.updateCSS(newEditableCSS);
   };
 
-  /**
-   * Handles closing the !important modal
-   */
   const handleCloseImportantModal = () => {
     setShowImportantModal(false);
   };

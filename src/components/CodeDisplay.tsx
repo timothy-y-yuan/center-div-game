@@ -1,8 +1,3 @@
-/**
- * @fileoverview Simple code display component for showing non-editable code
- * Shows HTML and CSS with syntax highlighting using react-syntax-highlighter
- */
-
 import { memo } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { useTheme } from '../hooks/useTheme';
@@ -12,10 +7,6 @@ interface CodeDisplayProps {
   level: Level;
 }
 
-/**
- * Simple code display component for non-editable HTML and CSS
- * Uses react-syntax-highlighter with Prism for syntax highlighting
- */
 const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
   const { actualTheme } = useTheme();
 

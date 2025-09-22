@@ -87,7 +87,6 @@ export function useGameState(): UseGameStateResult {
     setShowHint(prev => !prev);
   }, []);
 
-  // Reveals the answer and marks level as failed
   const revealAnswer = useCallback(() => {
     const levelId = createLevelId(currentLevel);
     const newFailedLevels = new Set(failedLevels);
@@ -108,7 +107,6 @@ export function useGameState(): UseGameStateResult {
     changeLevel(0);
   }, [changeLevel]);
 
-  // Checks if the current level is completed using the game state service
   const checkCompletion = useCallback(
     (level: Level, iframeId: string) => {
       const result = gameStateService.checkLevelCompletion(level, iframeId);

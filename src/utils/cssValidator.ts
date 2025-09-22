@@ -6,10 +6,6 @@ import type {
 } from '../types';
 import { createValidationError } from './typeHelpers';
 
-/**
- * Checks if the given CSS contains any !important declarations
- * Returns true if !important is found anywhere in the CSS
- */
 export function containsImportant(css: string): boolean {
   // Remove comments first to avoid false positives
   const cleanCSS = css.replace(/\/\*[\s\S]*?\*\//g, '');
@@ -18,10 +14,6 @@ export function containsImportant(css: string): boolean {
   return /!\s*important/i.test(cleanCSS);
 }
 
-/**
- * Parses CSS text into a simple object structure
- * Returns: { selector: { property: value } }
- */
 export function parseCSS(css: string): Record<string, Record<string, string>> {
   const result: Record<string, Record<string, string>> = {};
 
@@ -56,9 +48,6 @@ export function parseCSS(css: string): Record<string, Record<string, string>> {
   return result;
 }
 
-/**
- * Validates user CSS against level constraints
- */
 export function validateUserCSS(
   userCSS: string,
   level: Level
@@ -141,9 +130,6 @@ export function validateUserCSS(
   }
 }
 
-/**
- * Generates the complete CSS by combining locked CSS with user's editable CSS
- */
 export function generateCompleteCSS(
   userEditableCSS: string,
   level: Level
@@ -174,9 +160,6 @@ export function generateCompleteCSS(
   return result.join('\n');
 }
 
-/**
- * Gets the initial editable CSS that the user starts with
- */
 export function getInitialEditableCSS(level: Level): string {
   const result: string[] = [];
 
@@ -192,9 +175,6 @@ export function getInitialEditableCSS(level: Level): string {
   return result.join('\n').trim();
 }
 
-/**
- * Generates a visual representation showing what's locked vs editable
- */
 export function generateEditableTemplate(level: Level): string {
   const result: string[] = [];
 

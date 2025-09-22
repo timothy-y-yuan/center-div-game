@@ -118,7 +118,6 @@ export const THEME_CONFIG = {
     LIGHT: '',
     DARK: 'dark',
   },
-  // Media query for detecting system dark mode preference
   DARK_MODE_MEDIA_QUERY: '(prefers-color-scheme: dark)',
 } as const;
 
@@ -130,7 +129,6 @@ export const THEME_CONFIG = {
  * Performance optimization configuration
  */
 export const PERFORMANCE_CONFIG = {
-  // Debounce delay for CSS validation to avoid excessive API calls during typing
   CSS_VALIDATION_DEBOUNCE_MS: 300,
   RESIZE_THROTTLE_MS: 100,
   MAX_VALIDATION_MESSAGES: 10,
