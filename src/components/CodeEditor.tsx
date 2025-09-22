@@ -5,7 +5,7 @@
 import Editor, { type Monaco } from '@monaco-editor/react';
 import { memo } from 'react';
 import { useTheme } from '../hooks/useTheme';
-import type { CSSValidationResult, Level } from '../types';
+import type { CSSValidationResult } from '../types';
 import type { editor } from 'monaco-editor';
 
 interface CodeEditorProps {
@@ -16,7 +16,6 @@ interface CodeEditorProps {
   emoji: string;
   headerClass: string;
   readOnly?: boolean;
-  level?: Level;
   validation?: CSSValidationResult;
 }
 
@@ -51,13 +50,12 @@ const CodeEditor = memo(function CodeEditor({
   emoji,
   headerClass,
   readOnly = false,
-  level,
   validation,
 }: CodeEditorProps) {
   const { actualTheme } = useTheme();
 
   return (
-    <>
+    <div className='h-full flex flex-col'>
       <div className={`${headerClass} p-4`}>
         <h3 className='font-bold text-lg flex items-center gap-3'>
           <span className='text-2xl'>{emoji}</span>
@@ -71,36 +69,6 @@ const CodeEditor = memo(function CodeEditor({
             {title}
           </span>
         </h3>
-
-        {/* Show constraints for CSS editor */}
-        {level && language === 'css' && (
-          <div className='mt-2 text-sm'>
-            <div className='p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800'>
-              <div className='font-medium text-blue-800 dark:text-blue-200 mb-1'>
-                Constraints:
-              </div>
-              <div className='text-blue-700 dark:text-blue-300'>
-                {level.constraints}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Show validation errors */}
-        {validation && !validation.isValid && (
-          <div className='mt-2 text-sm'>
-            <div className='p-2 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800'>
-              <div className='font-medium text-red-800 dark:text-red-200 mb-1'>
-                Validation Errors:
-              </div>
-              {validation.errors.map((error, index) => (
-                <div key={index} className='text-red-700 dark:text-red-300'>
-                  • {error.message}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
       <div className='flex-1'>
         <Editor
@@ -127,7 +95,21 @@ const CodeEditor = memo(function CodeEditor({
           }}
         />
       </div>
-    </>
+      {/* Show validation errors at bottom */}
+      {validation && !validation.isValid && (
+        <div className='px-4 py-2 border-t border-red-300/40 dark:border-red-400/30 bg-red-50/50 dark:bg-red-500/10'>
+          {validation.errors.map((error, index) => (
+            <div
+              key={index}
+              className='text-xs text-red-700 dark:text-red-300 flex items-center gap-1'
+            >
+              <span className='w-1 h-1 bg-red-500 dark:bg-red-400 rounded-full flex-shrink-0'></span>
+              {error.message}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 });
 
