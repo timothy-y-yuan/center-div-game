@@ -102,7 +102,10 @@ const ConfettiEffect = memo(function ConfettiEffect({
   if (!isVisible || pieces.length === 0) return null;
 
   return createPortal(
-    <div className='fixed inset-0 pointer-events-none z-[10000] overflow-hidden'>
+    <div
+      className='fixed inset-0 pointer-events-none z-[10000] overflow-hidden'
+      data-testid='confetti-effect'
+    >
       {pieces.map(piece => (
         <div
           key={piece.id}
