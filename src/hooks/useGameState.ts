@@ -197,13 +197,8 @@ export function useGameState(): UseGameStateResult {
   const unlockSecretLevel = useCallback(() => {
     setIsSecretLevelUnlocked(true);
     storageService.setSecretLevelUnlocked(true);
-
-    setCurrentLevel(999);
-    setShowHint(false);
-    setIsCompleted(false);
-
-    storageService.setCurrentLevel(createLevelId(999));
-  }, []);
+    changeLevel(999);
+  }, [changeLevel]);
 
   // ============================================================================
   // RETURN INTERFACE
