@@ -4,8 +4,8 @@
  */
 
 import { useCallback } from 'react';
-import type { Level, LevelId } from '../types';
 import { gameStateService } from '../services/GameStateService';
+import type { Level } from '../types';
 
 // ============================================================================
 // HOOK INTERFACE
@@ -17,11 +17,6 @@ export interface UseLevelCompletionResult {
     level: Level,
     iframeId: string
   ) => CompletionCheckResult;
-
-  /** Gets completion requirements for a level */
-  readonly getLevelRequirements: (
-    levelId: LevelId
-  ) => import('../services/GameStateService').LevelRequirements;
 
   /** Gets appropriate completion message */
   readonly getCompletionMessage: (
@@ -116,13 +111,6 @@ export function useLevelCompletion(): UseLevelCompletionResult {
     []
   );
 
-  /**
-   * Gets the completion requirements for a specific level
-   */
-  const getLevelRequirements = useCallback((levelId: LevelId) => {
-    return gameStateService.getLevelRequirements(levelId);
-  }, []);
-
   // ============================================================================
   // MESSAGE GENERATION
   // ============================================================================
@@ -165,7 +153,6 @@ export function useLevelCompletion(): UseLevelCompletionResult {
 
   return {
     checkCompletion,
-    getLevelRequirements,
     getCompletionMessage,
     getFailureMessage,
     getPlayerTitle,

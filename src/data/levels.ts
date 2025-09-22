@@ -40,6 +40,10 @@ export const levels: Level[] = [
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: false,
+    },
     constraints: 'You can only modify the .target selector.',
     hint: 'Think about margins... what happens when you tell the left and right margins to figure themselves out? 🤔',
     solutionCSS: `.target {
@@ -80,6 +84,10 @@ export const levels: Level[] = [
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
+    },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
     },
     constraints: 'You can only modify the .container selector.',
     hint: 'The container needs to become flexible... think about how to justify content and align items when things get flexed 💪',
@@ -122,6 +130,10 @@ export const levels: Level[] = [
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
+    },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
     },
     constraints: 'You can only modify the .container selector.',
     hint: "Time to think in grids! There's a shorthand property that can place items exactly where you want them ⭐",
@@ -177,6 +189,10 @@ export const levels: Level[] = [
         allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
+    },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
     },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'Sometimes you need to break free from the normal flow. Position yourself halfway, then use a transformation to account for your own size 🚀',
@@ -245,6 +261,10 @@ export const levels: Level[] = [
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
+    },
     constraints:
       'You can modify .container, .container::before, and .target selectors.',
     hint: "Think old school! How do you center text? And what if your target wasn't a block? You might need a ghost friend to help with vertical alignment 👻",
@@ -311,6 +331,10 @@ export const levels: Level[] = [
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
+    },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'Before flexbox existed, how did table cells center their content? Make your container behave like one! 🔥',
     solutionCSS: `.container {
@@ -371,6 +395,10 @@ export const levels: Level[] = [
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
+    },
     constraints: 'You can modify both .container and .target selectors.',
     hint: "Math time! If you know your element's size, you can calculate exactly where 50% minus half your size lands ⚡",
     solutionCSS: `.container {
@@ -430,6 +458,10 @@ export const levels: Level[] = [
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
+    },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'What if you stretched your element to fill all sides, then let margins do the magic? Sometimes being everywhere means being centered 🌟',
     solutionCSS: `.container {
@@ -479,6 +511,10 @@ export const levels: Level[] = [
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
+    },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
     },
     constraints: 'You can only modify the .container selector.',
     hint: 'Multiple targets need organization! Think about direction and how to arrange them while keeping them centered as a group 🎪',
@@ -544,6 +580,10 @@ export const levels: Level[] = [
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
+    requirements: {
+      requiresHorizontalCentering: true,
+      requiresVerticalCentering: true,
+    },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'Final boss mode! Combine the power of grids with responsive sizing that clamps between boundaries. Add some shadow magic for style 🥷',
     solutionCSS: `.container {
@@ -607,6 +647,10 @@ div.container div.target {
       allowedProperties: [],
       initialEditableCSS: '  /* come on. just center me. */',
     },
+  },
+  requirements: {
+    requiresHorizontalCentering: true,
+    requiresVerticalCentering: true,
   },
   constraints: 'You can only modify the .target selector.',
   hint: 'Sometimes normal CSS rules get overruled by more specific selectors and inline styles. You might need to emphasize your declarations with extra authority! 💥',
