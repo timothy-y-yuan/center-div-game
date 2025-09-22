@@ -14,43 +14,18 @@ import { gameStateService } from '../services/GameStateService';
 // ============================================================================
 
 export interface UseGameStateResult {
-  /** Current level index */
   readonly currentLevel: number;
-
-  /** Whether the current level is completed */
   readonly isCompleted: boolean;
-
-  /** Whether hint panel is visible */
   readonly showHint: boolean;
-
-  /** Whether confetti animation should show */
   readonly showConfetti: boolean;
-
-  /** Set of completed level IDs */
   readonly completedLevels: ReadonlySet<LevelId>;
-
-  /** Set of failed level IDs */
   readonly failedLevels: ReadonlySet<LevelId>;
-
-  /** Changes to a specific level */
   readonly changeLevel: (levelIndex: number) => void;
-
-  /** Moves to the next level */
   readonly nextLevel: (totalLevels: number) => void;
-
-  /** Toggles hint visibility */
   readonly toggleHint: () => void;
-
-  /** Reveals the answer for current level */
   readonly revealAnswer: () => void;
-
-  /** Resets all progress data */
   readonly resetProgress: () => void;
-
-  /** Checks if current level is completed */
   readonly checkCompletion: (level: Level, iframeId: string) => void;
-
-  /** Clears confetti animation */
   readonly clearConfetti: () => void;
 }
 
@@ -60,7 +35,6 @@ export interface UseGameStateResult {
 
 /**
  * Custom hook for managing overall game state with persistence
- * @returns Game state and state management functions
  */
 export function useGameState(): UseGameStateResult {
   // Initialize state from storage
@@ -84,9 +58,6 @@ export function useGameState(): UseGameStateResult {
   // STATE MANAGEMENT FUNCTIONS
   // ============================================================================
 
-  /**
-   * Changes to a specific level with full state reset
-   */
   const changeLevel = useCallback(
     (levelIndex: number) => {
       const levelId = createLevelId(levelIndex);
@@ -103,9 +74,6 @@ export function useGameState(): UseGameStateResult {
     [completedLevels, failedLevels]
   );
 
-  /**
-   * Moves to the next level if available
-   */
   const nextLevel = useCallback(
     (totalLevels: number) => {
       if (currentLevel < totalLevels - 1) {
@@ -115,16 +83,11 @@ export function useGameState(): UseGameStateResult {
     [currentLevel, changeLevel]
   );
 
-  /**
-   * Toggles hint panel visibility
-   */
   const toggleHint = useCallback(() => {
     setShowHint(prev => !prev);
   }, []);
 
-  /**
-   * Reveals the answer and marks level as failed
-   */
+  // Reveals the answer and marks level as failed
   const revealAnswer = useCallback(() => {
     const levelId = createLevelId(currentLevel);
     const newFailedLevels = new Set(failedLevels);
@@ -137,9 +100,6 @@ export function useGameState(): UseGameStateResult {
     storageService.setFailedLevels(newFailedLevels);
   }, [currentLevel, failedLevels]);
 
-  /**
-   * Resets all progress and returns to first level
-   */
   const resetProgress = useCallback(() => {
     storageService.clearAllData();
 
@@ -148,9 +108,7 @@ export function useGameState(): UseGameStateResult {
     changeLevel(0);
   }, [changeLevel]);
 
-  /**
-   * Checks if the current level is completed using the game state service
-   */
+  // Checks if the current level is completed using the game state service
   const checkCompletion = useCallback(
     (level: Level, iframeId: string) => {
       const result = gameStateService.checkLevelCompletion(level, iframeId);
@@ -176,9 +134,6 @@ export function useGameState(): UseGameStateResult {
     [currentLevel, completedLevels, failedLevels, isCompleted]
   );
 
-  /**
-   * Clears the confetti animation
-   */
   const clearConfetti = useCallback(() => {
     setShowConfetti(false);
   }, []);

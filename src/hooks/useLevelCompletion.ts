@@ -12,46 +12,29 @@ import type { Level } from '../types';
 // ============================================================================
 
 export interface UseLevelCompletionResult {
-  /** Checks if the current level is completed */
   readonly checkCompletion: (
     level: Level,
     iframeId: string
   ) => CompletionCheckResult;
 
-  /** Gets appropriate completion message */
   readonly getCompletionMessage: (
     isCompleted: boolean,
     hintsUsed: boolean,
     answersRevealed: number
   ) => string;
 
-  /** Gets appropriate failure message */
   readonly getFailureMessage: (attemptNumber: number) => string;
 
-  /** Gets player title for completion count */
   readonly getPlayerTitle: (completedLevelsCount: number) => string;
 }
 
 export interface CompletionCheckResult {
-  /** Whether the level is completed */
   readonly isCompleted: boolean;
-
-  /** Whether horizontal centering requirement is met */
   readonly isHorizontallyCentered: boolean;
-
-  /** Whether vertical centering requirement is met */
   readonly isVerticallyCentered: boolean;
-
-  /** Distance from perfect horizontal center in pixels */
   readonly horizontalOffset: number;
-
-  /** Distance from perfect vertical center in pixels */
   readonly verticalOffset: number;
-
-  /** Human-readable feedback about the completion status */
   readonly feedback: string;
-
-  /** Raw element measurement data */
   readonly measurement: import('../services/GameStateService').ElementMeasurement;
 }
 
@@ -61,7 +44,6 @@ export interface CompletionCheckResult {
 
 /**
  * Custom hook for level completion logic
- * @returns Completion checking functions and utilities
  */
 export function useLevelCompletion(): UseLevelCompletionResult {
   // ============================================================================
@@ -115,9 +97,6 @@ export function useLevelCompletion(): UseLevelCompletionResult {
   // MESSAGE GENERATION
   // ============================================================================
 
-  /**
-   * Gets appropriate completion message based on performance
-   */
   const getCompletionMessage = useCallback(
     (
       isCompleted: boolean,
@@ -133,16 +112,10 @@ export function useLevelCompletion(): UseLevelCompletionResult {
     []
   );
 
-  /**
-   * Gets appropriate failure message based on attempt number
-   */
   const getFailureMessage = useCallback((attemptNumber: number): string => {
     return gameStateService.getFailureMessage(attemptNumber);
   }, []);
 
-  /**
-   * Gets player title based on completion progress
-   */
   const getPlayerTitle = useCallback((completedLevelsCount: number): string => {
     return gameStateService.getPlayerTitle(completedLevelsCount);
   }, []);
