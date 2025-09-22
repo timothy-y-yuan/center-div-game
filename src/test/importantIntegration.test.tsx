@@ -14,23 +14,6 @@ vi.mock('canvas-confetti', () => ({
   default: vi.fn(),
 }));
 
-// Mock monaco editor
-vi.mock('@monaco-editor/react', () => ({
-  default: ({
-    onChange,
-    value,
-  }: {
-    onChange?: (value: string) => void;
-    value?: string;
-  }) => (
-    <textarea
-      data-testid='monaco-editor'
-      value={value}
-      onChange={e => onChange?.(e.target.value)}
-    />
-  ),
-}));
-
 // Mock react-resizable-panels
 vi.mock('react-resizable-panels', () => ({
   Panel: ({ children }: { children: React.ReactNode }) => (
