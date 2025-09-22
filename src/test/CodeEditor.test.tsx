@@ -3,28 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import CodeEditor from '../components/CodeEditor';
 import { ThemeProvider } from '../contexts/ThemeProvider';
 
-// Mock Monaco Editor
 const mockOnChange = vi.fn();
-
-vi.mock('@monaco-editor/react', () => ({
-  default: ({
-    onChange,
-    value,
-    options,
-  }: {
-    onChange?: (value: string) => void;
-    value?: string;
-    options?: { readOnly?: boolean; language?: string };
-  }) => (
-    <textarea
-      data-testid='monaco-editor'
-      value={value}
-      onChange={e => onChange?.(e.target.value)}
-      readOnly={options?.readOnly}
-      placeholder={options?.language}
-    />
-  ),
-}));
 
 const renderWithTheme = (component: React.ReactElement) => {
   return render(<ThemeProvider>{component}</ThemeProvider>);
@@ -48,7 +27,7 @@ describe('CodeEditor Component', () => {
       />
     );
 
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument();
+    expect(screen.getByTestId('monaco-editor-css')).toBeInTheDocument();
     expect(
       screen.getByDisplayValue('.test { color: red; }')
     ).toBeInTheDocument();
@@ -56,7 +35,7 @@ describe('CodeEditor Component', () => {
     expect(screen.getByText('🎨')).toBeInTheDocument();
 
     // Test onChange functionality
-    const editor = screen.getByTestId('monaco-editor');
+    const editor = screen.getByTestId('monaco-editor-css');
     fireEvent.change(editor, { target: { value: '.new { color: blue; }' } });
     expect(mockOnChange).toHaveBeenCalledWith('.new { color: blue; }');
 
@@ -91,7 +70,7 @@ describe('CodeEditor Component', () => {
       />
     );
 
-    const editor = screen.getByTestId('monaco-editor');
+    const editor = screen.getByTestId('monaco-editor-html');
     expect(editor).toHaveAttribute('readonly');
 
     // Check title styling
@@ -120,7 +99,7 @@ describe('CodeEditor Component', () => {
       />
     );
 
-    const editor = screen.getByTestId('monaco-editor');
+    const editor = screen.getByTestId('monaco-editor-css');
     expect(editor).toHaveValue(multilineCSS);
 
     // Test rapid value changes

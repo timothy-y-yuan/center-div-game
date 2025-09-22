@@ -1,33 +1,9 @@
-/**
- * @fileoverview Integration tests with minimal mocking
- * Tests complete user workflow with real iframe and completion detection
- */
-
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import App from '../App';
 import { ThemeProvider } from '../contexts/ThemeProvider';
 import { levels } from '../data/levels';
-
-vi.mock('@monaco-editor/react', () => ({
-  default: ({
-    value,
-    onChange,
-    language,
-  }: {
-    value: string;
-    onChange?: (value: string) => void;
-    language: string;
-  }) => (
-    <textarea
-      data-testid={`monaco-editor-${language}`}
-      value={value}
-      onChange={e => onChange?.(e.target.value)}
-      style={{ width: '100%', height: '200px', fontFamily: 'monospace' }}
-    />
-  ),
-}));
 
 const renderWithTheme = (component: React.ReactElement) => {
   return render(<ThemeProvider>{component}</ThemeProvider>);

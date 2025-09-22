@@ -1,5 +1,31 @@
 import '@testing-library/jest-dom';
+import React from 'react';
 import { vi } from 'vitest';
+
+// Mock Monaco Editor globally for all tests
+vi.mock('@monaco-editor/react', () => ({
+  default: (props: {
+    language?: string;
+    onChange?: (value: string) => void;
+    value?: string;
+    options?: { readOnly?: boolean };
+  }) => {
+    const { language, onChange, value, options } = props;
+    const testId = `monaco-editor-${language || 'unknown'}`;
+
+    return React.createElement('textarea', {
+      'data-testid': testId,
+      value: value || '',
+      readOnly: options?.readOnly || false,
+      onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+        onChange?.(e.target.value),
+    });
+  },
+  loader: {
+    init: vi.fn(),
+    config: vi.fn(),
+  },
+}));
 
 // Mock localStorage with actual storage functionality
 const localStorageMock = (() => {
