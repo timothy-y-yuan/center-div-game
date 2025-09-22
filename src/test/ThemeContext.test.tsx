@@ -9,9 +9,9 @@ const TestComponent = () => {
 
   return (
     <div>
-      <div data-testid="theme">{theme}</div>
-      <div data-testid="actual-theme">{actualTheme}</div>
-      <div data-testid="system-theme">{systemTheme}</div>
+      <div data-testid='theme'>{theme}</div>
+      <div data-testid='actual-theme'>{actualTheme}</div>
+      <div data-testid='system-theme'>{systemTheme}</div>
       <button onClick={() => setTheme('light')}>Set Light</button>
       <button onClick={() => setTheme('dark')}>Set Dark</button>
       <button onClick={() => setTheme('system')}>Set System</button>
@@ -28,7 +28,7 @@ describe('ThemeContext', () => {
     // Mock matchMedia
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation((query) => ({
+      value: vi.fn().mockImplementation(query => ({
         matches: query === '(prefers-color-scheme: dark)',
         media: query,
         onchange: null,
@@ -53,7 +53,7 @@ describe('ThemeContext', () => {
     // Mock dark system preference
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation((query) => ({
+      value: vi.fn().mockImplementation(query => ({
         matches: query === '(prefers-color-scheme: dark)',
         media: query,
         onchange: null,
@@ -77,7 +77,7 @@ describe('ThemeContext', () => {
     // Mock light system preference
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation((query) => ({
+      value: vi.fn().mockImplementation(query => ({
         matches: false, // No match for dark mode
         media: query,
         onchange: null,
@@ -181,7 +181,7 @@ describe('ThemeContext', () => {
     // Mock light system preference
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation((query) => ({
+      value: vi.fn().mockImplementation(query => ({
         matches: false,
         media: query,
         onchange: null,
@@ -246,7 +246,7 @@ describe('ThemeContext', () => {
 
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation((query) => ({
+      value: vi.fn().mockImplementation(query => ({
         matches: false,
         media: query,
         onchange: null,

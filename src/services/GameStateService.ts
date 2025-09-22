@@ -94,7 +94,9 @@ export interface IGameStateService {
     hintsUsed: boolean,
     answersRevealed: number
   ): LevelProgress;
-  calculateOverallStats(levelProgress: Record<LevelId, LevelProgress>): ProgressStats;
+  calculateOverallStats(
+    levelProgress: Record<LevelId, LevelProgress>
+  ): ProgressStats;
   getPlayerTitle(completedLevelsCount: number): string;
   getCompletionMessage(
     isCompleted: boolean,
@@ -131,7 +133,8 @@ export class GameStateService implements IGameStateService {
       }
 
       const targetElement = iframe.contentDocument.querySelector('.target');
-      const containerElement = iframe.contentDocument.querySelector('.container');
+      const containerElement =
+        iframe.contentDocument.querySelector('.container');
 
       if (!targetElement || !containerElement) {
         return this.createInvalidMeasurement();
@@ -183,25 +186,37 @@ export class GameStateService implements IGameStateService {
         isVerticallyCentered: false,
         horizontalOffset: Infinity,
         verticalOffset: Infinity,
-        feedback: 'Unable to measure element positioning. Please check your HTML structure.',
+        feedback:
+          'Unable to measure element positioning. Please check your HTML structure.',
       };
     }
 
     const requirements = this.getLevelRequirements(level.id);
     const tolerance = UI_CONSTANTS.COMPLETION_TOLERANCE_PX;
 
-    const horizontalOffset = Math.abs(measurement.centerX - measurement.containerCenterX);
-    const verticalOffset = Math.abs(measurement.centerY - measurement.containerCenterY);
+    const horizontalOffset = Math.abs(
+      measurement.centerX - measurement.containerCenterX
+    );
+    const verticalOffset = Math.abs(
+      measurement.centerY - measurement.containerCenterY
+    );
 
     const isHorizontallyCentered = horizontalOffset <= tolerance;
     const isVerticallyCentered = verticalOffset <= tolerance;
 
     // Check level-specific requirements
-    const meetsHorizontalRequirement = !requirements.requiresHorizontalCentering || isHorizontallyCentered;
-    const meetsVerticalRequirement = !requirements.requiresVerticalCentering || isVerticallyCentered;
-    const meetsCustomRequirement = !requirements.customValidator || requirements.customValidator(measurement);
+    const meetsHorizontalRequirement =
+      !requirements.requiresHorizontalCentering || isHorizontallyCentered;
+    const meetsVerticalRequirement =
+      !requirements.requiresVerticalCentering || isVerticallyCentered;
+    const meetsCustomRequirement =
+      !requirements.customValidator ||
+      requirements.customValidator(measurement);
 
-    const isCompleted = meetsHorizontalRequirement && meetsVerticalRequirement && meetsCustomRequirement;
+    const isCompleted =
+      meetsHorizontalRequirement &&
+      meetsVerticalRequirement &&
+      meetsCustomRequirement;
 
     return {
       isCompleted,
@@ -233,7 +248,12 @@ export class GameStateService implements IGameStateService {
     horizontalOffset: number;
     verticalOffset: number;
   }): string {
-    const { isCompleted, isHorizontallyCentered, isVerticallyCentered, requirements } = params;
+    const {
+      isCompleted,
+      isHorizontallyCentered,
+      isVerticallyCentered,
+      requirements,
+    } = params;
 
     if (isCompleted) {
       return 'Perfect! The element is properly centered.';
@@ -242,7 +262,9 @@ export class GameStateService implements IGameStateService {
     const issues: string[] = [];
 
     if (requirements.requiresHorizontalCentering && !isHorizontallyCentered) {
-      issues.push(`horizontally off by ${Math.round(params.horizontalOffset)}px`);
+      issues.push(
+        `horizontally off by ${Math.round(params.horizontalOffset)}px`
+      );
     }
 
     if (requirements.requiresVerticalCentering && !isVerticallyCentered) {
@@ -296,7 +318,9 @@ export class GameStateService implements IGameStateService {
     answersRevealed: number
   ): LevelProgress {
     const now = createTimestampMs();
-    const completionTime = isCompleted ? calculateDuration(startTime, now) : null;
+    const completionTime = isCompleted
+      ? calculateDuration(startTime, now)
+      : null;
 
     return {
       completed: isCompleted,
@@ -315,24 +339,32 @@ export class GameStateService implements IGameStateService {
    * @param levelProgress - Progress data for all levels
    * @returns Aggregated statistics
    */
-  calculateOverallStats(levelProgress: Record<LevelId, LevelProgress>): ProgressStats {
+  calculateOverallStats(
+    levelProgress: Record<LevelId, LevelProgress>
+  ): ProgressStats {
     const progressArray = Object.values(levelProgress);
 
     const totalLevelsCompleted = progressArray.filter(p => p.completed).length;
     const totalAttempts = progressArray.reduce((sum, p) => sum + p.attempts, 0);
     const totalHintsUsed = progressArray.filter(p => p.hintsUsed).length;
-    const totalAnswersRevealed = progressArray.reduce((sum, p) => sum + p.answersRevealed, 0);
+    const totalAnswersRevealed = progressArray.reduce(
+      (sum, p) => sum + p.answersRevealed,
+      0
+    );
 
     // Calculate total play time and average completion time
-    const completedLevels = progressArray.filter(p => p.completed && p.completionTime !== null);
+    const completedLevels = progressArray.filter(
+      p => p.completed && p.completionTime !== null
+    );
     const totalPlayTime = completedLevels.reduce(
       (sum, p) => sum + (p.completionTime as number),
       0
     );
 
-    const averageCompletionTime = completedLevels.length > 0
-      ? createDurationMs(Math.round(totalPlayTime / completedLevels.length))
-      : createDurationMs(0);
+    const averageCompletionTime =
+      completedLevels.length > 0
+        ? createDurationMs(Math.round(totalPlayTime / completedLevels.length))
+        : createDurationMs(0);
 
     return {
       totalLevelsCompleted,
@@ -350,8 +382,13 @@ export class GameStateService implements IGameStateService {
    * @returns Player title string
    */
   getPlayerTitle(completedLevelsCount: number): string {
-    const clampedCount = Math.max(0, Math.min(completedLevelsCount, GAME_CONFIG.TOTAL_LEVELS));
-    return EDUCATIONAL_CONTENT.PLAYER_TITLES[clampedCount as keyof typeof EDUCATIONAL_CONTENT.PLAYER_TITLES];
+    const clampedCount = Math.max(
+      0,
+      Math.min(completedLevelsCount, GAME_CONFIG.TOTAL_LEVELS)
+    );
+    return EDUCATIONAL_CONTENT.PLAYER_TITLES[
+      clampedCount as keyof typeof EDUCATIONAL_CONTENT.PLAYER_TITLES
+    ];
   }
 
   /**

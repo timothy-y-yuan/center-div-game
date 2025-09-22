@@ -45,7 +45,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [actualTheme]);
 
   const toggleTheme = () => {
-    setTheme((current) => {
+    setTheme(current => {
       if (current === 'system')
         return systemTheme === 'dark' ? 'light' : 'dark';
       if (current === 'dark') return 'light';

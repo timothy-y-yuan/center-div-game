@@ -131,8 +131,8 @@ export function useProgress(): UseProgressResult {
   /**
    * Player title based on completion count
    */
-  const playerTitle = useMemo(() =>
-    gameStateService.getPlayerTitle(progressStats.totalLevelsCompleted),
+  const playerTitle = useMemo(
+    () => gameStateService.getPlayerTitle(progressStats.totalLevelsCompleted),
     [progressStats.totalLevelsCompleted]
   );
 
@@ -143,90 +143,99 @@ export function useProgress(): UseProgressResult {
   /**
    * Records successful completion of a level
    */
-  const recordLevelCompletion = useCallback((
-    levelId: LevelId,
-    hintsUsed: boolean,
-    answersRevealed: number,
-    startTime: TimestampMs
-  ) => {
-    if (!userProgress) return;
+  const recordLevelCompletion = useCallback(
+    (
+      levelId: LevelId,
+      hintsUsed: boolean,
+      answersRevealed: number,
+      startTime: TimestampMs
+    ) => {
+      if (!userProgress) return;
 
-    try {
-      const levelProgress = gameStateService.calculateLevelProgress(
-        levelId,
-        true, // isCompleted
-        startTime,
-        hintsUsed,
-        answersRevealed
-      );
+      try {
+        const levelProgress = gameStateService.calculateLevelProgress(
+          levelId,
+          true, // isCompleted
+          startTime,
+          hintsUsed,
+          answersRevealed
+        );
 
-      const updatedProgress = gameStateService.updateUserProgress(
-        userProgress,
-        levelId,
-        levelProgress
-      );
+        const updatedProgress = gameStateService.updateUserProgress(
+          userProgress,
+          levelId,
+          levelProgress
+        );
 
-      setUserProgress(updatedProgress);
-      storageService.setUserProgress(updatedProgress);
-    } catch (error) {
-      console.error('Failed to record level completion:', error);
-    }
-  }, [userProgress]);
+        setUserProgress(updatedProgress);
+        storageService.setUserProgress(updatedProgress);
+      } catch (error) {
+        console.error('Failed to record level completion:', error);
+      }
+    },
+    [userProgress]
+  );
 
   /**
    * Records an attempt on a level (increments attempt counter)
    */
-  const recordLevelAttempt = useCallback((levelId: LevelId) => {
-    if (!userProgress) return;
+  const recordLevelAttempt = useCallback(
+    (levelId: LevelId) => {
+      if (!userProgress) return;
 
-    try {
-      const existingProgress = userProgress.levels[levelId];
+      try {
+        const existingProgress = userProgress.levels[levelId];
 
-      if (existingProgress) {
-        // Increment attempt count
-        const updatedLevelProgress: LevelProgress = {
-          ...existingProgress,
-          attempts: existingProgress.attempts + 1,
-        };
+        if (existingProgress) {
+          // Increment attempt count
+          const updatedLevelProgress: LevelProgress = {
+            ...existingProgress,
+            attempts: existingProgress.attempts + 1,
+          };
 
-        const updatedProgress = gameStateService.updateUserProgress(
-          userProgress,
-          levelId,
-          updatedLevelProgress
-        );
+          const updatedProgress = gameStateService.updateUserProgress(
+            userProgress,
+            levelId,
+            updatedLevelProgress
+          );
 
-        setUserProgress(updatedProgress);
-        storageService.setUserProgress(updatedProgress);
-      } else {
-        // First attempt - create initial progress
-        const initialProgress = gameStateService.calculateLevelProgress(
-          levelId,
-          false, // not completed yet
-          createTimestampMs(),
-          false, // no hints used yet
-          0 // no answers revealed yet
-        );
+          setUserProgress(updatedProgress);
+          storageService.setUserProgress(updatedProgress);
+        } else {
+          // First attempt - create initial progress
+          const initialProgress = gameStateService.calculateLevelProgress(
+            levelId,
+            false, // not completed yet
+            createTimestampMs(),
+            false, // no hints used yet
+            0 // no answers revealed yet
+          );
 
-        const updatedProgress = gameStateService.updateUserProgress(
-          userProgress,
-          levelId,
-          initialProgress
-        );
+          const updatedProgress = gameStateService.updateUserProgress(
+            userProgress,
+            levelId,
+            initialProgress
+          );
 
-        setUserProgress(updatedProgress);
-        storageService.setUserProgress(updatedProgress);
+          setUserProgress(updatedProgress);
+          storageService.setUserProgress(updatedProgress);
+        }
+      } catch (error) {
+        console.error('Failed to record level attempt:', error);
       }
-    } catch (error) {
-      console.error('Failed to record level attempt:', error);
-    }
-  }, [userProgress]);
+    },
+    [userProgress]
+  );
 
   /**
    * Gets progress data for a specific level
    */
-  const getLevelProgress = useCallback((levelId: LevelId): LevelProgress | null => {
-    return userProgress?.levels[levelId] || null;
-  }, [userProgress]);
+  const getLevelProgress = useCallback(
+    (levelId: LevelId): LevelProgress | null => {
+      return userProgress?.levels[levelId] || null;
+    },
+    [userProgress]
+  );
 
   /**
    * Clears all progress data
@@ -246,7 +255,11 @@ export function useProgress(): UseProgressResult {
    */
   const exportProgress = useCallback((): string => {
     if (!userProgress) {
-      return JSON.stringify(gameStateService.createInitialUserProgress(), null, 2);
+      return JSON.stringify(
+        gameStateService.createInitialUserProgress(),
+        null,
+        2
+      );
     }
 
     return JSON.stringify(userProgress, null, 2);

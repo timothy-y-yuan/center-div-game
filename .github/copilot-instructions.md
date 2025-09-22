@@ -23,7 +23,7 @@ npm run dev
 npm run test:run
 # Expected: ✓ 12 test files, 174 tests passed
 
-# Run tests in watch mode for development  
+# Run tests in watch mode for development
 npm test
 ```
 
@@ -36,21 +36,31 @@ npm run build
 # Status: Known issue - development server works fine
 
 # Lint check (completes in ~2 seconds)
-npm run lint  
+npm run lint
 # Expected: 29 linting errors but doesn't prevent development
+
+# Format code with Prettier
+npm run format
+# Formats all files according to project standards
+
+# Check Prettier formatting
+npm run format:check
+# Verifies all files are properly formatted
 ```
 
 ## Working Effectively
 
 **Primary development workflow:**
+
 1. Start dev server: `npm run dev`
 2. Navigate to http://localhost:5173/
-3. Make changes in src/ directory  
+3. Make changes in src/ directory
 4. Test automatically with hot reload
 5. Run test suite: `npm run test:run`
 6. Commit changes
 
 **NEVER CANCEL timeouts:**
+
 - `npm install`: Set timeout to 60+ seconds
 - `npm run test:run`: Set timeout to 30+ seconds (actual: ~6 seconds)
 - `npm run dev`: Set timeout to 30+ seconds (actual: ~2 seconds)
@@ -68,11 +78,11 @@ npm run lint
 
 2. **Core Gameplay**: Test at least one complete level:
    - Click in CSS editor and add `margin: 0 auto;` to `.target`
-   - Click "🎯 Check" button  
+   - Click "🎯 Check" button
    - Verify completion detection and feedback
    - Test hint system with "💡 Hint" button
 
-3. **Level Navigation**: 
+3. **Level Navigation**:
    - Use level dropdown to switch between levels 1-10
    - Verify each level loads with correct constraints and content
    - Test settings dropdown functionality
@@ -82,13 +92,15 @@ npm run lint
 ## Repository Structure & Key Files
 
 **Core application files:**
+
 - `src/App.tsx` - Main game component with state management
-- `src/components/` - UI components (Header, CodeEditor, Preview, etc.)  
+- `src/components/` - UI components (Header, CodeEditor, Preview, etc.)
 - `src/data/levels.ts` - 10 level definitions with constraints and solutions
 - `src/test/` - 12 test files with 174 comprehensive tests
 - `src/types.ts` - TypeScript interfaces and types
 
 **Configuration files:**
+
 - `package.json` - Dependencies and npm scripts
 - `vite.config.ts` - Vite build configuration with Vitest setup
 - `tailwind.config.js` - Tailwind CSS v4 configuration
@@ -96,6 +108,7 @@ npm run lint
 - `tsconfig.json` - TypeScript project references
 
 **Critical locations for common changes:**
+
 - Game logic: `src/App.tsx` (lines 59-100 contain completion checking)
 - Level definitions: `src/data/levels.ts` (10 comprehensive levels)
 - Styling: `src/index.css` (Tailwind v4 imports and Monaco editor overrides)
@@ -103,17 +116,20 @@ npm run lint
 
 ## Known Issues & Workarounds
 
-**TypeScript Build Errors**: 
+**TypeScript Build Errors**:
+
 - Build fails with 73 TypeScript errors related to type mismatches
 - Workaround: Use `npm run dev` for development, build issues don't affect functionality
 - Development server works perfectly despite build errors
 
 **Font Loading Issues**:
+
 - External fonts (Google Fonts, jsDelivr) may be blocked in some environments
 - Monaco Editor uses fallback fonts automatically
 - Victor Mono font loads when available, defaults gracefully
 
 **Linting Warnings**:
+
 - 29 ESLint errors exist but don't prevent development
 - Run `npm run lint` to see current issues
 - Focus on functionality over linting perfection for development
@@ -121,26 +137,31 @@ npm run lint
 ## Technology Stack Details
 
 **Frontend Framework**: React 19 with TypeScript
+
 - Uses React 19 features and hooks
 - All components in `src/components/`
 - Context providers in `src/contexts/`
 
 **Build & Development**: Vite 5.4
+
 - Dev server: `npm run dev` → http://localhost:5173/
 - Preview: `npm run preview` → http://localhost:4173/ (requires successful build)
 - Hot module replacement enabled
 
-**Styling**: Tailwind CSS v4  
+**Styling**: Tailwind CSS v4
+
 - Import syntax: `@import "tailwindcss"` in `src/index.css`
 - Uses `@tailwindcss/vite` plugin
 - Custom glassmorphism effects with `.glass` utility
 
 **Testing**: Vitest with Testing Library
+
 - 174 tests across 12 files
 - Tests include component rendering, user interactions, and game logic
 - Setup file: `src/test/setup.ts` with localStorage and matchMedia mocks
 
 **Code Editor**: Monaco Editor (@monaco-editor/react)
+
 - Syntax highlighting and IntelliSense for HTML/CSS
 - Victor Mono font with ligatures when available
 - Real-time code validation and preview
@@ -150,11 +171,12 @@ npm run lint
 Before completing any change:
 
 1. **Run and pass**: `npm run test:run` (NEVER CANCEL - 6 seconds)
-2. **Start successfully**: `npm run dev` (NEVER CANCEL - 2 seconds)  
-3. **Load application**: Navigate to http://localhost:5173/
-4. **Test core functionality**: Complete at least level 1 of the game
-5. **Check responsive design**: Test different viewport sizes
-6. **Validate no regressions**: Ensure existing features still work
+2. **Check formatting**: `npm run format:check` (2 seconds)
+3. **Start successfully**: `npm run dev` (NEVER CANCEL - 2 seconds)
+4. **Load application**: Navigate to http://localhost:5173/
+5. **Test core functionality**: Complete at least level 1 of the game
+6. **Check responsive design**: Test different viewport sizes
+7. **Validate no regressions**: Ensure existing features still work
 
 ## Common Commands Reference
 
@@ -165,8 +187,10 @@ npm run dev                   # Start dev server (~2s)
 npm run test:run              # Run all tests (~6s) - NEVER CANCEL
 npm test                      # Run tests in watch mode
 npm run lint                  # Check linting (~2s)
+npm run format                # Format all files with Prettier (~3s)
+npm run format:check          # Check Prettier formatting (~2s)
 
-# Advanced testing  
+# Advanced testing
 npm run test:ui               # Vitest UI interface
 vitest --reporter=verbose     # Detailed test output
 
@@ -174,7 +198,7 @@ vitest --reporter=verbose     # Detailed test output
 npm run build                 # TypeScript + Vite build (~4s when failing)
 
 # Never run these without NEVER CANCEL warnings
-npm run build                 # Set timeout 60+ seconds  
+npm run build                 # Set timeout 60+ seconds
 npm run test:run              # Set timeout 30+ seconds
 npm install                   # Set timeout 60+ seconds
 ```
@@ -182,18 +206,21 @@ npm install                   # Set timeout 60+ seconds
 ## Development Philosophy
 
 **Always validate changes immediately:**
+
 - Code changes → run tests → start dev server → test manually
 - Component changes → check all related tests still pass
 - Type changes → expect build failures but verify dev server works
 - UI changes → take screenshot to document visual impact
 
 **Test-driven development:**
+
 - 174 comprehensive tests validate core functionality
 - Tests serve as living documentation of expected behavior
 - Run `npm run test:run` after every change
 - Fix failing tests before adding new features
 
 **Hot reload development:**
+
 - Make changes in `src/` directory
 - Changes appear immediately in browser at http://localhost:5173/
 - No need to restart dev server for most changes
@@ -204,10 +231,11 @@ npm install                   # Set timeout 60+ seconds
 **CRITICAL: This project maintains exceptionally high readability standards:**
 
 **Code Quality Requirements:**
+
 - All code must be written with obsessive attention to readability and clarity
 - TypeScript must be used properly with comprehensive type safety
 - Every function, interface, and complex logic must have clear, descriptive names
-- Comments should explain *why*, not *what* (the code should be self-documenting)
+- Comments should explain _why_, not _what_ (the code should be self-documenting)
 - Prefer longer, descriptive variable names over cryptic abbreviations
 - Break complex logic into smaller, well-named functions
 - Use consistent patterns and conventions throughout the codebase
@@ -218,13 +246,16 @@ Before any pull request can be approved, ALL of the following must pass:
 1. **Build Success**: `npm run build` must complete without errors
 2. **Test Coverage**: `npm run test:run` must pass all tests (174+ tests)
 3. **Linting**: `npm run lint` must pass without warnings
-4. **Type Checking**: TypeScript compilation must succeed
-5. **Manual Testing**: Core game functionality must be verified working
+4. **Code Formatting**: `npm run format:check` must pass without errors
+5. **Type Checking**: TypeScript compilation must succeed
+6. **Manual Testing**: Core game functionality must be verified working
 
 **Code Review Checklist:**
+
 - [ ] Code builds successfully (`npm run build`)
 - [ ] All tests pass (`npm run test:run`)
 - [ ] Linting passes (`npm run lint`)
+- [ ] Prettier formatting passes (`npm run format:check`)
 - [ ] Types are comprehensive and accurate
 - [ ] Variable and function names are descriptive and clear
 - [ ] Complex logic is broken into small, well-named functions
@@ -234,8 +265,10 @@ Before any pull request can be approved, ALL of the following must pass:
 
 **Automatic Rejection Criteria:**
 Pull requests will be automatically rejected if:
+
 - Build fails with TypeScript errors
 - Any tests fail or are broken
 - ESLint warnings exist
+- Prettier formatting violations exist (run `npm run format` to fix)
 - Code contains unclear variable names or functions
 - Code lacks type safety or uses `any` types inappropriately

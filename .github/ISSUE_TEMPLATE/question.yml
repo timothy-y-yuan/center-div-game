@@ -1,7 +1,7 @@
 name: ❓ Question
 description: Ask a question about the game or CSS centering techniques
-title: "[Question]: "
-labels: ["question", "needs-triage"]
+title: '[Question]: '
+labels: ['question', 'needs-triage']
 assignees: []
 
 body:
@@ -16,12 +16,12 @@ body:
       label: Question Type
       description: What type of question is this?
       options:
-        - "Game Usage/How-to"
-        - "CSS Centering Technique"
-        - "Level-Specific Help"
-        - "Technical/Development"
-        - "Educational Content"
-        - "General"
+        - 'Game Usage/How-to'
+        - 'CSS Centering Technique'
+        - 'Level-Specific Help'
+        - 'Technical/Development'
+        - 'Educational Content'
+        - 'General'
     validations:
       required: true
 
@@ -40,17 +40,17 @@ body:
       label: Related Level (if applicable)
       description: Is this question about a specific game level?
       options:
-        - "Not level-specific"
+        - 'Not level-specific'
         - "Level 1 - Baby's First Center"
-        - "Level 2 - Add Vertical Too"
-        - "Level 3 - Grid Power"
-        - "Level 4 - Absolute Beginner"
-        - "Level 5 - Text-Align Hack"
-        - "Level 6 - Flexbox Pro"
-        - "Level 7 - Grid Master"
-        - "Level 8 - Advanced Centering"
-        - "Level 9 - Complex Layout"
-        - "Level 10 - CSS Ninja"
+        - 'Level 2 - Add Vertical Too'
+        - 'Level 3 - Grid Power'
+        - 'Level 4 - Absolute Beginner'
+        - 'Level 5 - Text-Align Hack'
+        - 'Level 6 - Flexbox Pro'
+        - 'Level 7 - Grid Master'
+        - 'Level 8 - Advanced Centering'
+        - 'Level 9 - Complex Layout'
+        - 'Level 10 - CSS Ninja'
 
   - type: textarea
     id: context

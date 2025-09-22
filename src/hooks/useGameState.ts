@@ -64,8 +64,8 @@ export interface UseGameStateResult {
  */
 export function useGameState(): UseGameStateResult {
   // Initialize state from storage
-  const [currentLevel, setCurrentLevel] = useState(() =>
-    storageService.getCurrentLevel() as number
+  const [currentLevel, setCurrentLevel] = useState(
+    () => storageService.getCurrentLevel() as number
   );
 
   const [isCompleted, setIsCompleted] = useState(false);
@@ -87,27 +87,33 @@ export function useGameState(): UseGameStateResult {
   /**
    * Changes to a specific level with full state reset
    */
-  const changeLevel = useCallback((levelIndex: number) => {
-    const levelId = createLevelId(levelIndex);
+  const changeLevel = useCallback(
+    (levelIndex: number) => {
+      const levelId = createLevelId(levelIndex);
 
-    setCurrentLevel(levelIndex);
-    setShowHint(false);
-    setIsCompleted(
-      completedLevels.has(levelId) && !failedLevels.has(levelId)
-    );
+      setCurrentLevel(levelIndex);
+      setShowHint(false);
+      setIsCompleted(
+        completedLevels.has(levelId) && !failedLevels.has(levelId)
+      );
 
-    // Persist the change
-    storageService.setCurrentLevel(levelId);
-  }, [completedLevels, failedLevels]);
+      // Persist the change
+      storageService.setCurrentLevel(levelId);
+    },
+    [completedLevels, failedLevels]
+  );
 
   /**
    * Moves to the next level if available
    */
-  const nextLevel = useCallback((totalLevels: number) => {
-    if (currentLevel < totalLevels - 1) {
-      changeLevel(currentLevel + 1);
-    }
-  }, [currentLevel, changeLevel]);
+  const nextLevel = useCallback(
+    (totalLevels: number) => {
+      if (currentLevel < totalLevels - 1) {
+        changeLevel(currentLevel + 1);
+      }
+    },
+    [currentLevel, changeLevel]
+  );
 
   /**
    * Toggles hint panel visibility
@@ -145,27 +151,30 @@ export function useGameState(): UseGameStateResult {
   /**
    * Checks if the current level is completed using the game state service
    */
-  const checkCompletion = useCallback((level: Level, iframeId: string) => {
-    const result = gameStateService.checkLevelCompletion(level, iframeId);
-    const levelId = createLevelId(currentLevel);
+  const checkCompletion = useCallback(
+    (level: Level, iframeId: string) => {
+      const result = gameStateService.checkLevelCompletion(level, iframeId);
+      const levelId = createLevelId(currentLevel);
 
-    // Only allow completion if level wasn't previously failed
-    const canComplete = result.isCompleted && !failedLevels.has(levelId);
+      // Only allow completion if level wasn't previously failed
+      const canComplete = result.isCompleted && !failedLevels.has(levelId);
 
-    if (canComplete && !isCompleted) {
-      // Trigger confetti on first completion
-      setShowConfetti(true);
+      if (canComplete && !isCompleted) {
+        // Trigger confetti on first completion
+        setShowConfetti(true);
 
-      // Mark level as completed
-      const newCompletedLevels = new Set(completedLevels);
-      newCompletedLevels.add(levelId);
+        // Mark level as completed
+        const newCompletedLevels = new Set(completedLevels);
+        newCompletedLevels.add(levelId);
 
-      setCompletedLevels(newCompletedLevels);
-      storageService.setCompletedLevels(newCompletedLevels);
-    }
+        setCompletedLevels(newCompletedLevels);
+        storageService.setCompletedLevels(newCompletedLevels);
+      }
 
-    setIsCompleted(canComplete);
-  }, [currentLevel, completedLevels, failedLevels, isCompleted]);
+      setIsCompleted(canComplete);
+    },
+    [currentLevel, completedLevels, failedLevels, isCompleted]
+  );
 
   /**
    * Clears the confetti animation

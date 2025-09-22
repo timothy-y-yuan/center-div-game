@@ -28,6 +28,12 @@ npm run test:ui
 # Run tests once
 npm run test:run
 
+# Format code with Prettier
+npm run format
+
+# Check Prettier formatting
+npm run format:check
+
 # Run type checking (if available)
 npm run typecheck
 ```
@@ -123,8 +129,9 @@ Before any pull request can be approved, ALL of the following must pass:
 1. **Build Success**: `npm run build` must complete without errors
 2. **Test Coverage**: `npm run test:run` must pass all tests (174+ tests)
 3. **Linting**: `npm run lint` must pass without warnings
-4. **Type Checking**: TypeScript compilation must succeed
-5. **Manual Testing**: Core game functionality must be verified working
+4. **Code Formatting**: `npm run format:check` must pass without errors
+5. **Type Checking**: TypeScript compilation must succeed
+6. **Manual Testing**: Core game functionality must be verified working
 
 #### Essential Testing Workflow
 
@@ -137,10 +144,13 @@ npm run test:run
 # 2. Check linting
 npm run lint
 
-# 3. Verify build succeeds
+# 3. Check Prettier formatting
+npm run format:check
+
+# 4. Verify build succeeds
 npm run build
 
-# 4. Start dev server and test manually
+# 5. Start dev server and test manually
 npm run dev
 ```
 
@@ -172,6 +182,7 @@ Pull requests will be automatically rejected if:
 - Build fails with TypeScript errors
 - Any tests fail or are broken
 - ESLint warnings exist
+- Prettier formatting violations exist (run `npm run format` to fix)
 - Code contains unclear variable names or functions
 - Code lacks type safety or uses `any` types inappropriately
 
@@ -182,10 +193,13 @@ Monaco Editor uses Victor Mono with aggressive CSS overrides in `src/index.css`:
 ```css
 .monaco-editor .view-lines .view-line,
 .monaco-editor .view-lines .view-line span {
-  font-family: 'Victor Mono', 'SF Mono', Monaco, Menlo, 'Ubuntu Mono', Consolas,
+  font-family:
+    'Victor Mono', 'SF Mono', Monaco, Menlo, 'Ubuntu Mono', Consolas,
     'Courier New', monospace !important;
   font-variant-ligatures: normal !important;
-  font-feature-settings: 'liga' 1, 'calt' 1 !important;
+  font-feature-settings:
+    'liga' 1,
+    'calt' 1 !important;
 }
 ```
 

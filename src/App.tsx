@@ -95,16 +95,20 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-main text-gray-900 dark:text-white flex flex-col relative overflow-hidden">
+    <div className='h-screen bg-main text-gray-900 dark:text-white flex flex-col relative overflow-hidden'>
       {/* Background decoration */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-orb-blue rounded-full"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orb-pink rounded-full"></div>
+      <div className='absolute top-0 left-1/4 w-96 h-96 bg-orb-blue rounded-full'></div>
+      <div className='absolute bottom-0 right-1/4 w-96 h-96 bg-orb-pink rounded-full'></div>
 
       <Header
         levels={levels}
         currentLevelIndex={gameState.currentLevel}
-        completedLevels={new Set(Array.from(gameState.completedLevels).map(id => id as number))}
-        failedLevels={new Set(Array.from(gameState.failedLevels).map(id => id as number))}
+        completedLevels={
+          new Set(Array.from(gameState.completedLevels).map(id => id as number))
+        }
+        failedLevels={
+          new Set(Array.from(gameState.failedLevels).map(id => id as number))
+        }
         showHint={gameState.showHint}
         onToggleHint={gameState.toggleHint}
         onCheck={handleCheckCompletion}
@@ -114,36 +118,36 @@ function App() {
         onNextLevel={handleNextLevel}
       />
 
-      <div className="flex-1 relative z-10 p-4">
-        <PanelGroup direction="horizontal" className="h-full">
+      <div className='flex-1 relative z-10 p-4'>
+        <PanelGroup direction='horizontal' className='h-full'>
           <Panel defaultSize={50} minSize={30}>
-            <div className="h-full flex flex-col glass rounded-2xl overflow-hidden mr-2">
-              <PanelGroup direction="vertical">
+            <div className='h-full flex flex-col glass rounded-2xl overflow-hidden mr-2'>
+              <PanelGroup direction='vertical'>
                 <Panel defaultSize={50} minSize={30}>
-                  <div className="h-full flex flex-col">
+                  <div className='h-full flex flex-col'>
                     <CodeDisplay
                       level={currentLevel}
-                      title="Given Code"
-                      emoji="📋"
-                      headerClass="header-html"
+                      title='Given Code'
+                      emoji='📋'
+                      headerClass='header-html'
                     />
                   </div>
                 </Panel>
 
-                <PanelResizeHandle className="h-2 bg-gray-300 dark:bg-slate-800 bg-opacity-20 hover:bg-opacity-40 transition-all duration-300 cursor-row-resize flex items-center justify-center group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                  <div className="w-8 h-0.5 bg-gray-400 dark:bg-slate-500 bg-opacity-60 group-hover:bg-blue-400 group-hover:bg-opacity-80 rounded-full transition-all duration-300 relative z-10"></div>
+                <PanelResizeHandle className='h-2 bg-gray-300 dark:bg-slate-800 bg-opacity-20 hover:bg-opacity-40 transition-all duration-300 cursor-row-resize flex items-center justify-center group relative'>
+                  <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300'></div>
+                  <div className='w-8 h-0.5 bg-gray-400 dark:bg-slate-500 bg-opacity-60 group-hover:bg-blue-400 group-hover:bg-opacity-80 rounded-full transition-all duration-300 relative z-10'></div>
                 </PanelResizeHandle>
 
                 <Panel defaultSize={50} minSize={25}>
-                  <div className="h-full flex flex-col">
+                  <div className='h-full flex flex-col'>
                     <CodeEditor
                       value={levelContent.editableCSS}
-                      language="css"
+                      language='css'
                       onChange={handleCSSChange}
-                      title="Your Code"
-                      emoji="✏️"
-                      headerClass="header-css"
+                      title='Your Code'
+                      emoji='✏️'
+                      headerClass='header-css'
                       level={currentLevel}
                       validation={levelContent.cssValidation}
                     />
@@ -153,9 +157,9 @@ function App() {
             </div>
           </Panel>
 
-          <PanelResizeHandle className="w-3 bg-gray-300 dark:bg-slate-800 bg-opacity-20 hover:bg-opacity-40 transition-all duration-300 cursor-col-resize flex items-center justify-center group relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-            <div className="h-8 w-0.5 bg-gray-400 dark:bg-slate-500 bg-opacity-60 group-hover:bg-blue-400 group-hover:bg-opacity-80 rounded-full transition-all duration-300 relative z-10"></div>
+          <PanelResizeHandle className='w-3 bg-gray-300 dark:bg-slate-800 bg-opacity-20 hover:bg-opacity-40 transition-all duration-300 cursor-col-resize flex items-center justify-center group relative'>
+            <div className='absolute inset-0 bg-gradient-to-b from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300'></div>
+            <div className='h-8 w-0.5 bg-gray-400 dark:bg-slate-500 bg-opacity-60 group-hover:bg-blue-400 group-hover:bg-opacity-80 rounded-full transition-all duration-300 relative z-10'></div>
           </PanelResizeHandle>
 
           <Panel defaultSize={50} minSize={30}>
@@ -175,7 +179,7 @@ function App() {
         onComplete={gameState.clearConfetti}
       />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

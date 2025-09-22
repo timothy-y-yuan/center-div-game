@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -15,27 +15,27 @@ jobs:
   test:
     name: Test Suite
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [22]
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        
+
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Run tests
         run: npm run test:run
-        
+
       - name: Upload test coverage
         uses: codecov/codecov-action@v5
         if: matrix.node-version == 22
@@ -45,44 +45,47 @@ jobs:
   lint:
     name: Code Quality
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Run ESLint
         run: npm run lint
+
+      - name: Check Prettier formatting
+        run: npm run format:check
 
   build:
     name: Build Application
     runs-on: ubuntu-latest
     needs: [test]
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build application
         run: npm run build
-        
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         if: success()
@@ -96,42 +99,42 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test, build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    
+
     # Grant GITHUB_TOKEN permissions to deploy to Pages
     permissions:
       contents: read
       pages: write
       id-token: write
-    
+
     # Deploy to the github-pages environment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build for production
         run: npm run build
-        
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        
+
       - name: Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist/
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -139,24 +142,24 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        
+
       - name: Run npm audit
         run: |
           npm audit --audit-level moderate || echo "Security vulnerabilities found but not blocking CI"
-          
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -165,7 +168,7 @@ jobs:
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
-          
+
       - name: Upload Trivy scan results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         if: always()

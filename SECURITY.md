@@ -4,10 +4,10 @@
 
 We release patches for security vulnerabilities in the following versions:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| Latest  | ✅ Yes             |
-| < Latest| ❌ No              |
+| Version  | Supported |
+| -------- | --------- |
+| Latest   | ✅ Yes    |
+| < Latest | ❌ No     |
 
 ## Reporting a Vulnerability
 
@@ -53,6 +53,7 @@ Given that this is a client-side educational game, relevant security concerns in
 ### 🕐 Response Timeline
 
 We will acknowledge receipt of your vulnerability report within:
+
 - **48 hours** for critical vulnerabilities
 - **1 week** for non-critical vulnerabilities
 

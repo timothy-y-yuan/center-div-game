@@ -1,7 +1,7 @@
 name: 🐛 Bug Report
 description: Report a bug or issue with the game
-title: "[Bug]: "
-labels: ["bug", "needs-triage"]
+title: '[Bug]: '
+labels: ['bug', 'needs-triage']
 assignees: []
 
 body:
@@ -38,17 +38,17 @@ body:
       description: Which level were you playing when this happened?
       options:
         - "Level 1 - Baby's First Center"
-        - "Level 2 - Add Vertical Too"
-        - "Level 3 - Grid Power"
-        - "Level 4 - Absolute Beginner"
-        - "Level 5 - Text-Align Hack"
-        - "Level 6 - Flexbox Pro"
-        - "Level 7 - Grid Master"
-        - "Level 8 - Advanced Centering"
-        - "Level 9 - Complex Layout"
-        - "Level 10 - CSS Ninja"
-        - "All levels"
-        - "Not level-specific"
+        - 'Level 2 - Add Vertical Too'
+        - 'Level 3 - Grid Power'
+        - 'Level 4 - Absolute Beginner'
+        - 'Level 5 - Text-Align Hack'
+        - 'Level 6 - Flexbox Pro'
+        - 'Level 7 - Grid Master'
+        - 'Level 8 - Advanced Centering'
+        - 'Level 9 - Complex Layout'
+        - 'Level 10 - CSS Ninja'
+        - 'All levels'
+        - 'Not level-specific'
 
   - type: dropdown
     id: browser

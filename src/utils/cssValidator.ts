@@ -1,4 +1,9 @@
-import type { Level, CSSValidationResult, ValidationMessage, CSSProperty } from '../types';
+import type {
+  Level,
+  CSSValidationResult,
+  ValidationMessage,
+  CSSProperty,
+} from '../types';
 import { createValidationError } from './typeHelpers';
 
 /**
@@ -9,7 +14,10 @@ export function parseCSS(css: string): Record<string, Record<string, string>> {
   const result: Record<string, Record<string, string>> = {};
 
   // Remove comments and normalize whitespace
-  const cleanCSS = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').trim();
+  const cleanCSS = css
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 
   // Split into selector blocks
   const blocks = cleanCSS.split('}').filter(block => block.trim());
@@ -54,29 +62,38 @@ export function validateUserCSS(
       const editableConfig = level.editableSelectors[selector];
 
       if (!editableConfig) {
-        errors.push(createValidationError(
-          `Selector "${selector}" is not allowed to be modified in this level.`,
-          { selector }
-        ));
+        errors.push(
+          createValidationError(
+            `Selector "${selector}" is not allowed to be modified in this level.`,
+            { selector }
+          )
+        );
         continue;
       }
 
       // Check each property
-      for (const [property,] of Object.entries(properties)) {
-        const isLocked = editableConfig.lockedProperties.includes(property as CSSProperty);
-        const isAllowed = editableConfig.allowedProperties.includes(property as CSSProperty) ||
-                         editableConfig.allowedProperties.includes('*');
+      for (const [property] of Object.entries(properties)) {
+        const isLocked = editableConfig.lockedProperties.includes(
+          property as CSSProperty
+        );
+        const isAllowed =
+          editableConfig.allowedProperties.includes(property as CSSProperty) ||
+          editableConfig.allowedProperties.includes('*');
 
         if (isLocked) {
-          errors.push(createValidationError(
-            `Property "${property}" in "${selector}" cannot be modified.`,
-            { selector, property }
-          ));
+          errors.push(
+            createValidationError(
+              `Property "${property}" in "${selector}" cannot be modified.`,
+              { selector, property }
+            )
+          );
         } else if (!isAllowed) {
-          errors.push(createValidationError(
-            `Property "${property}" is not allowed in "${selector}" for this level.`,
-            { selector, property }
-          ));
+          errors.push(
+            createValidationError(
+              `Property "${property}" is not allowed in "${selector}" for this level.`,
+              { selector, property }
+            )
+          );
         }
       }
     }
@@ -85,14 +102,14 @@ export function validateUserCSS(
       isValid: errors.length === 0,
       errors,
       warnings,
-      info: []
+      info: [],
     };
   } catch {
     return {
       isValid: false,
       errors: [createValidationError('Invalid CSS syntax')],
       warnings,
-      info: []
+      info: [],
     };
   }
 }
@@ -100,7 +117,10 @@ export function validateUserCSS(
 /**
  * Generates the complete CSS by combining locked CSS with user's editable CSS
  */
-export function generateCompleteCSS(userEditableCSS: string, level: Level): string {
+export function generateCompleteCSS(
+  userEditableCSS: string,
+  level: Level
+): string {
   const result: string[] = [];
 
   // Add locked CSS first
@@ -109,7 +129,7 @@ export function generateCompleteCSS(userEditableCSS: string, level: Level): stri
   // Parse user CSS and add to appropriate selectors
   const parsedUserCSS = parseCSS(userEditableCSS);
 
-  for (const [selector,] of Object.entries(level.editableSelectors)) {
+  for (const [selector] of Object.entries(level.editableSelectors)) {
     const userProperties = parsedUserCSS[selector] || {};
 
     if (Object.keys(userProperties).length > 0) {
@@ -166,8 +186,13 @@ export function generateEditableTemplate(level: Level): string {
       result.push(config.initialEditableCSS);
     } else {
       result.push('  /* Add your CSS properties here */');
-      if (config.allowedProperties.length > 0 && !config.allowedProperties.includes('*')) {
-        result.push(`  /* Allowed properties: ${config.allowedProperties.join(', ')} */`);
+      if (
+        config.allowedProperties.length > 0 &&
+        !config.allowedProperties.includes('*')
+      ) {
+        result.push(
+          `  /* Allowed properties: ${config.allowedProperties.join(', ')} */`
+        );
       }
     }
     result.push('}');

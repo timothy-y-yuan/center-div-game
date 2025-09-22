@@ -17,9 +17,9 @@ vi.mock('@monaco-editor/react', () => ({
     options?: { readOnly?: boolean; language?: string };
   }) => (
     <textarea
-      data-testid="monaco-editor"
+      data-testid='monaco-editor'
       value={value}
-      onChange={(e) => onChange?.(e.target.value)}
+      onChange={e => onChange?.(e.target.value)}
       readOnly={options?.readOnly}
       placeholder={options?.language}
     />
@@ -38,12 +38,12 @@ describe('CodeEditor Component', () => {
   it('should render Monaco editor with HTML language', () => {
     renderWithTheme(
       <CodeEditor
-        language="html"
-        value="<div>test</div>"
+        language='html'
+        value='<div>test</div>'
         onChange={mockOnChange}
-        title="HTML"
-        emoji="📝"
-        headerClass="header-html"
+        title='HTML'
+        emoji='📝'
+        headerClass='header-html'
       />
     );
 
@@ -54,12 +54,12 @@ describe('CodeEditor Component', () => {
   it('should render Monaco editor with CSS language', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=".test { color: red; }"
+        language='css'
+        value='.test { color: red; }'
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -72,12 +72,12 @@ describe('CodeEditor Component', () => {
   it('should display the correct title', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS Editor"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS Editor'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -87,12 +87,12 @@ describe('CodeEditor Component', () => {
   it('should call onChange when editor content changes', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -105,12 +105,12 @@ describe('CodeEditor Component', () => {
   it('should render with HTML language and correct value', () => {
     renderWithTheme(
       <CodeEditor
-        language="html"
-        value="<div>test</div>"
+        language='html'
+        value='<div>test</div>'
         onChange={mockOnChange}
-        title="HTML"
-        emoji="📝"
-        headerClass="header-html"
+        title='HTML'
+        emoji='📝'
+        headerClass='header-html'
       />
     );
 
@@ -124,12 +124,12 @@ describe('CodeEditor Component', () => {
 
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -143,12 +143,12 @@ describe('CodeEditor Component', () => {
 
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -159,12 +159,12 @@ describe('CodeEditor Component', () => {
   it('should make editor read-only when readOnly prop is true', () => {
     renderWithTheme(
       <CodeEditor
-        language="html"
-        value="<div>test</div>"
+        language='html'
+        value='<div>test</div>'
         onChange={mockOnChange}
-        title="HTML"
-        emoji="📝"
-        headerClass="header-html"
+        title='HTML'
+        emoji='📝'
+        headerClass='header-html'
         readOnly={true}
       />
     );
@@ -176,12 +176,12 @@ describe('CodeEditor Component', () => {
   it('should not be read-only by default', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -192,12 +192,12 @@ describe('CodeEditor Component', () => {
   it('should have proper editor container styling', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -209,12 +209,12 @@ describe('CodeEditor Component', () => {
   it('should have proper title styling', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS Editor"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS Editor'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -225,12 +225,12 @@ describe('CodeEditor Component', () => {
   it('should handle empty value', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -246,12 +246,12 @@ describe('CodeEditor Component', () => {
 
     renderWithTheme(
       <CodeEditor
-        language="css"
+        language='css'
         value={multilineCSS}
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -264,12 +264,12 @@ describe('CodeEditor Component', () => {
   it('should render with correct emoji and title', () => {
     renderWithTheme(
       <CodeEditor
-        language="css"
-        value=""
+        language='css'
+        value=''
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -280,12 +280,12 @@ describe('CodeEditor Component', () => {
   it('should handle rapid value changes', () => {
     const { rerender } = renderWithTheme(
       <CodeEditor
-        language="css"
-        value="initial"
+        language='css'
+        value='initial'
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
@@ -293,12 +293,12 @@ describe('CodeEditor Component', () => {
     rerender(
       <ThemeProvider>
         <CodeEditor
-          language="css"
-          value="changed1"
+          language='css'
+          value='changed1'
           onChange={mockOnChange}
-          title="CSS"
-          emoji="🎨"
-          headerClass="header-css"
+          title='CSS'
+          emoji='🎨'
+          headerClass='header-css'
         />
       </ThemeProvider>
     );
@@ -306,12 +306,12 @@ describe('CodeEditor Component', () => {
     rerender(
       <ThemeProvider>
         <CodeEditor
-          language="css"
-          value="changed2"
+          language='css'
+          value='changed2'
           onChange={mockOnChange}
-          title="CSS"
-          emoji="🎨"
-          headerClass="header-css"
+          title='CSS'
+          emoji='🎨'
+          headerClass='header-css'
         />
       </ThemeProvider>
     );
@@ -322,24 +322,24 @@ describe('CodeEditor Component', () => {
   it('should handle language changes', () => {
     const { rerender } = renderWithTheme(
       <CodeEditor
-        language="css"
-        value=".test {}"
+        language='css'
+        value='.test {}'
         onChange={mockOnChange}
-        title="CSS"
-        emoji="🎨"
-        headerClass="header-css"
+        title='CSS'
+        emoji='🎨'
+        headerClass='header-css'
       />
     );
 
     rerender(
       <ThemeProvider>
         <CodeEditor
-          language="html"
-          value="<div></div>"
+          language='html'
+          value='<div></div>'
           onChange={mockOnChange}
-          title="HTML"
-          emoji="📝"
-          headerClass="header-html"
+          title='HTML'
+          emoji='📝'
+          headerClass='header-html'
         />
       </ThemeProvider>
     );

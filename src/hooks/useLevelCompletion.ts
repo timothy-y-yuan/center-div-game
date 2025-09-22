@@ -13,10 +13,15 @@ import { gameStateService } from '../services/GameStateService';
 
 export interface UseLevelCompletionResult {
   /** Checks if the current level is completed */
-  readonly checkCompletion: (level: Level, iframeId: string) => CompletionCheckResult;
+  readonly checkCompletion: (
+    level: Level,
+    iframeId: string
+  ) => CompletionCheckResult;
 
   /** Gets completion requirements for a level */
-  readonly getLevelRequirements: (levelId: LevelId) => import('../services/GameStateService').LevelRequirements;
+  readonly getLevelRequirements: (
+    levelId: LevelId
+  ) => import('../services/GameStateService').LevelRequirements;
 
   /** Gets appropriate completion message */
   readonly getCompletionMessage: (
@@ -71,44 +76,45 @@ export function useLevelCompletion(): UseLevelCompletionResult {
   /**
    * Checks if a level is completed and provides detailed feedback
    */
-  const checkCompletion = useCallback((
-    level: Level,
-    iframeId: string
-  ): CompletionCheckResult => {
-    try {
-      const result = gameStateService.checkLevelCompletion(level, iframeId);
-      const measurement = gameStateService.measureElementCentering(iframeId);
+  const checkCompletion = useCallback(
+    (level: Level, iframeId: string): CompletionCheckResult => {
+      try {
+        const result = gameStateService.checkLevelCompletion(level, iframeId);
+        const measurement = gameStateService.measureElementCentering(iframeId);
 
-      return {
-        isCompleted: result.isCompleted,
-        isHorizontallyCentered: result.isHorizontallyCentered,
-        isVerticallyCentered: result.isVerticallyCentered,
-        horizontalOffset: result.horizontalOffset,
-        verticalOffset: result.verticalOffset,
-        feedback: result.feedback,
-        measurement,
-      };
-    } catch (error) {
-      console.error('Error checking level completion:', error);
+        return {
+          isCompleted: result.isCompleted,
+          isHorizontallyCentered: result.isHorizontallyCentered,
+          isVerticallyCentered: result.isVerticallyCentered,
+          horizontalOffset: result.horizontalOffset,
+          verticalOffset: result.verticalOffset,
+          feedback: result.feedback,
+          measurement,
+        };
+      } catch (error) {
+        console.error('Error checking level completion:', error);
 
-      // Return safe fallback result
-      return {
-        isCompleted: false,
-        isHorizontallyCentered: false,
-        isVerticallyCentered: false,
-        horizontalOffset: Infinity,
-        verticalOffset: Infinity,
-        feedback: 'Unable to check completion. Please ensure your HTML structure is correct.',
-        measurement: {
-          centerX: 0,
-          centerY: 0,
-          containerCenterX: 0,
-          containerCenterY: 0,
-          isValid: false,
-        },
-      };
-    }
-  }, []);
+        // Return safe fallback result
+        return {
+          isCompleted: false,
+          isHorizontallyCentered: false,
+          isVerticallyCentered: false,
+          horizontalOffset: Infinity,
+          verticalOffset: Infinity,
+          feedback:
+            'Unable to check completion. Please ensure your HTML structure is correct.',
+          measurement: {
+            centerX: 0,
+            centerY: 0,
+            containerCenterX: 0,
+            containerCenterY: 0,
+            isValid: false,
+          },
+        };
+      }
+    },
+    []
+  );
 
   /**
    * Gets the completion requirements for a specific level
@@ -124,13 +130,20 @@ export function useLevelCompletion(): UseLevelCompletionResult {
   /**
    * Gets appropriate completion message based on performance
    */
-  const getCompletionMessage = useCallback((
-    isCompleted: boolean,
-    hintsUsed: boolean,
-    answersRevealed: number
-  ): string => {
-    return gameStateService.getCompletionMessage(isCompleted, hintsUsed, answersRevealed);
-  }, []);
+  const getCompletionMessage = useCallback(
+    (
+      isCompleted: boolean,
+      hintsUsed: boolean,
+      answersRevealed: number
+    ): string => {
+      return gameStateService.getCompletionMessage(
+        isCompleted,
+        hintsUsed,
+        answersRevealed
+      );
+    },
+    []
+  );
 
   /**
    * Gets appropriate failure message based on attempt number

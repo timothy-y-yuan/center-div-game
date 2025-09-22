@@ -13,4 +13,7 @@ export { useProgress } from './useProgress';
 export type { UseProgressResult } from './useProgress';
 
 export { useLevelCompletion } from './useLevelCompletion';
-export type { UseLevelCompletionResult, CompletionCheckResult } from './useLevelCompletion';
+export type {
+  UseLevelCompletionResult,
+  CompletionCheckResult,
+} from './useLevelCompletion';
