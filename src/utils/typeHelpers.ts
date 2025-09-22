@@ -3,7 +3,7 @@
  * Provides safe constructors for branded types and validation utilities
  */
 
-import type { LevelId, TimestampMs, DurationMs, ValidationMessage, ValidationSeverity } from '../types';
+import type { LevelId, TimestampMs, DurationMs, ValidationMessage, ValidationSeverity, CSSProperty } from '../types';
 
 // ============================================================================
 // BRANDED TYPE CONSTRUCTORS
@@ -70,7 +70,7 @@ export function createValidationError(
     message,
     severity: 'error' as ValidationSeverity,
     selector: options.selector,
-    property: options.property,
+    property: options.property as CSSProperty | undefined,
     line: options.line,
   };
 }
@@ -93,7 +93,7 @@ export function createValidationWarning(
     message,
     severity: 'warning' as ValidationSeverity,
     selector: options.selector,
-    property: options.property,
+    property: options.property as CSSProperty | undefined,
     line: options.line,
   };
 }
@@ -116,7 +116,7 @@ export function createValidationInfo(
     message,
     severity: 'info' as ValidationSeverity,
     selector: options.selector,
-    property: options.property,
+    property: options.property as CSSProperty | undefined,
     line: options.line,
   };
 }

@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { parseCSS, validateUserCSS, generateCompleteCSS, getInitialEditableCSS } from '../utils/cssValidator'
 import type { Level } from '../types'
+import { createLevelId } from '../utils/typeHelpers'
 
 describe('CSS Validator Utilities', () => {
   const mockLevel: Level = {
-    id: 1,
+    id: createLevelId(1),
     title: "Test Level",
     description: "Test description",
     initialHTML: '<div class="container"><div class="target">Test</div></div>',
@@ -29,7 +30,9 @@ describe('CSS Validator Utilities', () => {
     constraints: "You can only add margin properties to .target",
     hint: "Test hint",
     solutionCSS: "Test solution",
-    explanation: "Test explanation"
+    explanation: "Test explanation",
+    difficulty: 'beginner',
+    tags: ['test', 'margin'],
   }
 
   describe('parseCSS', () => {
@@ -88,7 +91,7 @@ describe('CSS Validator Utilities', () => {
       const result = validateUserCSS(userCSS, mockLevel)
 
       expect(result.isValid).toBe(false)
-      expect(result.errors).toContain('Property "width" in ".target" cannot be modified.')
+      expect(result.errors.some(error => error.message === 'Property "width" in ".target" cannot be modified.')).toBe(true)
     })
 
     it('should reject disallowed properties', () => {
@@ -96,7 +99,7 @@ describe('CSS Validator Utilities', () => {
       const result = validateUserCSS(userCSS, mockLevel)
 
       expect(result.isValid).toBe(false)
-      expect(result.errors).toContain('Property "color" is not allowed in ".target" for this level.')
+      expect(result.errors.some(error => error.message === 'Property "color" is not allowed in ".target" for this level.')).toBe(true)
     })
 
     it('should reject unknown selectors', () => {
@@ -104,7 +107,7 @@ describe('CSS Validator Utilities', () => {
       const result = validateUserCSS(userCSS, mockLevel)
 
       expect(result.isValid).toBe(false)
-      expect(result.errors).toContain('Selector ".unknown" is not allowed to be modified in this level.')
+      expect(result.errors.some(error => error.message === 'Selector ".unknown" is not allowed to be modified in this level.')).toBe(true)
     })
   })
 

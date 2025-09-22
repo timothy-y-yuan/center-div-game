@@ -23,6 +23,7 @@ const mockProps = {
   onLevelSelect: vi.fn(),
   onRevealAnswer: vi.fn(),
   onResetProgress: vi.fn(),
+  onNextLevel: vi.fn(),
 }
 
 describe('Header Component', () => {

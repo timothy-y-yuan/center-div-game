@@ -7,15 +7,12 @@ import { UI_CONSTANTS, GAME_CONFIG, EDUCATIONAL_CONTENT } from '../constants';
 import type {
   LevelId,
   Level,
-  LevelState,
   TimestampMs,
-  DurationMs,
   UserProgress,
   LevelProgress,
   ProgressStats,
 } from '../types';
 import {
-  createLevelId,
   createTimestampMs,
   createDurationMs,
   calculateDuration,
@@ -292,7 +289,7 @@ export class GameStateService implements IGameStateService {
    * @returns Complete level progress data
    */
   calculateLevelProgress(
-    levelId: LevelId,
+    _levelId: LevelId,
     isCompleted: boolean,
     startTime: TimestampMs,
     hintsUsed: boolean,

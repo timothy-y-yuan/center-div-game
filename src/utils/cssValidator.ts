@@ -1,4 +1,5 @@
-import type { Level, EditableSelector, CSSValidationResult } from '../types';
+import type { Level, CSSValidationResult, ValidationMessage, CSSProperty } from '../types';
+import { createValidationError } from './typeHelpers';
 
 /**
  * Parses CSS text into a simple object structure
@@ -42,8 +43,8 @@ export function validateUserCSS(
   userCSS: string,
   level: Level
 ): CSSValidationResult {
-  const errors: string[] = [];
-  const warnings: string[] = [];
+  const errors: ValidationMessage[] = [];
+  const warnings: ValidationMessage[] = [];
 
   try {
     const parsedCSS = parseCSS(userCSS);
@@ -53,20 +54,29 @@ export function validateUserCSS(
       const editableConfig = level.editableSelectors[selector];
 
       if (!editableConfig) {
-        errors.push(`Selector "${selector}" is not allowed to be modified in this level.`);
+        errors.push(createValidationError(
+          `Selector "${selector}" is not allowed to be modified in this level.`,
+          { selector }
+        ));
         continue;
       }
 
       // Check each property
-      for (const [property, value] of Object.entries(properties)) {
-        const isLocked = editableConfig.lockedProperties.includes(property);
-        const isAllowed = editableConfig.allowedProperties.includes(property) ||
-                         editableConfig.allowedProperties.includes('*'); // Allow all
+      for (const [property,] of Object.entries(properties)) {
+        const isLocked = editableConfig.lockedProperties.includes(property as CSSProperty);
+        const isAllowed = editableConfig.allowedProperties.includes(property as CSSProperty) ||
+                         editableConfig.allowedProperties.includes('*');
 
         if (isLocked) {
-          errors.push(`Property "${property}" in "${selector}" cannot be modified.`);
+          errors.push(createValidationError(
+            `Property "${property}" in "${selector}" cannot be modified.`,
+            { selector, property }
+          ));
         } else if (!isAllowed) {
-          errors.push(`Property "${property}" is not allowed in "${selector}" for this level.`);
+          errors.push(createValidationError(
+            `Property "${property}" is not allowed in "${selector}" for this level.`,
+            { selector, property }
+          ));
         }
       }
     }
@@ -74,13 +84,15 @@ export function validateUserCSS(
     return {
       isValid: errors.length === 0,
       errors,
-      warnings
+      warnings,
+      info: []
     };
   } catch (error) {
     return {
       isValid: false,
-      errors: ['Invalid CSS syntax'],
-      warnings
+      errors: [createValidationError('Invalid CSS syntax')],
+      warnings,
+      info: []
     };
   }
 }
@@ -97,7 +109,7 @@ export function generateCompleteCSS(userEditableCSS: string, level: Level): stri
   // Parse user CSS and add to appropriate selectors
   const parsedUserCSS = parseCSS(userEditableCSS);
 
-  for (const [selector, editableConfig] of Object.entries(level.editableSelectors)) {
+  for (const [selector,] of Object.entries(level.editableSelectors)) {
     const userProperties = parsedUserCSS[selector] || {};
 
     if (Object.keys(userProperties).length > 0) {

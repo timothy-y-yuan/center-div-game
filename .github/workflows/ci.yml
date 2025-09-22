@@ -66,7 +66,7 @@ jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
-    needs: [test, lint]
+    needs: [test]
     
     steps:
       - name: Checkout code
@@ -83,7 +83,6 @@ jobs:
         
       - name: Build application
         run: npm run build
-        continue-on-error: true  # Known TypeScript build issues
         
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -96,7 +95,7 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    needs: [test, lint]
+    needs: [test, build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     # Grant GITHUB_TOKEN permissions to deploy to Pages
@@ -124,45 +123,7 @@ jobs:
         run: npm ci
         
       - name: Build for production
-        run: |
-          npm run build || echo "Build failed but continuing with dev server fallback"
-          if [ ! -d "dist" ]; then
-            echo "Creating fallback deployment message"
-            mkdir -p dist
-            cat > dist/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>Center Div Game - Build in Progress</title>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-                     text-align: center; padding: 50px; background: #f8fafc; }
-              .container { max-width: 600px; margin: 0 auto; }
-              .status { background: #fef3c7; color: #92400e; padding: 15px; border-radius: 8px; margin: 20px 0; }
-              a { color: #3b82f6; text-decoration: none; }
-              a:hover { text-decoration: underline; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <h1>🎯 Center Div Game</h1>
-              <div class="status">
-                <strong>🚧 Build in Progress</strong><br>
-                The production build is currently being optimized. 
-                The development version works perfectly!
-              </div>
-              <p>This interactive CSS centering game is built with React 19, TypeScript, and Vite.</p>
-              <p>
-                <strong>For developers:</strong> Run <code>npm run dev</code> to start the development server.<br>
-                <a href="https://github.com/timothy-y-yuan/center-div-game">View on GitHub</a>
-              </p>
-            </div>
-          </body>
-          </html>
-          EOF
-          fi
+        run: npm run build
         
       - name: Setup Pages
         uses: actions/configure-pages@v5
