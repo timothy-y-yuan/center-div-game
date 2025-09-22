@@ -73,16 +73,16 @@ const ConfettiEffect = memo(function ConfettiEffect({
 
     // Animation loop
     const animate = () => {
-      setPieces((currentPieces) =>
+      setPieces(currentPieces =>
         currentPieces
-          .map((piece) => ({
+          .map(piece => ({
             ...piece,
             x: piece.x + piece.vx,
             y: piece.y + piece.vy,
             rotation: piece.rotation + piece.rotationSpeed,
             vy: piece.vy + 0.1, // gravity
           }))
-          .filter((piece) => piece.y < window.innerHeight + 50)
+          .filter(piece => piece.y < window.innerHeight + 50)
       );
     };
 
@@ -102,11 +102,11 @@ const ConfettiEffect = memo(function ConfettiEffect({
   if (!isVisible || pieces.length === 0) return null;
 
   return createPortal(
-    <div className="fixed inset-0 pointer-events-none z-[10000] overflow-hidden">
-      {pieces.map((piece) => (
+    <div className='fixed inset-0 pointer-events-none z-[10000] overflow-hidden'>
+      {pieces.map(piece => (
         <div
           key={piece.id}
-          className="absolute"
+          className='absolute'
           style={{
             left: piece.x,
             top: piece.y,
@@ -118,7 +118,7 @@ const ConfettiEffect = memo(function ConfettiEffect({
             piece.emoji
           ) : (
             <div
-              className="rounded-sm"
+              className='rounded-sm'
               style={{
                 width: piece.size,
                 height: piece.size,

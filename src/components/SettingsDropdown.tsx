@@ -92,22 +92,22 @@ export default function SettingsDropdown({
       <button
         ref={buttonRef}
         onClick={handleToggle}
-        className="inline-flex items-center gap-3 bg-white bg-opacity-10 dark:bg-white dark:bg-opacity-10 rounded-lg px-4 py-2 glass hover:bg-opacity-20 dark:hover:bg-opacity-20 transition-all duration-200"
+        className='inline-flex items-center gap-3 bg-white bg-opacity-10 dark:bg-white dark:bg-opacity-10 rounded-lg px-4 py-2 glass hover:bg-opacity-20 dark:hover:bg-opacity-20 transition-all duration-200'
       >
-        <span className="text-lg">⚙️</span>
+        <span className='text-lg'>⚙️</span>
         <svg
           className={`w-4 h-4 text-gray-600 dark:text-gray-300 transition-transform ${
             isOpen ? 'rotate-180' : ''
           }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            strokeLinecap='round'
+            strokeLinejoin='round'
             strokeWidth={2}
-            d="M19 9l-7 7-7-7"
+            d='M19 9l-7 7-7-7'
           />
         </svg>
       </button>
@@ -154,8 +154,8 @@ export default function SettingsDropdown({
               >
                 🎨 Theme
               </div>
-              <div className="space-y-1">
-                {(['light', 'dark', 'system'] as const).map((themeOption) => (
+              <div className='space-y-1'>
+                {(['light', 'dark', 'system'] as const).map(themeOption => (
                   <button
                     key={themeOption}
                     onClick={() => handleThemeChange(themeOption)}
@@ -165,24 +165,24 @@ export default function SettingsDropdown({
                           ? 'bg-blue-900/50 text-blue-300'
                           : 'bg-blue-50 text-blue-700'
                         : actualTheme === 'dark'
-                        ? 'hover:bg-gray-700 text-gray-200'
-                        : 'hover:bg-gray-100 text-gray-700'
+                          ? 'hover:bg-gray-700 text-gray-200'
+                          : 'hover:bg-gray-100 text-gray-700'
                     }`}
                   >
-                    <span className="text-base">
+                    <span className='text-base'>
                       {getThemeIcon(themeOption)}
                     </span>
                     <span>{getThemeLabel(themeOption)}</span>
                     {theme === themeOption && (
                       <svg
-                        className="w-4 h-4 ml-auto flex-shrink-0"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
+                        className='w-4 h-4 ml-auto flex-shrink-0'
+                        fill='currentColor'
+                        viewBox='0 0 20 20'
                       >
                         <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
+                          fillRule='evenodd'
+                          d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                          clipRule='evenodd'
                         />
                       </svg>
                     )}
@@ -213,7 +213,7 @@ export default function SettingsDropdown({
                       : 'hover:bg-red-50 text-red-600 hover:text-red-700'
                   }`}
                 >
-                  <span className="text-base">🗑️</span>
+                  <span className='text-base'>🗑️</span>
                   <span>Reset All Progress</span>
                 </button>
               ) : (
@@ -239,10 +239,10 @@ export default function SettingsDropdown({
                     This will permanently delete all your progress, completed
                     levels, and scores.
                   </div>
-                  <div className="flex gap-2">
+                  <div className='flex gap-2'>
                     <button
                       onClick={handleResetProgress}
-                      className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-medium py-2 px-3 rounded transition-colors"
+                      className='flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-medium py-2 px-3 rounded transition-colors'
                     >
                       Yes, Reset All
                     </button>
@@ -262,7 +262,7 @@ export default function SettingsDropdown({
             </div>
 
             {/* Credits Section */}
-            <div className="px-4 py-3">
+            <div className='px-4 py-3'>
               <div
                 className={`text-sm font-medium mb-2 ${
                   actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-700'
@@ -275,20 +275,20 @@ export default function SettingsDropdown({
                   actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
                 }`}
               >
-                <div className="mb-1">
+                <div className='mb-1'>
                   <strong>Game Design & Development:</strong> Timothy (that's
                   you!)
                 </div>
-                <div className="mb-1">
+                <div className='mb-1'>
                   <strong>Powered by:</strong> React, TypeScript, Tailwind CSS
                 </div>
-                <div className="mb-1">
+                <div className='mb-1'>
                   <strong>Code Editor:</strong> Monaco Editor
                 </div>
-                <div className="mb-1">
+                <div className='mb-1'>
                   <strong>AI Assistant:</strong> Claude (Anthropic)
                 </div>
-                <div className="text-xs text-center mt-3 pt-2 border-t border-gray-600 dark:border-gray-700">
+                <div className='text-xs text-center mt-3 pt-2 border-t border-gray-600 dark:border-gray-700'>
                   Made with 💻 and way too much ☕<br />
                   <em>Vibe coded with Claude Code ✨</em>
                 </div>

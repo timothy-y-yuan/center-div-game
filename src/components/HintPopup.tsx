@@ -61,10 +61,10 @@ export default function HintPopup({
     <div
       ref={popupRef}
       style={popupStyle}
-      className="w-80 animate-in slide-in-from-top-2 duration-200"
+      className='w-80 animate-in slide-in-from-top-2 duration-200'
     >
       {/* Arrow */}
-      <div className="absolute -top-2 right-4 w-4 h-4 rotate-45 bg-amber-400"></div>
+      <div className='absolute -top-2 right-4 w-4 h-4 rotate-45 bg-amber-400'></div>
 
       {/* Popup content */}
       <div
@@ -84,18 +84,18 @@ export default function HintPopup({
               : 'bg-gradient-to-r from-amber-400 to-orange-500'
           }`}
         >
-          <div className="flex items-center gap-3">
-            <span className="text-xl">
+          <div className='flex items-center gap-3'>
+            <span className='text-xl'>
               {isCompleted ? '🤓' : isFailed ? '😭' : '💡'}
             </span>
-            <h3 className="font-bold text-white">
+            <h3 className='font-bold text-white'>
               {isCompleted || isFailed ? 'Solution' : 'Hint'}
             </h3>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-4 pb-2">
+        <div className='p-4 pb-2'>
           {isCompleted || isFailed ? (
             <div>
               <p
@@ -123,7 +123,7 @@ export default function HintPopup({
                     : 'bg-blue-50 text-blue-800 border border-blue-200'
                 }`}
               >
-                <div className="font-semibold mb-1">💡 Why it works:</div>
+                <div className='font-semibold mb-1'>💡 Why it works:</div>
                 <div>{explanation}</div>
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function HintPopup({
           >
             <button
               onClick={onRevealAnswer}
-              className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] text-sm"
+              className='w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] text-sm'
             >
               😭 I'm a dumbass, what's the answer?
             </button>

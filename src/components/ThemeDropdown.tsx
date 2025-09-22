@@ -27,8 +27,7 @@ export default function ThemeDropdown() {
     { value: 'dark', label: 'Dark', icon: '🌙' },
   ];
 
-  const currentOption =
-    options.find((opt) => opt.value === theme) || options[0];
+  const currentOption = options.find(opt => opt.value === theme) || options[0];
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -73,24 +72,24 @@ export default function ThemeDropdown() {
       <button
         ref={buttonRef}
         onClick={handleToggle}
-        className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors"
+        className='flex items-center gap-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors'
         aria-label={`Theme: ${currentOption.label}`}
       >
         <span>{currentOption.icon}</span>
-        <span className="hidden sm:inline">{currentOption.label}</span>
+        <span className='hidden sm:inline'>{currentOption.label}</span>
         <svg
           className={`w-4 h-4 transition-transform ${
             isOpen ? 'rotate-180' : ''
           }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            strokeLinecap='round'
+            strokeLinejoin='round'
             strokeWidth={2}
-            d="M19 9l-7 7-7-7"
+            d='M19 9l-7 7-7-7'
           />
         </svg>
       </button>
@@ -109,7 +108,7 @@ export default function ThemeDropdown() {
               left: dropdownPosition.left,
             }}
           >
-            {options.map((option) => (
+            {options.map(option => (
               <button
                 key={option.value}
                 onClick={() => handleSelect(option.value)}
@@ -131,14 +130,14 @@ export default function ThemeDropdown() {
                 <span>{option.label}</span>
                 {theme === option.value && (
                   <svg
-                    className="w-4 h-4 ml-auto"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+                    className='w-4 h-4 ml-auto'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
+                      fillRule='evenodd'
+                      d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                      clipRule='evenodd'
                     />
                   </svg>
                 )}

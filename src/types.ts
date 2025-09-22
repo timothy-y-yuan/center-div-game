@@ -31,17 +31,59 @@ export type CSSSelector = `.${string}` | `#${string}` | string;
  * Valid CSS property names (subset of commonly used properties)
  */
 export type CSSProperty =
-  | 'margin' | 'margin-top' | 'margin-right' | 'margin-bottom' | 'margin-left'
-  | 'padding' | 'padding-top' | 'padding-right' | 'padding-bottom' | 'padding-left'
-  | 'display' | 'position' | 'top' | 'right' | 'bottom' | 'left'
-  | 'width' | 'height' | 'max-width' | 'max-height' | 'min-width' | 'min-height'
-  | 'flex' | 'flex-direction' | 'flex-wrap' | 'justify-content' | 'align-items' | 'align-content'
-  | 'grid' | 'grid-template-columns' | 'grid-template-rows' | 'grid-gap' | 'grid-column' | 'grid-row'
-  | 'text-align' | 'vertical-align' | 'line-height' | 'font-size' | 'color'
-  | 'transform' | 'transform-origin'
-  | 'border' | 'border-radius' | 'background' | 'background-color'
-  | 'overflow' | 'z-index' | 'opacity' | 'visibility'
-  | 'place-items' | 'justify-items' | 'content' | 'box-shadow'
+  | 'margin'
+  | 'margin-top'
+  | 'margin-right'
+  | 'margin-bottom'
+  | 'margin-left'
+  | 'padding'
+  | 'padding-top'
+  | 'padding-right'
+  | 'padding-bottom'
+  | 'padding-left'
+  | 'display'
+  | 'position'
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'width'
+  | 'height'
+  | 'max-width'
+  | 'max-height'
+  | 'min-width'
+  | 'min-height'
+  | 'flex'
+  | 'flex-direction'
+  | 'flex-wrap'
+  | 'justify-content'
+  | 'align-items'
+  | 'align-content'
+  | 'grid'
+  | 'grid-template-columns'
+  | 'grid-template-rows'
+  | 'grid-gap'
+  | 'grid-column'
+  | 'grid-row'
+  | 'text-align'
+  | 'vertical-align'
+  | 'line-height'
+  | 'font-size'
+  | 'color'
+  | 'transform'
+  | 'transform-origin'
+  | 'border'
+  | 'border-radius'
+  | 'background'
+  | 'background-color'
+  | 'overflow'
+  | 'z-index'
+  | 'opacity'
+  | 'visibility'
+  | 'place-items'
+  | 'justify-items'
+  | 'content'
+  | 'box-shadow'
   | '*'; // Special wildcard to allow all properties
 
 // ============================================================================
@@ -61,7 +103,11 @@ export type ThemeMode = 'light' | 'dark' | 'system';
 /**
  * Difficulty levels for educational progression
  */
-export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
+export type DifficultyLevel =
+  | 'beginner'
+  | 'intermediate'
+  | 'advanced'
+  | 'expert';
 
 // ============================================================================
 // LEVEL DEFINITION INTERFACES
@@ -288,7 +334,9 @@ export interface ThemeProps {
 /**
  * Creates a branded type constructor function
  */
-export type BrandedTypeConstructor<T, Brand> = (value: T) => T & { readonly __brand: Brand };
+export type BrandedTypeConstructor<T, Brand> = (
+  value: T
+) => T & { readonly __brand: Brand };
 
 /**
  * Utility type to make all properties of an interface deeply readonly
@@ -300,9 +348,14 @@ export type DeepReadonly<T> = {
 /**
  * Utility type for partial updates to objects
  */
-export type PartialUpdate<T> = Partial<Pick<T, {
-  [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? never : K;
-}[keyof T]>>;
+export type PartialUpdate<T> = Partial<
+  Pick<
+    T,
+    {
+      [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? never : K;
+    }[keyof T]
+  >
+>;
 
 // ============================================================================
 // TYPE GUARDS
@@ -327,18 +380,62 @@ export function isTimestampMs(value: unknown): value is TimestampMs {
  */
 export function isCSSProperty(value: unknown): value is CSSProperty {
   const validProperties: CSSProperty[] = [
-    'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
-    'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
-    'display', 'position', 'top', 'right', 'bottom', 'left',
-    'width', 'height', 'max-width', 'max-height', 'min-width', 'min-height',
-    'flex', 'flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content',
-    'grid', 'grid-template-columns', 'grid-template-rows', 'grid-gap', 'grid-column', 'grid-row',
-    'text-align', 'vertical-align', 'line-height', 'font-size', 'color',
-    'transform', 'transform-origin',
-    'border', 'border-radius', 'background', 'background-color',
-    'overflow', 'z-index', 'opacity', 'visibility',
-    'place-items', 'justify-items', 'content', 'box-shadow',
-    '*'
+    'margin',
+    'margin-top',
+    'margin-right',
+    'margin-bottom',
+    'margin-left',
+    'padding',
+    'padding-top',
+    'padding-right',
+    'padding-bottom',
+    'padding-left',
+    'display',
+    'position',
+    'top',
+    'right',
+    'bottom',
+    'left',
+    'width',
+    'height',
+    'max-width',
+    'max-height',
+    'min-width',
+    'min-height',
+    'flex',
+    'flex-direction',
+    'flex-wrap',
+    'justify-content',
+    'align-items',
+    'align-content',
+    'grid',
+    'grid-template-columns',
+    'grid-template-rows',
+    'grid-gap',
+    'grid-column',
+    'grid-row',
+    'text-align',
+    'vertical-align',
+    'line-height',
+    'font-size',
+    'color',
+    'transform',
+    'transform-origin',
+    'border',
+    'border-radius',
+    'background',
+    'background-color',
+    'overflow',
+    'z-index',
+    'opacity',
+    'visibility',
+    'place-items',
+    'justify-items',
+    'content',
+    'box-shadow',
+    '*',
   ];
-  return typeof value === 'string' && validProperties.includes(value as CSSProperty);
+  return (
+    typeof value === 'string' && validProperties.includes(value as CSSProperty)
+  );
 }

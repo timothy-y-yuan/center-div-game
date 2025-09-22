@@ -1,7 +1,7 @@
 name: ✨ Feature Request
 description: Suggest a new feature or enhancement for the game
-title: "[Feature]: "
-labels: ["enhancement", "needs-triage"]
+title: '[Feature]: '
+labels: ['enhancement', 'needs-triage']
 assignees: []
 
 body:
@@ -25,17 +25,17 @@ body:
       label: Feature Category
       description: What type of feature is this?
       options:
-        - "New Game Level"
-        - "UI/UX Improvement"
-        - "Code Editor Enhancement"
-        - "Hint System"
-        - "Progress Tracking"
-        - "Theme/Visual"
-        - "Accessibility"
-        - "Performance"
-        - "Developer Experience"
-        - "Educational Content"
-        - "Other"
+        - 'New Game Level'
+        - 'UI/UX Improvement'
+        - 'Code Editor Enhancement'
+        - 'Hint System'
+        - 'Progress Tracking'
+        - 'Theme/Visual'
+        - 'Accessibility'
+        - 'Performance'
+        - 'Developer Experience'
+        - 'Educational Content'
+        - 'Other'
     validations:
       required: true
 
@@ -70,10 +70,10 @@ body:
       label: Priority Level
       description: How important is this feature to you?
       options:
-        - "Low - Nice to have"
-        - "Medium - Would improve experience"
-        - "High - Important for usability"
-        - "Critical - Blocks usage"
+        - 'Low - Nice to have'
+        - 'Medium - Would improve experience'
+        - 'High - Important for usability'
+        - 'Critical - Blocks usage'
 
   - type: textarea
     id: mockups

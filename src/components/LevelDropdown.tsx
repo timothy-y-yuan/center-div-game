@@ -72,40 +72,40 @@ export default function LevelDropdown({
       <button
         ref={buttonRef}
         onClick={handleToggle}
-        className="inline-flex items-center gap-3 bg-white bg-opacity-10 dark:bg-white dark:bg-opacity-10 rounded-lg px-4 py-2 glass hover:bg-opacity-20 dark:hover:bg-opacity-20 transition-all duration-200"
+        className='inline-flex items-center gap-3 bg-white bg-opacity-10 dark:bg-white dark:bg-opacity-10 rounded-lg px-4 py-2 glass hover:bg-opacity-20 dark:hover:bg-opacity-20 transition-all duration-200'
       >
         <span
           className={`text-sm font-semibold ${
             completedLevels.has(currentLevelIndex)
               ? 'text-emerald-600 dark:text-emerald-400'
               : failedLevels.has(currentLevelIndex)
-              ? 'text-red-600 dark:text-red-400'
-              : 'text-gray-800 dark:text-white'
+                ? 'text-red-600 dark:text-red-400'
+                : 'text-gray-800 dark:text-white'
           }`}
         >
           {currentLevel.title}
         </span>
         {completedLevels.has(currentLevelIndex) && (
-          <span className="text-emerald-600 dark:text-emerald-300 text-sm">
+          <span className='text-emerald-600 dark:text-emerald-300 text-sm'>
             🎉
           </span>
         )}
         {failedLevels.has(currentLevelIndex) && (
-          <span className="text-red-600 dark:text-red-400 text-sm">😭</span>
+          <span className='text-red-600 dark:text-red-400 text-sm'>😭</span>
         )}
         <svg
           className={`w-4 h-4 text-gray-600 dark:text-gray-300 transition-transform ${
             isOpen ? 'rotate-180' : ''
           }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            strokeLinecap='round'
+            strokeLinejoin='round'
             strokeWidth={2}
-            d="M19 9l-7 7-7-7"
+            d='M19 9l-7 7-7-7'
           />
         </svg>
       </button>
@@ -145,13 +145,13 @@ export default function LevelDropdown({
                       }`
                 }`}
               >
-                <div className="flex-shrink-0">
+                <div className='flex-shrink-0'>
                   {completedLevels.has(index) ? (
-                    <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-sm">
+                    <div className='w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-sm'>
                       🎉
                     </div>
                   ) : failedLevels.has(index) ? (
-                    <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-sm">
+                    <div className='w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-sm'>
                       😭
                     </div>
                   ) : (
@@ -164,14 +164,14 @@ export default function LevelDropdown({
                     />
                   )}
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className='flex-1 min-w-0'>
                   <div
                     className={`font-medium text-sm truncate ${
                       completedLevels.has(index)
                         ? 'text-emerald-600 dark:text-emerald-400'
                         : failedLevels.has(index)
-                        ? 'text-red-600 dark:text-red-400'
-                        : ''
+                          ? 'text-red-600 dark:text-red-400'
+                          : ''
                     }`}
                   >
                     {level.title}
@@ -186,14 +186,14 @@ export default function LevelDropdown({
                 </div>
                 {index === currentLevelIndex && (
                   <svg
-                    className="w-4 h-4 ml-2 flex-shrink-0"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+                    className='w-4 h-4 ml-2 flex-shrink-0'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
+                      fillRule='evenodd'
+                      d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                      clipRule='evenodd'
                     />
                   </svg>
                 )}
@@ -216,14 +216,14 @@ export default function LevelDropdown({
                   }`}
                 >
                   <svg
-                    className="w-3 h-3 animate-bounce"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+                    className='w-3 h-3 animate-bounce'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
+                      fillRule='evenodd'
+                      d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                      clipRule='evenodd'
                     />
                   </svg>
                 </div>

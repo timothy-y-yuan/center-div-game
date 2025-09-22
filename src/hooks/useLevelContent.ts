@@ -5,7 +5,11 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import type { Level, CSSValidationResult } from '../types';
-import { getInitialEditableCSS, validateUserCSS, generateCompleteCSS } from '../utils/cssValidator';
+import {
+  getInitialEditableCSS,
+  validateUserCSS,
+  generateCompleteCSS,
+} from '../utils/cssValidator';
 
 // ============================================================================
 // HOOK INTERFACE
@@ -70,15 +74,16 @@ export function useLevelContent(currentLevel: Level): UseLevelContentResult {
   /**
    * Generates complete CSS by combining locked and editable parts
    */
-  const completeCSS = useMemo(() =>
-    generateCompleteCSS(editableCSS, currentLevel),
+  const completeCSS = useMemo(
+    () => generateCompleteCSS(editableCSS, currentLevel),
     [editableCSS, currentLevel]
   );
 
   /**
    * Generates complete HTML document for preview iframe
    */
-  const previewContent = useMemo(() => `
+  const previewContent = useMemo(
+    () => `
     <!DOCTYPE html>
     <html>
     <head>
@@ -88,7 +93,9 @@ export function useLevelContent(currentLevel: Level): UseLevelContentResult {
       ${html}
     </body>
     </html>
-  `, [html, completeCSS]);
+  `,
+    [html, completeCSS]
+  );
 
   // ============================================================================
   // CONTENT MANAGEMENT FUNCTIONS
@@ -106,13 +113,16 @@ export function useLevelContent(currentLevel: Level): UseLevelContentResult {
    * Updates the editable CSS and triggers validation
    * @param newCSS - New CSS content
    */
-  const updateCSS = useCallback((newCSS: string) => {
-    setEditableCSS(newCSS);
+  const updateCSS = useCallback(
+    (newCSS: string) => {
+      setEditableCSS(newCSS);
 
-    // Validate the CSS against level constraints
-    const validation = validateUserCSS(newCSS, currentLevel);
-    setCssValidation(validation);
-  }, [currentLevel]);
+      // Validate the CSS against level constraints
+      const validation = validateUserCSS(newCSS, currentLevel);
+      setCssValidation(validation);
+    },
+    [currentLevel]
+  );
 
   /**
    * Sets the CSS to the level's solution (used when revealing answer)

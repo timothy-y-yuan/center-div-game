@@ -3,7 +3,14 @@
  * Provides safe constructors for branded types and validation utilities
  */
 
-import type { LevelId, TimestampMs, DurationMs, ValidationMessage, ValidationSeverity, CSSProperty } from '../types';
+import type {
+  LevelId,
+  TimestampMs,
+  DurationMs,
+  ValidationMessage,
+  ValidationSeverity,
+  CSSProperty,
+} from '../types';
 
 // ============================================================================
 // BRANDED TYPE CONSTRUCTORS
@@ -17,7 +24,9 @@ import type { LevelId, TimestampMs, DurationMs, ValidationMessage, ValidationSev
  */
 export function createLevelId(value: number): LevelId {
   if (!Number.isInteger(value) || value < 0) {
-    throw new Error(`Invalid level ID: ${value}. Must be a non-negative integer.`);
+    throw new Error(
+      `Invalid level ID: ${value}. Must be a non-negative integer.`
+    );
   }
   return value as LevelId;
 }
@@ -43,7 +52,9 @@ export function createTimestampMs(value: number = Date.now()): TimestampMs {
  */
 export function createDurationMs(value: number): DurationMs {
   if (!Number.isInteger(value) || value < 0) {
-    throw new Error(`Invalid duration: ${value}. Must be a non-negative integer.`);
+    throw new Error(
+      `Invalid duration: ${value}. Must be a non-negative integer.`
+    );
   }
   return value as DurationMs;
 }
@@ -130,7 +141,9 @@ export function createValidationInfo(
  * @param values - Array of numbers to convert
  * @returns A Set of validated LevelIds
  */
-export function createLevelIdSet(values: readonly number[]): ReadonlySet<LevelId> {
+export function createLevelIdSet(
+  values: readonly number[]
+): ReadonlySet<LevelId> {
   const validatedIds = values.map(createLevelId);
   return new Set(validatedIds);
 }
@@ -140,7 +153,9 @@ export function createLevelIdSet(values: readonly number[]): ReadonlySet<LevelId
  * @param levelIds - Set of LevelIds to convert
  * @returns Array of numbers
  */
-export function levelIdSetToArray(levelIds: ReadonlySet<LevelId>): readonly number[] {
+export function levelIdSetToArray(
+  levelIds: ReadonlySet<LevelId>
+): readonly number[] {
   return Array.from(levelIds).map(id => id as number);
 }
 
@@ -154,7 +169,10 @@ export function levelIdSetToArray(levelIds: ReadonlySet<LevelId>): readonly numb
  * @param end - End timestamp
  * @returns Duration in milliseconds
  */
-export function calculateDuration(start: TimestampMs, end: TimestampMs): DurationMs {
+export function calculateDuration(
+  start: TimestampMs,
+  end: TimestampMs
+): DurationMs {
   const durationValue = (end as number) - (start as number);
   return createDurationMs(Math.max(0, durationValue));
 }
@@ -224,7 +242,10 @@ export function formatTimestamp(
  * @returns The validated string
  * @throws {Error} If validation fails
  */
-export function validateNonEmptyString(value: unknown, fieldName: string): string {
+export function validateNonEmptyString(
+  value: unknown,
+  fieldName: string
+): string {
   if (typeof value !== 'string' || value.trim().length === 0) {
     throw new Error(`${fieldName} must be a non-empty string`);
   }
@@ -251,7 +272,9 @@ export function validateNumberRange(
   }
 
   if (value < min || value > max) {
-    throw new Error(`${fieldName} must be between ${min} and ${max}, got ${value}`);
+    throw new Error(
+      `${fieldName} must be between ${min} and ${max}, got ${value}`
+    );
   }
 
   return value;
@@ -264,7 +287,10 @@ export function validateNumberRange(
  * @returns The validated array
  * @throws {Error} If the array contains duplicates
  */
-export function validateUniqueArray<T>(array: readonly T[], fieldName: string): readonly T[] {
+export function validateUniqueArray<T>(
+  array: readonly T[],
+  fieldName: string
+): readonly T[] {
   const seen = new Set<T>();
   const duplicates: T[] = [];
 
@@ -277,7 +303,9 @@ export function validateUniqueArray<T>(array: readonly T[], fieldName: string): 
   }
 
   if (duplicates.length > 0) {
-    throw new Error(`${fieldName} contains duplicate values: ${duplicates.join(', ')}`);
+    throw new Error(
+      `${fieldName} contains duplicate values: ${duplicates.join(', ')}`
+    );
   }
 
   return array;
@@ -335,8 +363,8 @@ export function deepEqual(a: unknown, b: unknown): boolean {
     return false;
   }
 
-  return keysA.every(key =>
-    keysB.includes(key) && deepEqual(objectA[key], objectB[key])
+  return keysA.every(
+    key => keysB.includes(key) && deepEqual(objectA[key], objectB[key])
   );
 }
 

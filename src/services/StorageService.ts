@@ -5,7 +5,11 @@
 
 import { STORAGE_KEYS, ERROR_MESSAGES } from '../constants';
 import type { LevelId, UserProgress } from '../types';
-import { createLevelId, createLevelIdSet, levelIdSetToArray } from '../utils/typeHelpers';
+import {
+  createLevelId,
+  createLevelIdSet,
+  levelIdSetToArray,
+} from '../utils/typeHelpers';
 
 // ============================================================================
 // STORAGE ERROR CLASSES
@@ -161,7 +165,10 @@ export class StorageService implements IStorageService {
       if (validator(parsed)) {
         return parsed;
       }
-      throw new InvalidStorageDataError(key, 'Data does not match expected format');
+      throw new InvalidStorageDataError(
+        key,
+        'Data does not match expected format'
+      );
     } catch (error) {
       if (error instanceof InvalidStorageDataError) {
         throw error;
@@ -210,13 +217,21 @@ export class StorageService implements IStorageService {
     const data = this.safeGetItem(STORAGE_KEYS.COMPLETED_LEVELS);
 
     const validator = (data: unknown): data is number[] => {
-      return Array.isArray(data) && data.every(item =>
-        typeof item === 'number' && Number.isInteger(item) && item >= 0
+      return (
+        Array.isArray(data) &&
+        data.every(
+          item =>
+            typeof item === 'number' && Number.isInteger(item) && item >= 0
+        )
       );
     };
 
     try {
-      const completedArray = this.parseAndValidate(data, validator, STORAGE_KEYS.COMPLETED_LEVELS);
+      const completedArray = this.parseAndValidate(
+        data,
+        validator,
+        STORAGE_KEYS.COMPLETED_LEVELS
+      );
       return completedArray ? createLevelIdSet(completedArray) : new Set();
     } catch (error) {
       console.warn('Invalid completed levels in storage:', error);
@@ -241,13 +256,21 @@ export class StorageService implements IStorageService {
     const data = this.safeGetItem(STORAGE_KEYS.FAILED_LEVELS);
 
     const validator = (data: unknown): data is number[] => {
-      return Array.isArray(data) && data.every(item =>
-        typeof item === 'number' && Number.isInteger(item) && item >= 0
+      return (
+        Array.isArray(data) &&
+        data.every(
+          item =>
+            typeof item === 'number' && Number.isInteger(item) && item >= 0
+        )
       );
     };
 
     try {
-      const failedArray = this.parseAndValidate(data, validator, STORAGE_KEYS.FAILED_LEVELS);
+      const failedArray = this.parseAndValidate(
+        data,
+        validator,
+        STORAGE_KEYS.FAILED_LEVELS
+      );
       return failedArray ? createLevelIdSet(failedArray) : new Set();
     } catch (error) {
       console.warn('Invalid failed levels in storage:', error);
@@ -295,7 +318,11 @@ export class StorageService implements IStorageService {
     const data = this.safeGetItem(STORAGE_KEYS.USER_PROGRESS);
 
     try {
-      return this.parseAndValidate(data, this.isValidUserProgress.bind(this), STORAGE_KEYS.USER_PROGRESS);
+      return this.parseAndValidate(
+        data,
+        this.isValidUserProgress.bind(this),
+        STORAGE_KEYS.USER_PROGRESS
+      );
     } catch (error) {
       console.warn('Invalid user progress in storage:', error);
       return null;
@@ -377,7 +404,10 @@ export class StorageService implements IStorageService {
       const hasAllKeys = requiredKeys.every(key => key in data);
 
       if (!hasAllKeys) {
-        throw new InvalidStorageDataError('import', 'Missing required data keys');
+        throw new InvalidStorageDataError(
+          'import',
+          'Missing required data keys'
+        );
       }
 
       // Import each piece of data
@@ -404,7 +434,9 @@ export class StorageService implements IStorageService {
  * @param storage - Storage implementation to use (defaults to localStorage)
  * @returns Storage service instance or mock service if storage unavailable
  */
-export function createStorageService(storage: Storage = localStorage): IStorageService {
+export function createStorageService(
+  storage: Storage = localStorage
+): IStorageService {
   const service = new StorageService(storage);
 
   if (!service.isStorageAvailable()) {
@@ -424,14 +456,24 @@ export function createMockStorageService(): IStorageService {
 
   return {
     getCurrentLevel: () => createLevelId(0),
-    setCurrentLevel: () => { /* no-op */ },
+    setCurrentLevel: () => {
+      /* no-op */
+    },
     getCompletedLevels: () => new Set(),
-    setCompletedLevels: () => { /* no-op */ },
+    setCompletedLevels: () => {
+      /* no-op */
+    },
     getFailedLevels: () => new Set(),
-    setFailedLevels: () => { /* no-op */ },
+    setFailedLevels: () => {
+      /* no-op */
+    },
     getUserProgress: () => null,
-    setUserProgress: () => { /* no-op */ },
-    clearAllData: () => { data.clear(); },
+    setUserProgress: () => {
+      /* no-op */
+    },
+    clearAllData: () => {
+      data.clear();
+    },
     isStorageAvailable: () => false,
   };
 }

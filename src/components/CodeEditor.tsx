@@ -59,8 +59,8 @@ const CodeEditor = memo(function CodeEditor({
   return (
     <>
       <div className={`${headerClass} p-4`}>
-        <h3 className="font-bold text-lg flex items-center gap-3">
-          <span className="text-2xl">{emoji}</span>
+        <h3 className='font-bold text-lg flex items-center gap-3'>
+          <span className='text-2xl'>{emoji}</span>
           <span
             className={
               language === 'html'
@@ -74,12 +74,12 @@ const CodeEditor = memo(function CodeEditor({
 
         {/* Show constraints for CSS editor */}
         {level && language === 'css' && (
-          <div className="mt-2 text-sm">
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800">
-              <div className="font-medium text-blue-800 dark:text-blue-200 mb-1">
+          <div className='mt-2 text-sm'>
+            <div className='p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800'>
+              <div className='font-medium text-blue-800 dark:text-blue-200 mb-1'>
                 Constraints:
               </div>
-              <div className="text-blue-700 dark:text-blue-300">
+              <div className='text-blue-700 dark:text-blue-300'>
                 {level.constraints}
               </div>
             </div>
@@ -88,13 +88,13 @@ const CodeEditor = memo(function CodeEditor({
 
         {/* Show validation errors */}
         {validation && !validation.isValid && (
-          <div className="mt-2 text-sm">
-            <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
-              <div className="font-medium text-red-800 dark:text-red-200 mb-1">
+          <div className='mt-2 text-sm'>
+            <div className='p-2 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800'>
+              <div className='font-medium text-red-800 dark:text-red-200 mb-1'>
                 Validation Errors:
               </div>
               {validation.errors.map((error, index) => (
-                <div key={index} className="text-red-700 dark:text-red-300">
+                <div key={index} className='text-red-700 dark:text-red-300'>
                   • {error.message}
                 </div>
               ))}
@@ -102,13 +102,13 @@ const CodeEditor = memo(function CodeEditor({
           </div>
         )}
       </div>
-      <div className="flex-1">
+      <div className='flex-1'>
         <Editor
-          height="100%"
+          height='100%'
           language={language}
           theme={actualTheme === 'dark' ? 'vs-dark' : 'vs-light'}
           value={value}
-          onChange={(value) => onChange(value || '')}
+          onChange={value => onChange(value || '')}
           beforeMount={handleEditorWillMount}
           onMount={handleEditorDidMount}
           options={{

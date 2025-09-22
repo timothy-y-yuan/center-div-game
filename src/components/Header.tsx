@@ -69,16 +69,16 @@ const Header = memo(function Header({
     currentLevelIndex < levels.length - 1;
 
   return (
-    <header className="relative z-10 glass border-b border-gray-200 dark:border-white border-opacity-10 dark:border-opacity-10 px-6 py-4">
+    <header className='relative z-10 glass border-b border-gray-200 dark:border-white border-opacity-10 dark:border-opacity-10 px-6 py-4'>
       {/* Top Row: Title & Controls */}
-      <div className="flex items-center justify-between w-full mb-3">
+      <div className='flex items-center justify-between w-full mb-3'>
         {/* Left: Title */}
-        <h1 className="text-4xl font-bold gradient-text leading-tight">
+        <h1 className='text-4xl font-bold gradient-text leading-tight'>
           Can You Center The &lt;div&gt;?
         </h1>
 
         {/* Right: Controls */}
-        <div className="flex items-center gap-3">
+        <div className='flex items-center gap-3'>
           <SettingsDropdown onResetProgress={onResetProgress} />
           <LevelDropdown
             levels={levels}
@@ -101,7 +101,7 @@ const Header = memo(function Header({
           </button>
           <button
             onClick={onCheck}
-            className="flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+            className='flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors'
           >
             <span>🎯</span>
             <span>Check</span>
@@ -109,7 +109,7 @@ const Header = memo(function Header({
           {showNextButton && (
             <button
               onClick={onNextLevel}
-              className="flex items-center gap-3 bg-green-600 hover:bg-green-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+              className='flex items-center gap-3 bg-green-600 hover:bg-green-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors'
             >
               <span>➡️</span>
               <span>Next Level</span>
@@ -119,23 +119,23 @@ const Header = memo(function Header({
       </div>
 
       {/* Bottom Row: Player Status & Progress Bar */}
-      <div className="flex items-center justify-between w-full">
+      <div className='flex items-center justify-between w-full'>
         {/* Left: Player Title, Progress Bar & Stats */}
-        <div className="flex items-center gap-4">
-          <div className="text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+        <div className='flex items-center gap-4'>
+          <div className='text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent'>
             {playerTitle}
           </div>
-          <div className="w-48">
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
-              <div className="h-full flex">
+          <div className='w-48'>
+            <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden'>
+              <div className='h-full flex'>
                 <div
-                  className="bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-500"
+                  className='bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-500'
                   style={{
                     width: `${(completedLevels.size / levels.length) * 100}%`,
                   }}
                 />
                 <div
-                  className="bg-gradient-to-r from-red-400 to-red-500 transition-all duration-500"
+                  className='bg-gradient-to-r from-red-400 to-red-500 transition-all duration-500'
                   style={{
                     width: `${(failedLevels.size / levels.length) * 100}%`,
                   }}
@@ -143,14 +143,14 @@ const Header = memo(function Header({
               </div>
             </div>
           </div>
-          <div className="text-xs text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
+          <div className='text-xs text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full'>
             🎉 {completedLevels.size} • 😭 {failedLevels.size} •{' '}
             {levels.length - completedLevels.size - failedLevels.size} left
           </div>
         </div>
 
         {/* Right: Current Level Description */}
-        <div className="text-gray-700 dark:text-gray-200 text-sm font-medium max-w-2xl text-right">
+        <div className='text-gray-700 dark:text-gray-200 text-sm font-medium max-w-2xl text-right'>
           {currentLevel.description}
         </div>
       </div>

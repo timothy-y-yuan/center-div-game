@@ -18,9 +18,9 @@ vi.mock('@monaco-editor/react', () => ({
     value?: string;
   }) => (
     <textarea
-      data-testid="monaco-editor"
+      data-testid='monaco-editor'
       value={value}
-      onChange={(e) => onChange?.(e.target.value)}
+      onChange={e => onChange?.(e.target.value)}
     />
   ),
 }));
@@ -28,12 +28,12 @@ vi.mock('@monaco-editor/react', () => ({
 // Mock react-resizable-panels
 vi.mock('react-resizable-panels', () => ({
   Panel: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="panel">{children}</div>
+    <div data-testid='panel'>{children}</div>
   ),
   PanelGroup: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="panel-group">{children}</div>
+    <div data-testid='panel-group'>{children}</div>
   ),
-  PanelResizeHandle: () => <div data-testid="panel-resize-handle" />,
+  PanelResizeHandle: () => <div data-testid='panel-resize-handle' />,
 }));
 
 const renderWithTheme = (component: React.ReactElement) => {

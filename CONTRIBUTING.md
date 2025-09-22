@@ -14,20 +14,24 @@ Thank you for your interest in contributing to the Center Div Game! This documen
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
+
    ```bash
    git clone https://github.com/your-username/center-div-game.git
    cd center-div-game
    ```
 
 3. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 4. **Start the development server**:
+
    ```bash
    npm run dev
    ```
+
    The game will be available at http://localhost:5173
 
 5. **Run the tests**:
@@ -38,6 +42,7 @@ Thank you for your interest in contributing to the Center Div Game! This documen
 ### Development Workflow
 
 1. **Create a new branch** from `main`:
+
    ```bash
    git checkout main
    git pull origin main
@@ -47,11 +52,13 @@ Thank you for your interest in contributing to the Center Div Game! This documen
 2. **Make your changes** and test them locally
 
 3. **Run the test suite** after making changes:
+
    ```bash
    npm run test:run
    ```
 
 4. **Commit your changes** with a descriptive message:
+
    ```bash
    git add .
    git commit -m "feat: add new centering technique to level 5"
@@ -78,6 +85,7 @@ npm run lint
 ```
 
 ### Current Status
+
 - ✅ **Tests**: 174 tests pass consistently
 - ❌ **Build**: Currently fails due to TypeScript errors (known issue)
 - ❌ **Lint**: 29 ESLint errors (known issue, doesn't block development)
@@ -102,23 +110,27 @@ src/
 ## 🎮 Types of Contributions
 
 ### 🐛 Bug Fixes
+
 - Fix game functionality issues
 - Resolve UI/UX problems
 - Address cross-browser compatibility
 
 ### ✨ New Features
+
 - Add new game levels
 - Enhance the hint system
 - Improve progress tracking
 - Add themes or visual improvements
 
 ### 📚 Educational Content
+
 - Improve level explanations
 - Add better hint messages
 - Create educational resources
 - Enhance CSS technique coverage
 
 ### 🧪 Testing & Quality
+
 - Add new test cases
 - Improve test coverage
 - Fix failing tests
@@ -130,6 +142,7 @@ If you want to add a new level:
 
 1. **Edit `src/data/levels.ts`**
 2. **Follow the existing pattern**:
+
    ```typescript
    {
      id: 11,
@@ -171,6 +184,7 @@ We use conventional commit format:
 - `chore:` - Build process, dependencies, etc.
 
 Examples:
+
 ```bash
 git commit -m "feat: add flexbox centering level"
 git commit -m "fix: resolve hint positioning on mobile"
@@ -216,6 +230,7 @@ We welcome feature suggestions! Please use our [feature request template](.githu
 5. **Address feedback** promptly
 
 ### PR Checklist
+
 - [ ] Tests pass (`npm run test:run`)
 - [ ] Development server works (`npm run dev`)
 - [ ] Manual testing completed
@@ -231,6 +246,7 @@ We welcome feature suggestions! Please use our [feature request template](.githu
 ## 🏆 Recognition
 
 Contributors will be recognized in:
+
 - GitHub contributors list
 - README acknowledgments
 - Release notes (for significant contributions)
@@ -242,6 +258,7 @@ Be respectful, inclusive, and constructive in all interactions. We're all here t
 ## 🎉 First Time Contributors
 
 New to open source? This project is beginner-friendly! Look for issues labeled:
+
 - `good first issue`
 - `help wanted`
 - `documentation`
