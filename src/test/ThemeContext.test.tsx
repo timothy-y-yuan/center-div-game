@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { ThemeProvider, useTheme } from '../contexts/ThemeContext'
+import { ThemeProvider } from '../contexts/ThemeContext'
+import { useTheme } from '../hooks/useTheme'
 
 // Test component that uses the theme context
 const TestComponent = () => {
@@ -282,7 +283,7 @@ describe('ThemeContext', () => {
   it('should handle missing window.matchMedia gracefully', () => {
     // Mock matchMedia to return a minimal object to prevent errors
     const originalMatchMedia = window.matchMedia
-    ;(window as any).matchMedia = vi.fn(() => ({
+    ;(window.matchMedia as unknown) = vi.fn(() => ({
       matches: true, // Default to dark
       addEventListener: vi.fn(),
       removeEventListener: vi.fn()

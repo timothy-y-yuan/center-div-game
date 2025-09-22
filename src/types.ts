@@ -301,7 +301,7 @@ export type DeepReadonly<T> = {
  * Utility type for partial updates to objects
  */
 export type PartialUpdate<T> = Partial<Pick<T, {
-  [K in keyof T]: T[K] extends Function ? never : K;
+  [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? never : K;
 }[keyof T]>>;
 
 // ============================================================================

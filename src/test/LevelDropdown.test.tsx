@@ -28,7 +28,7 @@ describe('LevelDropdown Component', () => {
       const actual = await vi.importActual('react-dom')
       return {
         ...actual,
-        createPortal: (children: any) => children
+        createPortal: (children: React.ReactNode) => children
       }
     })
   })
