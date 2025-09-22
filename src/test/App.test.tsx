@@ -8,23 +8,6 @@ vi.mock('canvas-confetti', () => ({
   default: vi.fn(),
 }));
 
-// Mock monaco editor
-vi.mock('@monaco-editor/react', () => ({
-  default: ({
-    onChange,
-    value,
-  }: {
-    onChange?: (value: string) => void;
-    value?: string;
-  }) => (
-    <textarea
-      data-testid='monaco-editor'
-      value={value}
-      onChange={e => onChange?.(e.target.value)}
-    />
-  ),
-}));
-
 // Mock react-resizable-panels
 vi.mock('react-resizable-panels', () => ({
   Panel: ({ children }: { children: React.ReactNode }) => (
@@ -64,7 +47,7 @@ describe('App Component', () => {
     renderWithTheme(<App />);
 
     expect(screen.getByText(/Can You Center The/)).toBeInTheDocument();
-    expect(screen.getAllByTestId('monaco-editor')).toHaveLength(1); // CSS editor only
+    expect(screen.getAllByTestId('monaco-editor-css')).toHaveLength(1); // CSS editor only
     expect(screen.getByText('Given Code')).toBeInTheDocument(); // CodeDisplay component
     expect(screen.getByText('Your Code')).toBeInTheDocument(); // CSS editor
     expect(screen.getByText('Check')).toBeInTheDocument();
@@ -258,7 +241,7 @@ describe('App Component', () => {
   it('should handle editor changes', () => {
     renderWithTheme(<App />);
 
-    const editors = screen.getAllByTestId('monaco-editor');
+    const editors = screen.getAllByTestId('monaco-editor-css');
     const cssEditor = editors[0]; // CSS is the only Monaco editor now
     fireEvent.change(cssEditor, {
       target: { value: '.target { margin: 0 auto; }' },
