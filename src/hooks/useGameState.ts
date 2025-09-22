@@ -107,7 +107,6 @@ export function useGameState(): UseGameStateResult {
         completedLevels.has(levelId) && !failedLevels.has(levelId)
       );
 
-      // Persist the change
       storageService.setCurrentLevel(levelId);
     },
     [completedLevels, failedLevels]
@@ -143,7 +142,6 @@ export function useGameState(): UseGameStateResult {
     setFailedLevels(newFailedLevels);
     setShowHint(false);
 
-    // Persist the failed level
     storageService.setFailedLevels(newFailedLevels);
   }, [currentLevel, failedLevels]);
 
@@ -197,16 +195,13 @@ export function useGameState(): UseGameStateResult {
    * Unlocks the secret level and immediately switches to it
    */
   const unlockSecretLevel = useCallback(() => {
-    // Mark secret level as unlocked
     setIsSecretLevelUnlocked(true);
     storageService.setSecretLevelUnlocked(true);
 
-    // Change to the secret level (index 999 represents the secret level)
     setCurrentLevel(999);
     setShowHint(false);
     setIsCompleted(false);
 
-    // Persist the level change
     storageService.setCurrentLevel(createLevelId(999));
   }, []);
 

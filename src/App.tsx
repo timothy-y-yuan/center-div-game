@@ -28,10 +28,7 @@ function App() {
   // HOOK INTEGRATION
   // ============================================================================
 
-  // Game state management
   const gameState = useGameState();
-
-  // Modal state for !important detection
   const [showImportantModal, setShowImportantModal] = useState(false);
 
   // Combined levels array that includes secret level when unlocked
@@ -71,10 +68,7 @@ function App() {
     return gameState.currentLevel;
   }, [gameState.currentLevel, gameState.isSecretLevelUnlocked, allLevels.length]);
 
-  // Level content management
   const levelContent = useLevelContent(currentLevel);
-
-  // Completion checking (removed unused variable)
 
   // ============================================================================
   // EVENT HANDLERS
@@ -149,20 +143,12 @@ function App() {
       }
 
       // If we're on a normal level, unlock secret level and switch to it
-      // Instantly fail the current level
       gameState.revealAnswer();
-
-      // Show the modal
       setShowImportantModal(true);
-
-      // Unlock the secret level and switch to it
       gameState.unlockSecretLevel();
-
-      // Don't update the CSS for the current level
       return;
     }
 
-    // If no !important, proceed with normal validation
     levelContent.updateCSS(newEditableCSS);
   };
 
