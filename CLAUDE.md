@@ -101,34 +101,74 @@ npm run typecheck
 
 ## Development Notes
 
-### ⚠️ IMPORTANT: Always Run Tests After Changes
+### ⚠️ CRITICAL: Code Quality & Standards
 
-**CRITICAL REMINDER**: After making ANY code changes, always run the test suite:
+This project maintains exceptionally high code quality and readability standards. Every contribution must meet these requirements.
+
+#### Code Quality Requirements
+
+**Readability Standards:**
+- All code must be written with obsessive attention to readability and clarity
+- TypeScript must be used properly with comprehensive type safety
+- Every function, interface, and complex logic must have clear, descriptive names
+- Comments should explain *why*, not *what* (the code should be self-documenting)
+- Prefer longer, descriptive variable names over cryptic abbreviations
+- Break complex logic into smaller, well-named functions
+- Use consistent patterns and conventions throughout the codebase
+
+**Pull Request Requirements:**
+Before any pull request can be approved, ALL of the following must pass:
+
+1. **Build Success**: `npm run build` must complete without errors
+2. **Test Coverage**: `npm run test:run` must pass all tests (174+ tests)
+3. **Linting**: `npm run lint` must pass without warnings
+4. **Type Checking**: TypeScript compilation must succeed
+5. **Manual Testing**: Core game functionality must be verified working
+
+#### Essential Testing Workflow
+
+**CRITICAL REMINDER**: After making ANY code changes, always validate:
 
 ```bash
-# Quick test run to catch failures
+# 1. Run the full test suite
 npm run test:run
 
-# Or run tests in watch mode during development
-npm test
+# 2. Check linting
+npm run lint
+
+# 3. Verify build succeeds
+npm run build
+
+# 4. Start dev server and test manually
+npm run dev
 ```
 
 **Why this matters:**
 - Tests catch breaking changes immediately
-- Architectural changes often require test updates
-- Component interface changes break existing tests
-- Better to catch issues locally than in CI/CD
+- Linting enforces code quality standards
+- Build failures indicate type safety issues
+- Manual testing verifies user experience
 
 **Test failure workflow:**
 1. Run tests after changes: `npm run test:run`
 2. If tests fail, update them to match new interfaces/behavior
 3. Ensure new functionality has appropriate test coverage
-4. Re-run tests until all pass
-5. Only then commit changes
+4. Fix all linting errors: `npm run lint`
+5. Ensure build succeeds: `npm run build`
+6. Re-run all validations until they pass
+7. Only then commit changes
 
 **Branching reminder:**
 - ALWAYS create new branches from `main`, never from feature branches
 - Use: `git checkout main && git checkout -b feature/your-feature-name`
+
+**Automatic Rejection Criteria:**
+Pull requests will be automatically rejected if:
+- Build fails with TypeScript errors
+- Any tests fail or are broken
+- ESLint warnings exist
+- Code contains unclear variable names or functions
+- Code lacks type safety or uses `any` types inappropriately
 
 ### Font Configuration
 
@@ -225,6 +265,33 @@ src/
 ├── main.tsx                   # React root and setup
 └── vite-env.d.ts             # Vite type definitions
 ```
+
+---
+
+---
+
+# important-instruction-reminders
+
+This project maintains exceptionally high readability and code quality standards. Every single contribution must meet these requirements:
+
+**Mandatory Validation Checklist:**
+- [ ] `npm run build` completes successfully without TypeScript errors
+- [ ] `npm run test:run` passes all tests completely
+- [ ] `npm run lint` passes without any warnings
+- [ ] Code uses descriptive variable and function names
+- [ ] Complex logic is broken into well-named, focused functions
+- [ ] TypeScript types are comprehensive and accurate (no `any` types)
+- [ ] Code follows established patterns and conventions
+- [ ] Manual testing confirms game functionality works
+
+**Code Quality Standards:**
+- Write code with obsessive attention to clarity and readability
+- Use self-documenting code practices (clear names, obvious structure)
+- Break complex logic into smaller, well-named functions
+- Maintain comprehensive TypeScript type safety
+- Follow consistent patterns throughout the codebase
+
+**AUTOMATIC REJECTION:** Pull requests will be rejected if build, tests, or linting fail, or if code quality standards are not met.
 
 ---
 
