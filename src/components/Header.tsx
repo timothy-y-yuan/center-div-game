@@ -150,7 +150,7 @@ const Header = memo(function Header({
         </div>
 
         {/* Right: Current Level Description */}
-        <div className="text-gray-700 dark:text-gray-200 text-sm font-medium max-w-md text-right">
+        <div className="text-gray-700 dark:text-gray-200 text-sm font-medium max-w-2xl text-right">
           {currentLevel.description}
         </div>
       </div>
