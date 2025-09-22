@@ -165,18 +165,15 @@ function App() {
                 </PanelResizeHandle>
 
                 <Panel defaultSize={50} minSize={25}>
-                  <div className='h-full flex flex-col'>
-                    <CodeEditor
-                      value={levelContent.editableCSS}
-                      language='css'
-                      onChange={handleCSSChange}
-                      title='Your Code'
-                      emoji='✏️'
-                      headerClass='header-css'
-                      level={currentLevel}
-                      validation={levelContent.cssValidation}
-                    />
-                  </div>
+                  <CodeEditor
+                    value={levelContent.editableCSS}
+                    language='css'
+                    onChange={handleCSSChange}
+                    title='Your Code'
+                    emoji='✏️'
+                    headerClass='header-css'
+                    validation={levelContent.cssValidation}
+                  />
                 </Panel>
               </PanelGroup>
             </div>
