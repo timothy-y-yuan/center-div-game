@@ -27,8 +27,11 @@ Ever wondered how many ways there are to center a div? This game takes you throu
 3. **Grid Power** - Centering with CSS Grid
 4. **Absolute Beginner** - Positioning and transforms
 5. **Text-Align Hack** - Old-school inline-block techniques
-6. **Flexbox Pro** - Advanced flexbox layouts
-7. **Grid Master** - Complex grid centering scenarios
+6. **Table Cell Vibes** - Old but reliable table-cell display
+7. **CSS Calc() Wizard** - Math meets CSS with calc()
+8. **Margin Auto Magic** - Advanced absolute positioning with margin auto
+9. **Multiple Targets** - Center multiple elements as a group
+10. **CSS Ninja Final Boss** - Master-level centering with modern CSS
 
 ## 🚀 Getting Started
 
@@ -50,8 +53,8 @@ npm test
 
 - **React 19** - UI framework
 - **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Styling
+- **Vite 7** - Build tool and dev server
+- **Tailwind CSS v4** - Styling
 - **Monaco Editor** - Code editor component
 - **React Resizable Panels** - Adjustable layout panels
 - **Vitest** - Testing framework
@@ -87,10 +90,14 @@ By completing this game, you'll master:
 - **Margin-based centering** (`margin: 0 auto`)
 - **Flexbox centering** (`display: flex`, `justify-content`, `align-items`)
 - **Grid centering** (`display: grid`, `place-items`)
-- **Absolute positioning** with transforms
+- **Absolute positioning** with transforms (`position: absolute`, `transform: translate`)
 - **Text-align techniques** for inline elements
-- **Vertical-align methods**
-- **Modern CSS best practices**
+- **Table-cell display** for legacy centering (`display: table-cell`)
+- **CSS calc()** for mathematical positioning
+- **Advanced margin auto** techniques with absolute positioning
+- **Multi-element centering** with flex direction
+- **Modern responsive techniques** (`clamp()`, `box-shadow`)
+- **CSS specificity** and `!important` override strategies
 
 ## 🤝 Contributing
 
