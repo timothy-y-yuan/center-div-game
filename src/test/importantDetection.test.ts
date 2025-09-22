@@ -2,19 +2,15 @@ import { describe, it, expect } from 'vitest';
 import { containsImportant } from '../utils/cssValidator';
 
 describe('containsImportant', () => {
-  it('should detect !important in simple CSS', () => {
-    const css = '.target { margin: 0 auto !important; }';
-    expect(containsImportant(css)).toBe(true);
-  });
-
-  it('should detect !important with spaces', () => {
-    const css = '.target { margin: 0 auto ! important; }';
-    expect(containsImportant(css)).toBe(true);
-  });
-
-  it('should detect !important case insensitively', () => {
-    const css = '.target { margin: 0 auto !IMPORTANT; }';
-    expect(containsImportant(css)).toBe(true);
+  it('should detect !important in various formats', () => {
+    // Simple CSS
+    expect(containsImportant('.target { margin: 0 auto !important; }')).toBe(true);
+    
+    // With spaces
+    expect(containsImportant('.target { margin: 0 auto ! important; }')).toBe(true);
+    
+    // Case insensitive
+    expect(containsImportant('.target { margin: 0 auto !IMPORTANT; }')).toBe(true);
   });
 
   it('should not detect !important in comments', () => {
@@ -49,10 +45,5 @@ describe('containsImportant', () => {
 
   it('should handle empty CSS', () => {
     expect(containsImportant('')).toBe(false);
-  });
-
-  it('should handle CSS with only comments', () => {
-    const css = '/* This is a comment with !important in it */';
-    expect(containsImportant(css)).toBe(false);
   });
 });
