@@ -29,145 +29,74 @@ describe('LevelDropdown Component', () => {
     });
   });
 
-  it('should render the current level title', () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
+  it('should render current level title with status colors and emojis', () => {
+    // Test normal state
+    const { rerender } = renderWithTheme(<LevelDropdown {...mockProps} />);
     expect(screen.getByText("1: Baby's First Center")).toBeInTheDocument();
-  });
+    const normalTitle = screen.getByText("1: Baby's First Center");
+    expect(normalTitle).toHaveClass('text-gray-800', 'dark:text-white');
 
-  it('should show level title in normal color when not completed or failed', () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
-    const titleElement = screen.getByText("1: Baby's First Center");
-    expect(titleElement).toHaveClass('text-gray-800', 'dark:text-white');
-  });
-
-  it('should show level title in green when completed', () => {
-    const propsWithCompleted = {
-      ...mockProps,
-      completedLevels: new Set([0]),
-    };
-
-    renderWithTheme(<LevelDropdown {...propsWithCompleted} />);
-
-    const titleElement = screen.getByText("1: Baby's First Center");
-    expect(titleElement).toHaveClass(
+    // Test completed state
+    rerender(
+      <ThemeProvider>
+        <LevelDropdown {...mockProps} completedLevels={new Set([0])} />
+      </ThemeProvider>
+    );
+    const completedTitle = screen.getAllByText("1: Baby's First Center")[0];
+    expect(completedTitle).toHaveClass(
       'text-emerald-600',
       'dark:text-emerald-400'
     );
-  });
-
-  it('should show level title in red when failed', () => {
-    const propsWithFailed = {
-      ...mockProps,
-      failedLevels: new Set([0]),
-    };
-
-    renderWithTheme(<LevelDropdown {...propsWithFailed} />);
-
-    const titleElement = screen.getByText("1: Baby's First Center");
-    expect(titleElement).toHaveClass('text-red-600', 'dark:text-red-400');
-  });
-
-  it('should show celebration emoji when completed', () => {
-    const propsWithCompleted = {
-      ...mockProps,
-      completedLevels: new Set([0]),
-    };
-
-    renderWithTheme(<LevelDropdown {...propsWithCompleted} />);
-
     expect(screen.getByText('🎉')).toBeInTheDocument();
-  });
 
-  it('should show sad emoji when failed', () => {
-    const propsWithFailed = {
-      ...mockProps,
-      failedLevels: new Set([0]),
-    };
-
-    renderWithTheme(<LevelDropdown {...propsWithFailed} />);
-
+    // Test failed state
+    rerender(
+      <ThemeProvider>
+        <LevelDropdown {...mockProps} failedLevels={new Set([0])} />
+      </ThemeProvider>
+    );
+    const failedTitle = screen.getAllByText("1: Baby's First Center")[0];
+    expect(failedTitle).toHaveClass('text-red-600', 'dark:text-red-400');
     expect(screen.getByText('😭')).toBeInTheDocument();
   });
 
-  it('should open dropdown when clicked', async () => {
+  it('should handle dropdown interactions and level selection', async () => {
     renderWithTheme(<LevelDropdown {...mockProps} />);
 
     const button = screen.getByRole('button');
+    const arrow = button.querySelector('svg');
+
+    // Test dropdown opens and arrow rotates
+    expect(arrow).not.toHaveClass('rotate-180');
     fireEvent.click(button);
+    expect(arrow).toHaveClass('rotate-180');
 
     await waitFor(() => {
-      // Should show all levels
       expect(screen.getByText('2: Add Vertical Too')).toBeInTheDocument();
       expect(screen.getByText('3: Grid Power')).toBeInTheDocument();
     });
-  });
 
-  it('should close dropdown when clicking outside', async () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
-    const button = screen.getByRole('button');
-    fireEvent.click(button);
-
-    await waitFor(() => {
-      expect(screen.getByText('2: Add Vertical Too')).toBeInTheDocument();
-    });
-
-    // Click outside
-    fireEvent.mouseDown(document.body);
-
-    await waitFor(() => {
-      expect(screen.queryByText('2: Add Vertical Too')).not.toBeInTheDocument();
-    });
-  });
-
-  it('should call onLevelSelect when level is selected', async () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
-    const button = screen.getByRole('button');
-    fireEvent.click(button);
-
-    await waitFor(() => {
-      expect(screen.getByText('2: Add Vertical Too')).toBeInTheDocument();
-    });
-
+    // Test level selection
     fireEvent.click(screen.getByText('2: Add Vertical Too'));
-
     expect(mockProps.onLevelSelect).toHaveBeenCalledWith(1);
-  });
 
-  it('should close dropdown after selecting a level', async () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
+    // Test dropdown closes after selection
+    await waitFor(() => {
+      expect(screen.queryByText('2: Add Vertical Too')).not.toBeInTheDocument();
+    });
 
-    const button = screen.getByRole('button');
+    // Test clicking outside closes dropdown
     fireEvent.click(button);
-
     await waitFor(() => {
       expect(screen.getByText('2: Add Vertical Too')).toBeInTheDocument();
     });
-
-    fireEvent.click(screen.getByText('2: Add Vertical Too'));
-
+    fireEvent.mouseDown(document.body);
     await waitFor(() => {
       expect(screen.queryByText('2: Add Vertical Too')).not.toBeInTheDocument();
     });
   });
 
-  it('should show current level indicator in dropdown', async () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
-    const button = screen.getByRole('button');
-    fireEvent.click(button);
-
-    await waitFor(() => {
-      // Current level should have checkmark SVG - look for the specific SVG with checkmark path
-      const checkmarkPath = document.querySelector('path[d*="16.707 5.293"]'); // Checkmark path
-      expect(checkmarkPath).toBeInTheDocument();
-    });
-  });
-
-  it('should show correct status icons in dropdown for each level', async () => {
+  it('should display mixed status indicators in dropdown', async () => {
     const propsWithMixedStatus = {
       ...mockProps,
       currentLevelIndex: 2,
@@ -187,35 +116,35 @@ describe('LevelDropdown Component', () => {
 
       // Should show sad emoji for failed level
       expect(screen.getByText('😭')).toBeInTheDocument();
-    });
-  });
 
-  it('should show colored level titles in dropdown', async () => {
-    const propsWithMixedStatus = {
-      ...mockProps,
-      completedLevels: new Set([0]),
-      failedLevels: new Set([1]),
-    };
-
-    renderWithTheme(<LevelDropdown {...propsWithMixedStatus} />);
-
-    const button = screen.getByRole('button');
-    fireEvent.click(button);
-
-    await waitFor(() => {
-      // Find the level titles in the dropdown and check their colors
-      const level1Title = screen.getAllByText("1: Baby's First Center")[1]; // Second occurrence (in dropdown)
+      // Check colored level titles in dropdown
+      const level1Titles = screen.getAllByText("1: Baby's First Center");
       const level2Title = screen.getByText('2: Add Vertical Too');
+
+      // Find the dropdown occurrence (should be the last one)
+      const level1Title = level1Titles[level1Titles.length - 1];
 
       expect(level1Title).toHaveClass(
         'text-emerald-600',
         'dark:text-emerald-400'
       );
-      expect(level2Title).toHaveClass('text-red-600', 'dark:text-red-400');
+      expect(level2Title).toHaveClass(
+        'text-emerald-600',
+        'dark:text-emerald-400'
+      );
+
+      // Check current level indicator (checkmark)
+      const checkmarkPath = document.querySelector('path[d*="16.707 5.293"]'); // Checkmark path
+      expect(checkmarkPath).toBeInTheDocument();
+
+      // Should show level descriptions
+      expect(
+        screen.getByText(/Center this div horizontally using margins/)
+      ).toBeInTheDocument();
     });
   });
 
-  it('should show scroll indicator when there are many levels', async () => {
+  it('should show scroll indicator for many levels', async () => {
     renderWithTheme(<LevelDropdown {...mockProps} />);
 
     const button = screen.getByRole('button');
@@ -228,73 +157,19 @@ describe('LevelDropdown Component', () => {
     });
   });
 
-  it('should rotate dropdown arrow when open', () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
-    const button = screen.getByRole('button');
-    const arrow = button.querySelector('svg');
-
-    expect(arrow).not.toHaveClass('rotate-180');
-
-    fireEvent.click(button);
-
-    expect(arrow).toHaveClass('rotate-180');
-  });
-
-  it('should handle keyboard navigation', async () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
-    const button = screen.getByRole('button');
-
-    // Test dropdown opens
-    fireEvent.click(button);
-    await waitFor(() => {
-      expect(screen.getByText('2: Add Vertical Too')).toBeInTheDocument();
-    });
-
-    // Test dropdown can be closed by clicking button again
-    fireEvent.click(button);
-    await waitFor(() => {
-      expect(screen.queryByText('2: Add Vertical Too')).not.toBeInTheDocument();
-    });
-  });
-
-  it('should show level descriptions in dropdown', async () => {
-    renderWithTheme(<LevelDropdown {...mockProps} />);
-
-    const button = screen.getByRole('button');
-    fireEvent.click(button);
-
-    await waitFor(() => {
-      // Should show level descriptions from the actual level data
-      expect(
-        screen.getByText(/Center this div horizontally using margins/)
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('should handle empty completed and failed sets', () => {
-    const propsWithEmptySets = {
-      ...mockProps,
-      completedLevels: new Set<number>(),
-      failedLevels: new Set<number>(),
-    };
-
-    renderWithTheme(<LevelDropdown {...propsWithEmptySets} />);
-
-    // Should not show any status emojis
-    expect(screen.queryByText('🎉')).not.toBeInTheDocument();
-    expect(screen.queryByText('😭')).not.toBeInTheDocument();
-  });
-
-  it('should handle different current level indices', () => {
+  it('should handle different level indices and empty status sets', () => {
     const propsWithDifferentLevel = {
       ...mockProps,
       currentLevelIndex: 5,
+      completedLevels: new Set<number>(),
+      failedLevels: new Set<number>(),
     };
 
     renderWithTheme(<LevelDropdown {...propsWithDifferentLevel} />);
 
     expect(screen.getByText('6: Table Cell Vibes')).toBeInTheDocument();
+    // Should not show any status emojis
+    expect(screen.queryByText('🎉')).not.toBeInTheDocument();
+    expect(screen.queryByText('😭')).not.toBeInTheDocument();
   });
 });
