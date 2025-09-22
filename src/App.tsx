@@ -150,9 +150,7 @@ function App() {
               <PanelGroup direction='vertical'>
                 <Panel defaultSize={50} minSize={30}>
                   <div className='h-full flex flex-col'>
-                    <CodeDisplay
-                      level={currentLevel}
-                    />
+                    <CodeDisplay level={currentLevel} />
                   </div>
                 </Panel>
 

@@ -5,10 +5,6 @@
 
 import { memo } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import {
-  oneDark,
-  oneLight,
-} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useTheme } from '../hooks/useTheme';
 import type { Level } from '../types';
 
@@ -20,9 +16,7 @@ interface CodeDisplayProps {
  * Simple code display component for non-editable HTML and CSS
  * Uses react-syntax-highlighter with Prism for syntax highlighting
  */
-const CodeDisplay = memo(function CodeDisplay({
-  level,
-}: CodeDisplayProps) {
+const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
   const { actualTheme } = useTheme();
 
   return (

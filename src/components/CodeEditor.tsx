@@ -99,7 +99,10 @@ const CodeEditor = memo(function CodeEditor({
       {validation && !validation.isValid && (
         <div className='px-4 py-2 border-t border-red-300/40 dark:border-red-400/30 bg-red-50/50 dark:bg-red-500/10'>
           {validation.errors.map((error, index) => (
-            <div key={index} className='text-xs text-red-700 dark:text-red-300 flex items-center gap-1'>
+            <div
+              key={index}
+              className='text-xs text-red-700 dark:text-red-300 flex items-center gap-1'
+            >
               <span className='w-1 h-1 bg-red-500 dark:bg-red-400 rounded-full flex-shrink-0'></span>
               {error.message}
             </div>

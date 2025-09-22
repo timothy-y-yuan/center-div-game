@@ -48,7 +48,7 @@ describe('App Component', () => {
 
     expect(screen.getByText(/Can You Center The/)).toBeInTheDocument();
     expect(screen.getAllByTestId('monaco-editor-css')).toHaveLength(1); // CSS editor only
-    expect(screen.getByText('Given Code')).toBeInTheDocument(); // CodeDisplay component
+    expect(screen.getByText('container')).toBeInTheDocument();
     expect(screen.getByText('Your Code')).toBeInTheDocument(); // CSS editor
     expect(screen.getByText('Check')).toBeInTheDocument();
     expect(screen.getByText('Hint')).toBeInTheDocument();
