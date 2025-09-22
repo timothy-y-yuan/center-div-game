@@ -92,9 +92,9 @@ export default function SettingsDropdown({
       <button
         ref={buttonRef}
         onClick={handleToggle}
-        className='inline-flex items-center gap-3 bg-white bg-opacity-10 dark:bg-white dark:bg-opacity-10 rounded-lg px-4 py-2 glass hover:bg-opacity-20 dark:hover:bg-opacity-20 transition-all duration-200 text-sm font-medium'
+        className='flex items-center gap-3 bg-white bg-opacity-10 dark:bg-white dark:bg-opacity-10 rounded-lg px-4 py-2 glass hover:bg-opacity-20 dark:hover:bg-opacity-20 transition-all duration-200 text-sm font-medium min-h-[38px]'
       >
-        <span className='text-lg'>⚙️</span>
+        <span className='text-sm font-semibold'>⚙️</span>
         <svg
           className={`w-4 h-4 text-gray-600 dark:text-gray-300 transition-transform ${
             isOpen ? 'rotate-180' : ''
