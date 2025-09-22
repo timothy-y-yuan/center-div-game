@@ -644,7 +644,7 @@ div.container div.target {
         'text-align',
         'line-height',
       ],
-      allowedProperties: ['*'], // Allow all properties for the secret level
+      allowedProperties: ['*'],
       initialEditableCSS: '  /* come on. just center me. */',
     },
   },

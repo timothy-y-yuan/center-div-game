@@ -31,42 +31,22 @@ function App() {
   const gameState = useGameState();
   const [showImportantModal, setShowImportantModal] = useState(false);
 
-  // Combined levels array that includes secret level when unlocked
-  const allLevels = useMemo(() => {
-    const baseLevels = [...levels];
-    if (gameState.isSecretLevelUnlocked) {
-      baseLevels.push(SECRET_IMPORTANT_LEVEL);
-    }
-    return baseLevels;
-  }, [gameState.isSecretLevelUnlocked]);
+  const allLevels = useMemo(() => 
+    gameState.isSecretLevelUnlocked ? [...levels, SECRET_IMPORTANT_LEVEL] : levels
+  , [gameState.isSecretLevelUnlocked]);
 
-  // Current level reference - handle both regular levels and secret level
   const currentLevel = useMemo(() => {
-    // Handle secret level (index 999)
-    if (gameState.currentLevel === 999) {
-      // Only return secret level if it's actually unlocked
-      if (gameState.isSecretLevelUnlocked) {
-        return SECRET_IMPORTANT_LEVEL;
-      }
-      // If secret level is not unlocked but currentLevel is 999, fallback to first level
-      return levels[0];
+    if (gameState.currentLevel === 999 && gameState.isSecretLevelUnlocked) {
+      return SECRET_IMPORTANT_LEVEL;
     }
-    // Handle normal levels
-    if (gameState.currentLevel >= 0 && gameState.currentLevel < levels.length) {
-      return levels[gameState.currentLevel];
-    }
-    // Fallback to first level
-    return levels[0];
+    return levels[gameState.currentLevel] || levels[0];
   }, [gameState.currentLevel, gameState.isSecretLevelUnlocked]);
 
-  // Current level index for Header component - convert secret level to array index
-  const currentLevelIndex = useMemo(() => {
-    if (gameState.currentLevel === 999 && gameState.isSecretLevelUnlocked) {
-      // Secret level is at the end of allLevels array
-      return allLevels.length - 1;
-    }
-    return gameState.currentLevel;
-  }, [gameState.currentLevel, gameState.isSecretLevelUnlocked, allLevels.length]);
+  const currentLevelIndex = useMemo(() => 
+    gameState.currentLevel === 999 && gameState.isSecretLevelUnlocked 
+      ? allLevels.length - 1 
+      : gameState.currentLevel
+  , [gameState.currentLevel, gameState.isSecretLevelUnlocked, allLevels.length]);
 
   const levelContent = useLevelContent(currentLevel);
 
