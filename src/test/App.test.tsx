@@ -236,10 +236,10 @@ describe('App Component', () => {
   it('should show correct player titles based on completed levels', () => {
     const testCases = [
       { completed: 0, title: '0.001x Engineer' },
-      { completed: 1, title: 'Copy-Paste Rookie' },
-      { completed: 2, title: 'Stack Overflow Searcher' },
-      { completed: 5, title: 'CSS Semicolon Forgetter' },
-      { completed: 10, title: 'CSS Ninja' },
+      { completed: 1, title: 'Copy-Paste Padawan' },
+      { completed: 2, title: 'Stack Overflow Scholar' },
+      { completed: 5, title: 'CSS Semicolon Slayer' },
+      { completed: 10, title: 'CSS Überwizardninjamaster' },
     ];
 
     testCases.forEach(({ completed, title }) => {

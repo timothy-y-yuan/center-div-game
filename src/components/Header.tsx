@@ -45,16 +45,16 @@ const Header = memo(function Header({
   const getPlayerTitle = (completedCount: number) => {
     const titles = [
       '0.001x Engineer',
-      'Copy-Paste Rookie',
-      'Stack Overflow Searcher',
-      'Margin Margin Margin',
-      'Flexbox Fumbler',
-      'CSS Semicolon Forgetter',
-      'Div Soup Chef',
-      'Bootstrap Dependent',
-      'CSS Grid Apprentice',
-      'Layout Learner',
-      'CSS Ninja',
+      'Copy-Paste Padawan',
+      'Stack Overflow Scholar',
+      '!important Abuser',
+      'Flexbox Whisperer',
+      'CSS Semicolon Slayer',
+      'Bootstrap Escapee',
+      'Grid Master Race',
+      'Layout Wizard Lord',
+      'CSS Chaos Architect',
+      'CSS Überwizardninjamaster',
     ];
     return titles[Math.min(completedCount, titles.length - 1)];
   };

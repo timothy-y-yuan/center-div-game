@@ -119,16 +119,16 @@ export const EDUCATIONAL_CONTENT = {
   /** Player titles based on completion progress */
   PLAYER_TITLES: {
     0: '0.001x Engineer',
-    1: 'Intern',
-    2: 'Junior Developer',
-    3: 'Developer',
-    4: 'Senior Developer',
-    5: 'Staff Engineer',
-    6: 'Principal Engineer',
-    7: 'Distinguished Engineer',
-    8: 'CSS Wizard',
-    9: 'CSS Master',
-    10: 'CSS Grandmaster',
+    1: 'Copy-Paste Padawan',
+    2: 'Stack Overflow Scholar',
+    3: '!important Abuser',
+    4: 'Flexbox Whisperer',
+    5: 'CSS Semicolon Slayer',
+    6: 'Bootstrap Escapee',
+    7: 'Grid Master Race',
+    8: 'Layout Wizard Lord',
+    9: 'CSS Chaos Architect',
+    10: 'CSS Überwizardninjamaster',
   },
 
   /** Completion messages for different achievement levels */
