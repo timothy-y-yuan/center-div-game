@@ -118,10 +118,58 @@ This project maintains exceptionally high code quality and readability standards
 - All code must be written with obsessive attention to readability and clarity
 - TypeScript must be used properly with comprehensive type safety
 - Every function, interface, and complex logic must have clear, descriptive names
-- Comments should explain _why_, not _what_ (the code should be self-documenting)
+- **CRITICAL: Comments should explain _why_, not _what_ (the code should be self-documenting)**
 - Prefer longer, descriptive variable names over cryptic abbreviations
 - Break complex logic into smaller, well-named functions
 - Use consistent patterns and conventions throughout the codebase
+
+**Comment Guidelines (STRICTLY ENFORCED):**
+
+Comments are code smell when they merely describe what the code obviously does. Write self-documenting code instead.
+
+**❌ BAD - Useless descriptive comments:**
+
+```typescript
+/** Whether the level is completed */
+readonly isCompleted: boolean;
+
+/** Distance from perfect horizontal center in pixels */
+readonly horizontalOffset: number;
+
+/** Regular expression for parsing CSS rules */
+CSS_RULE_REGEX: /([^{]+)\{([^}]*)\}/g;
+
+// Set the user's name
+const userName = user.name;
+
+// Check if the user is authenticated
+if (user.isAuthenticated) {
+```
+
+**✅ GOOD - Comments explaining why, when, or complex business logic:**
+
+```typescript
+// Using a 5px tolerance because smaller values cause false negatives
+// due to sub-pixel rendering differences across browsers
+const CENTERING_TOLERANCE = 5;
+
+// Fallback to polling if ResizeObserver isn't supported (IE11)
+if (!window.ResizeObserver) {
+  startPollingForChanges();
+}
+
+// Complex algorithm explanation for non-obvious business logic
+// This uses the Sutherland-Hodgman clipping algorithm because...
+function clipPolygon(polygon: Point[], bounds: Rectangle): Point[] {
+```
+
+**✅ EVEN BETTER - No comments needed when code is self-documenting:**
+
+```typescript
+const isCenteredWithinTolerance = Math.abs(offset) <= CENTERING_TOLERANCE;
+const hasValidAuthentication = user.isAuthenticated && !user.tokenExpired;
+const shouldFallbackToPolling = !window.ResizeObserver;
+```
 
 **Pull Request Requirements:**
 Before any pull request can be approved, ALL of the following must pass:
@@ -185,6 +233,7 @@ Pull requests will be automatically rejected if:
 - Prettier formatting violations exist (run `npm run format` to fix)
 - Code contains unclear variable names or functions
 - Code lacks type safety or uses `any` types inappropriately
+- **Code contains useless comments that merely describe what the code obviously does**
 
 ### Font Configuration
 
