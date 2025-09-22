@@ -3,14 +3,16 @@
  * Orchestrates the Center Div Game with clean architecture and custom hooks
  */
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import Header from './components/Header';
 import CodeEditor from './components/CodeEditor';
 import Preview from './components/Preview';
 import ConfettiEffect from './components/ConfettiEffect';
+import ImportantModal from './components/ImportantModal';
 import { levels } from './data/levels';
 import { useGameState, useLevelContent } from './hooks';
+import { containsImportant } from './utils/cssValidator';
 import CodeDisplay from './components/CodeDisplay';
 
 // ============================================================================
@@ -28,6 +30,9 @@ function App() {
 
   // Game state management
   const gameState = useGameState();
+
+  // Modal state for !important detection
+  const [showImportantModal, setShowImportantModal] = useState(false);
 
   // Current level reference
   const currentLevel = useMemo(
@@ -88,10 +93,30 @@ function App() {
   };
 
   /**
-   * Handles CSS changes with validation
+   * Handles CSS changes with validation and !important detection
    */
   const handleCSSChange = (newEditableCSS: string) => {
+    // Check for !important usage first
+    if (containsImportant(newEditableCSS)) {
+      // Instantly fail the level
+      gameState.revealAnswer();
+
+      // Show the modal
+      setShowImportantModal(true);
+
+      // Don't update the CSS - reject the change
+      return;
+    }
+
+    // If no !important, proceed with normal validation
     levelContent.updateCSS(newEditableCSS);
+  };
+
+  /**
+   * Handles closing the !important modal
+   */
+  const handleCloseImportantModal = () => {
+    setShowImportantModal(false);
   };
 
   return (
@@ -177,6 +202,11 @@ function App() {
       <ConfettiEffect
         isVisible={gameState.showConfetti}
         onComplete={gameState.clearConfetti}
+      />
+
+      <ImportantModal
+        isOpen={showImportantModal}
+        onClose={handleCloseImportantModal}
       />
     </div>
   );
