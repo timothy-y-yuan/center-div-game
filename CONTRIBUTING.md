@@ -6,7 +6,7 @@ Thank you for your interest in contributing to the Center Div Game! This documen
 
 ### Prerequisites
 
-- Node.js (version 18, 20, or 22)
+- Node.js (version 22+)
 - npm (comes with Node.js)
 - Git
 
