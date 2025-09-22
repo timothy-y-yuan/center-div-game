@@ -48,7 +48,7 @@ npm run typecheck
 - `src/components/ChatbotHint.tsx` - Interactive chatbot-style hint interface
 - `src/data/levels.ts` - **10 comprehensive levels** with detailed explanations and solutions
 - `src/types.ts` - Comprehensive TypeScript interfaces for levels, progress, and user data
-- `src/contexts/ThemeContext.tsx` - Theme management context
+- `src/contexts/themeContext.ts` - Theme management context
 
 ### Key Technologies
 
@@ -108,10 +108,11 @@ This project maintains exceptionally high code quality and readability standards
 #### Code Quality Requirements
 
 **Readability Standards:**
+
 - All code must be written with obsessive attention to readability and clarity
 - TypeScript must be used properly with comprehensive type safety
 - Every function, interface, and complex logic must have clear, descriptive names
-- Comments should explain *why*, not *what* (the code should be self-documenting)
+- Comments should explain _why_, not _what_ (the code should be self-documenting)
 - Prefer longer, descriptive variable names over cryptic abbreviations
 - Break complex logic into smaller, well-named functions
 - Use consistent patterns and conventions throughout the codebase
@@ -144,12 +145,14 @@ npm run dev
 ```
 
 **Why this matters:**
+
 - Tests catch breaking changes immediately
 - Linting enforces code quality standards
 - Build failures indicate type safety issues
 - Manual testing verifies user experience
 
 **Test failure workflow:**
+
 1. Run tests after changes: `npm run test:run`
 2. If tests fail, update them to match new interfaces/behavior
 3. Ensure new functionality has appropriate test coverage
@@ -159,11 +162,13 @@ npm run dev
 7. Only then commit changes
 
 **Branching reminder:**
+
 - ALWAYS create new branches from `main`, never from feature branches
 - Use: `git checkout main && git checkout -b feature/your-feature-name`
 
 **Automatic Rejection Criteria:**
 Pull requests will be automatically rejected if:
+
 - Build fails with TypeScript errors
 - Any tests fail or are broken
 - ESLint warnings exist
@@ -253,7 +258,7 @@ src/
 │   ├── ThemeDropdown.tsx      # Theme selection interface
 │   └── ChatbotHint.tsx        # Interactive hint chatbot
 ├── contexts/
-│   └── ThemeContext.tsx       # Theme state management
+│   └── themeContext.ts       # Theme state management
 ├── data/
 │   └── levels.ts              # 10 comprehensive level definitions
 ├── hooks/                     # (empty, reserved for future)
@@ -275,6 +280,7 @@ src/
 This project maintains exceptionally high readability and code quality standards. Every single contribution must meet these requirements:
 
 **Mandatory Validation Checklist:**
+
 - [ ] `npm run build` completes successfully without TypeScript errors
 - [ ] `npm run test:run` passes all tests completely
 - [ ] `npm run lint` passes without any warnings
@@ -285,6 +291,7 @@ This project maintains exceptionally high readability and code quality standards
 - [ ] Manual testing confirms game functionality works
 
 **Code Quality Standards:**
+
 - Write code with obsessive attention to clarity and readability
 - Use self-documenting code practices (clear names, obvious structure)
 - Break complex logic into smaller, well-named functions
