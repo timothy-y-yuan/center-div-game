@@ -296,3 +296,104 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
+
+/* Syntax highlighter variables - using official VS Code colors */
+:root {
+  --syntax-text: #383a42;
+  --syntax-bg: #fafafa;
+  --syntax-comment: #a0a1a7;
+  --syntax-tag: #e45649;
+  --syntax-attr-name: #986801;
+  --syntax-attr-value: #50a14f;
+  --syntax-string: #50a14f;
+  --syntax-property: #4078f2;
+  --syntax-selector: #a626a4;
+  --syntax-keyword: #a626a4;
+  --syntax-punctuation: #383a42;
+}
+
+.dark {
+  --syntax-text: #d4d4d4;
+  --syntax-bg: #1e1e1e;
+  --syntax-comment: #6a9955;
+  --syntax-tag: #569cd6;
+  --syntax-attr-name: #9cdcfe;
+  --syntax-attr-value: #ce9178;
+  --syntax-string: #ce9178;
+  --syntax-property: #9cdcfe;
+  --syntax-selector: #d7ba7d;
+  --syntax-keyword: #c586c0;
+  --syntax-punctuation: #d4d4d4;
+}
+
+/* Syntax highlighter styling */
+.syntax-highlighter,
+.syntax-highlighter *,
+.syntax-highlighter pre,
+.syntax-highlighter code,
+pre.syntax-highlighter,
+code.syntax-highlighter {
+  font-family:
+    'Victor Mono', 'SF Mono', Monaco, Menlo, 'Ubuntu Mono', Consolas,
+    'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  font-variant-ligatures: normal;
+  font-feature-settings:
+    'liga' 1,
+    'calt' 1;
+}
+
+.syntax-highlighter {
+  margin: 0;
+  padding: 16px;
+  background: var(--syntax-bg);
+  color: var(--syntax-text);
+  text-shadow: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Set default color for untokenized text */
+.syntax-highlighter *,
+.syntax-highlighter span {
+  color: var(--syntax-text);
+}
+
+/* Token colors using variables */
+.syntax-highlighter .token.comment,
+.syntax-highlighter .token.prolog,
+.syntax-highlighter .token.doctype,
+.syntax-highlighter .token.cdata {
+  color: var(--syntax-comment);
+}
+
+.syntax-highlighter .token.tag {
+  color: var(--syntax-tag);
+}
+
+.syntax-highlighter .token.attr-name {
+  color: var(--syntax-attr-name);
+}
+
+.syntax-highlighter .token.attr-value,
+.syntax-highlighter .token.string {
+  color: var(--syntax-attr-value);
+}
+
+.syntax-highlighter .token.property {
+  color: var(--syntax-property);
+}
+
+.syntax-highlighter .token.selector {
+  color: var(--syntax-selector);
+}
+
+.syntax-highlighter .token.keyword {
+  color: var(--syntax-keyword);
+}
+
+.syntax-highlighter .token.punctuation {
+  color: var(--syntax-punctuation);
+}

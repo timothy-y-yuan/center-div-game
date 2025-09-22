@@ -152,9 +152,6 @@ function App() {
                   <div className='h-full flex flex-col'>
                     <CodeDisplay
                       level={currentLevel}
-                      title='Given Code'
-                      emoji='📋'
-                      headerClass='header-html'
                     />
                   </div>
                 </Panel>
