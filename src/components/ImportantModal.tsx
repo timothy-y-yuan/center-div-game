@@ -193,8 +193,8 @@ export default function ImportantModal({
                   }`}
                 >
                   <span className='text-base mr-1'>💡</span>
-                  <strong>Pro tip:</strong> `!important` breaks CSS's natural cascade and specificity rules, making your code harder to maintain and debug. 
-                  It creates a hierarchy where only more `!important` rules can override it, leading to "!important wars" in your codebase. 
+                  <strong>Pro tip:</strong> <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>!important</code> breaks CSS's natural cascade and specificity rules, making your code harder to maintain and debug. 
+                  It creates a hierarchy where only more <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>!important</code> rules can override it, leading to "!important wars" in your codebase. 
                   Instead, master specificity, understand the cascade, and use proper CSS architecture - 
                   your future self (and your team) will thank you!
                   <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
