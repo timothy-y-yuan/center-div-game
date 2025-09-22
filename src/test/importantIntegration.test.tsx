@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import { ThemeProvider } from '../contexts/ThemeProvider';
@@ -47,7 +47,7 @@ describe('!important Detection Integration', () => {
     // Clear localStorage before each test
     localStorage.clear();
     vi.clearAllMocks();
-    
+
     // Mock getBoundingClientRect
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
       x: 0,
@@ -74,10 +74,10 @@ describe('!important Detection Integration', () => {
 
   it('should render App component with ImportantModal available', () => {
     renderWithTheme(<App />);
-    
+
     // The app should render without crashing
     expect(screen.getByText('Can You Center The <div>?')).toBeInTheDocument();
-    
+
     // Modal should not be visible initially
     expect(screen.queryByText('!important Detected')).not.toBeInTheDocument();
   });

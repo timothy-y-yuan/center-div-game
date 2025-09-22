@@ -13,7 +13,7 @@ import { createValidationError } from './typeHelpers';
 export function containsImportant(css: string): boolean {
   // Remove comments first to avoid false positives
   const cleanCSS = css.replace(/\/\*[\s\S]*?\*\//g, '');
-  
+
   // Check for !important declarations (case insensitive)
   return /!\s*important/i.test(cleanCSS);
 }

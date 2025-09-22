@@ -4,13 +4,19 @@ import { containsImportant } from '../utils/cssValidator';
 describe('containsImportant', () => {
   it('should detect !important in various formats', () => {
     // Simple CSS
-    expect(containsImportant('.target { margin: 0 auto !important; }')).toBe(true);
-    
+    expect(containsImportant('.target { margin: 0 auto !important; }')).toBe(
+      true
+    );
+
     // With spaces
-    expect(containsImportant('.target { margin: 0 auto ! important; }')).toBe(true);
-    
+    expect(containsImportant('.target { margin: 0 auto ! important; }')).toBe(
+      true
+    );
+
     // Case insensitive
-    expect(containsImportant('.target { margin: 0 auto !IMPORTANT; }')).toBe(true);
+    expect(containsImportant('.target { margin: 0 auto !IMPORTANT; }')).toBe(
+      true
+    );
   });
 
   it('should not detect !important in comments', () => {

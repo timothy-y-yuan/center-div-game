@@ -100,14 +100,14 @@ function App() {
     if (containsImportant(newEditableCSS)) {
       // Instantly fail the level
       gameState.revealAnswer();
-      
+
       // Show the modal
       setShowImportantModal(true);
-      
+
       // Don't update the CSS - reject the change
       return;
     }
-    
+
     // If no !important, proceed with normal validation
     levelContent.updateCSS(newEditableCSS);
   };

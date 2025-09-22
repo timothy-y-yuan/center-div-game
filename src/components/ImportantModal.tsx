@@ -7,7 +7,10 @@ interface ImportantModalProps {
   onClose: () => void;
 }
 
-export default function ImportantModal({ isOpen, onClose }: ImportantModalProps) {
+export default function ImportantModal({
+  isOpen,
+  onClose,
+}: ImportantModalProps) {
   const { actualTheme } = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -57,7 +60,9 @@ export default function ImportantModal({ isOpen, onClose }: ImportantModalProps)
           <div className='p-4 bg-gradient-to-r from-red-500 to-red-600'>
             <div className='flex items-center gap-3'>
               <span className='text-2xl'>🚫</span>
-              <h3 className='font-bold text-white text-lg'>!important Detected</h3>
+              <h3 className='font-bold text-white text-lg'>
+                !important Detected
+              </h3>
             </div>
           </div>
 
@@ -68,17 +73,20 @@ export default function ImportantModal({ isOpen, onClose }: ImportantModalProps)
                 actualTheme === 'dark' ? 'text-gray-200' : 'text-gray-700'
               }`}
             >
-              Whoa there! Using <code className='bg-red-100 dark:bg-red-900 px-1 py-0.5 rounded text-red-700 dark:text-red-300 font-mono text-sm'>!important</code> is 
-              not allowed in this game.
+              Whoa there! Using{' '}
+              <code className='bg-red-100 dark:bg-red-900 px-1 py-0.5 rounded text-red-700 dark:text-red-300 font-mono text-sm'>
+                !important
+              </code>{' '}
+              is not allowed in this game.
             </p>
-            
+
             <p
               className={`text-sm leading-relaxed mb-6 ${
                 actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
               }`}
             >
-              The whole point is to learn proper CSS techniques! Try solving this level 
-              with regular CSS properties instead.
+              The whole point is to learn proper CSS techniques! Try solving
+              this level with regular CSS properties instead.
             </p>
 
             {/* Close button */}
