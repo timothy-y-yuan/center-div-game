@@ -53,14 +53,14 @@ describe('Enhanced ImportantModal - Stage 2', () => {
     expect(
       screen.getByText(/The ENTIRE point of this game is to learn/)
     ).toBeInTheDocument();
-    expect(screen.getByText(/proper/)).toBeInTheDocument();
+    expect(screen.getAllByText(/proper/).length).toBeGreaterThan(0);
     expect(screen.getByText(/CSS techniques!/)).toBeInTheDocument();
     expect(screen.getByText(/CSS HARD MODE/)).toBeInTheDocument();
 
     // Check for pro tip section
     expect(screen.getByText('💡')).toBeInTheDocument();
     expect(screen.getByText(/Pro tip:/)).toBeInTheDocument();
-    expect(screen.getByText(/Master specificity/)).toBeInTheDocument();
+    expect(screen.getByText(/breaks CSS's natural cascade/)).toBeInTheDocument();
   });
 
   it('should have animations and state management', async () => {
@@ -126,11 +126,12 @@ describe('Enhanced ImportantModal - Stage 2', () => {
     renderWithTheme(<ImportantModal isOpen={true} onClose={mockOnClose} />);
 
     // Check for educational content about specificity - text may be split across elements
-    expect(screen.getByText(/Master specificity/)).toBeInTheDocument();
+    expect(screen.getByText(/breaks CSS's natural cascade/)).toBeInTheDocument();
     expect(screen.getByText(/understand the cascade/)).toBeInTheDocument();
     expect(
-      screen.getByText(/more maintainable and elegant/)
+      screen.getByText(/master specificity/)
     ).toBeInTheDocument();
+    expect(screen.getByText(/!important wars/)).toBeInTheDocument();
 
     // Check for anti-cheating message
     expect(screen.getByText(/cheating on your homework/)).toBeInTheDocument();

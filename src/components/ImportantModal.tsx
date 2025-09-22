@@ -16,22 +16,19 @@ export default function ImportantModal({
   const [shake, setShake] = useState(false);
   const [bounceTitle, setBounceTitle] = useState(false);
 
-  // Trigger animations when modal opens
+  // Trigger animations when modal opens with settling behavior
   useEffect(() => {
     if (isOpen) {
-      // Start shaking immediately
+      // Start with dramatic entrance
       setShake(true);
 
       // Start title bouncing after a short delay
       setTimeout(() => setBounceTitle(true), 300);
 
-      // Continue shaking for dramatic effect
-      const shakeInterval = setInterval(() => {
-        setShake(prev => !prev);
-      }, 800);
+      // Stop the main container bouncing after initial impact for readability
+      setTimeout(() => setShake(false), 2000);
 
       return () => {
-        clearInterval(shakeInterval);
         setShake(false);
         setBounceTitle(false);
       };
@@ -79,7 +76,6 @@ export default function ImportantModal({
           shake ? 'animate-bounce' : ''
         }`}
         style={{
-          animation: 'bounce 0.5s infinite alternate, pulse 1s infinite',
           filter: 'drop-shadow(0 0 20px red) drop-shadow(0 0 40px orange)'
         }}
       >
@@ -197,13 +193,14 @@ export default function ImportantModal({
                   }`}
                 >
                   <span className='text-base mr-1'>💡</span>
-                  <strong>Pro tip:</strong> Master specificity, understand the
-                  cascade, and your CSS will be more maintainable and elegant
-                  than any
+                  <strong>Pro tip:</strong> `!important` breaks CSS's natural cascade and specificity rules, making your code harder to maintain and debug. 
+                  It creates a hierarchy where only more `!important` rules can override it, leading to "!important wars" in your codebase. 
+                  Instead, master specificity, understand the cascade, and use proper CSS architecture - 
+                  your future self (and your team) will thank you!
                   <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
                     !important
                   </code>
-                  hack could ever be!
+                  should be reserved for rare edge cases, not everyday styling.
                 </p>
               </div>
 
