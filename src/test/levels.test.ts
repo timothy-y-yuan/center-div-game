@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { levels } from '../data/levels';
 
 describe('Levels Data', () => {
@@ -69,8 +69,12 @@ describe('Levels Data', () => {
       expect(level.initialHTML).toContain('target');
       expect(level.lockedCSS).toContain('.container');
       expect(level.lockedCSS).toContain('.target');
-      expect(level.solutionCSS).toContain('.container');
-      expect(level.solutionCSS).toContain('.target');
+
+      // solutionCSS should only contain selectors that are editable for this level
+      const editableSelectors = Object.keys(level.editableSelectors);
+      editableSelectors.forEach(selector => {
+        expect(level.solutionCSS).toContain(selector);
+      });
     });
   });
 
