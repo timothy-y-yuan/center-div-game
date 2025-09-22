@@ -36,19 +36,11 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [
-          'margin',
-          'margin-top',
-          'margin-right',
-          'margin-bottom',
-          'margin-left',
-        ],
-        initialEditableCSS:
-          '  /* Add margin properties to center horizontally */',
+        allowedProperties: [],
+        initialEditableCSS: '  /* come on. just center me. */',
       },
     },
-    constraints:
-      'You can only add margin properties to .target. Goal: center it horizontally.',
+    constraints: 'You can only modify the .target selector.',
     hint: 'Think about margins... what happens when you tell the left and right margins to figure themselves out? 🤔',
     solutionCSS: `.container {
   width: 300px;
@@ -98,19 +90,12 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [
-          'display',
-          'justify-content',
-          'align-items',
-          'flex-direction',
-          'flex-wrap',
-        ],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Add flexbox properties to center the child element */',
+          '  /* i just want my child to be happy and centered */',
       },
     },
-    constraints:
-      'You can only add flexbox properties to .container. Goal: center the target both horizontally and vertically.',
+    constraints: 'You can only modify the .container selector.',
     hint: 'The container needs to become flexible... think about how to justify content and align items when things get flexed 💪',
     solutionCSS: `.container {
   width: 300px;
@@ -161,20 +146,12 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [
-          'display',
-          'place-items',
-          'align-items',
-          'justify-items',
-          'grid-template-columns',
-          'grid-template-rows',
-        ],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Add CSS Grid properties to center the child element */',
+          '  /* i just want my child to be happy and centered */',
       },
     },
-    constraints:
-      'You can only add CSS Grid properties to .container. Goal: center the target using grid layout.',
+    constraints: 'You can only modify the .container selector.',
     hint: "Time to think in grids! There's a shorthand property that can place items exactly where you want them ⭐",
     solutionCSS: `.container {
   width: 300px;
@@ -225,9 +202,9 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: ['position'],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Add positioning context for absolute children */',
+          '  /* i just want my child to be happy and centered */',
       },
       '.target': {
         lockedProperties: [
@@ -239,20 +216,11 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [
-          'position',
-          'top',
-          'left',
-          'right',
-          'bottom',
-          'transform',
-        ],
-        initialEditableCSS:
-          '  /* Add absolute positioning and centering properties */',
+        allowedProperties: [],
+        initialEditableCSS: '  /* come on. just center me. */',
       },
     },
-    constraints:
-      'Add position to .container and absolute positioning with transforms to .target.',
+    constraints: 'You can modify both .container and .target selectors.',
     hint: 'Sometimes you need to break free from the normal flow. Position yourself halfway, then use a transformation to account for your own size 🚀',
     solutionCSS: `.container {
   width: 300px;
@@ -306,15 +274,15 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: ['text-align'],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Add text alignment for horizontal centering */',
+          '  /* i just want my child to be happy and centered */',
       },
       '.container::before': {
         lockedProperties: [],
-        allowedProperties: ['content', 'height', 'display', 'vertical-align'],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Create ghost element for vertical alignment */',
+          '  /* i just want my child to be happy and centered */',
       },
       '.target': {
         lockedProperties: [
@@ -326,12 +294,12 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: ['display', 'vertical-align'],
-        initialEditableCSS: '  /* Change display and add vertical alignment */',
+        allowedProperties: [],
+        initialEditableCSS: '  /* come on. just center me. */',
       },
     },
     constraints:
-      'Add text-align to .container, create ::before pseudo-element, and make .target inline-block.',
+      'You can modify .container, .container::before, and .target selectors.',
     hint: "Think old school! How do you center text? And what if your target wasn't a block? You might need a ghost friend to help with vertical alignment 👻",
     solutionCSS: `.container {
   width: 300px;
@@ -389,9 +357,9 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: ['display', 'text-align', 'vertical-align'],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Make container behave like table cell with centering */',
+          '  /* i just want my child to be happy and centered */',
       },
       '.target': {
         lockedProperties: [
@@ -403,13 +371,11 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: ['display'],
-        initialEditableCSS:
-          '  /* Change display to work with table-cell parent */',
+        allowedProperties: [],
+        initialEditableCSS: '  /* come on. just center me. */',
       },
     },
-    constraints:
-      'Add table-cell display and alignment to .container, adjust .target display.',
+    constraints: 'You can modify both .container and .target selectors.',
     hint: 'Before flexbox existed, how did table cells center their content? Make your container behave like one! 🔥',
     solutionCSS: `.container {
   width: 300px;
@@ -462,8 +428,9 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: ['position'],
-        initialEditableCSS: '  /* Add positioning context */',
+        allowedProperties: [],
+        initialEditableCSS:
+          '  /* i just want my child to be happy and centered */',
       },
       '.target': {
         lockedProperties: [
@@ -475,12 +442,11 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: ['position', 'top', 'left'],
-        initialEditableCSS: '  /* Use calc() with absolute positioning */',
+        allowedProperties: [],
+        initialEditableCSS: '  /* come on. just center me. */',
       },
     },
-    constraints:
-      'Use calc() to mathematically center with absolute positioning.',
+    constraints: 'You can modify both .container and .target selectors.',
     hint: "Math time! If you know your element's size, you can calculate exactly where 50% minus half your size lands ⚡",
     solutionCSS: `.container {
   width: 300px;
@@ -532,8 +498,9 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: ['position'],
-        initialEditableCSS: '  /* Add positioning context */',
+        allowedProperties: [],
+        initialEditableCSS:
+          '  /* i just want my child to be happy and centered */',
       },
       '.target': {
         lockedProperties: [
@@ -545,20 +512,11 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [
-          'position',
-          'top',
-          'left',
-          'right',
-          'bottom',
-          'margin',
-        ],
-        initialEditableCSS:
-          '  /* Use absolute positioning with margin auto trick */',
+        allowedProperties: [],
+        initialEditableCSS: '  /* come on. just center me. */',
       },
     },
-    constraints:
-      'Use absolute positioning with all four directions and margin auto.',
+    constraints: 'You can modify both .container and .target selectors.',
     hint: 'What if you stretched your element to fill all sides, then let margins do the magic? Sometimes being everywhere means being centered 🌟',
     solutionCSS: `.container {
   width: 300px;
@@ -614,18 +572,12 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [
-          'display',
-          'justify-content',
-          'align-items',
-          'flex-direction',
-        ],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Use flexbox to center multiple children as a group */',
+          '  /* i just want my child to be happy and centered */',
       },
     },
-    constraints:
-      'Add flexbox properties to .container to center the group of elements.',
+    constraints: 'You can only modify the .container selector.',
     hint: 'Multiple targets need organization! Think about direction and how to arrange them while keeping them centered as a group 🎪',
     solutionCSS: `.container {
   width: 300px;
@@ -688,14 +640,9 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [
-          'display',
-          'place-items',
-          'align-items',
-          'justify-items',
-        ],
+        allowedProperties: [],
         initialEditableCSS:
-          '  /* Use CSS Grid to center the complex element */',
+          '  /* i just want my child to be happy and centered */',
       },
       '.target': {
         lockedProperties: [
@@ -705,13 +652,11 @@ export const levels: Level[] = [
           'color',
           'text-align',
         ],
-        allowedProperties: ['width', 'min-width', 'max-width', 'box-shadow'],
-        initialEditableCSS:
-          '  /* Add responsive width and styling enhancements */',
+        allowedProperties: [],
+        initialEditableCSS: '  /* come on. just center me. */',
       },
     },
-    constraints:
-      'Use CSS Grid on .container and add responsive width + box-shadow to .target.',
+    constraints: 'You can modify both .container and .target selectors.',
     hint: 'Final boss mode! Combine the power of grids with responsive sizing that clamps between boundaries. Add some shadow magic for style 🥷',
     solutionCSS: `.container {
   width: 300px;
