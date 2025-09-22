@@ -155,6 +155,9 @@ export interface Level {
   /** Human-readable explanation of editing constraints */
   readonly constraints: string;
 
+  /** Requirements that must be met for level completion */
+  readonly requirements: LevelRequirements;
+
   /** Hint text to help users when they're stuck */
   readonly hint: string;
 
@@ -169,6 +172,17 @@ export interface Level {
 
   /** Tags for categorizing learning concepts */
   readonly tags: readonly string[];
+}
+
+/**
+ * Level requirements configuration
+ */
+export interface LevelRequirements {
+  /** Whether horizontal centering is required */
+  readonly requiresHorizontalCentering: boolean;
+
+  /** Whether vertical centering is required */
+  readonly requiresVerticalCentering: boolean;
 }
 
 // ============================================================================

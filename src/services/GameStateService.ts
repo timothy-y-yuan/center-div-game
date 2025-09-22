@@ -3,19 +3,20 @@
  * Handles level completion logic, progress tracking, and game state transitions
  */
 
-import { UI_CONSTANTS, GAME_CONFIG, EDUCATIONAL_CONTENT } from '../constants';
+import { EDUCATIONAL_CONTENT, GAME_CONFIG, UI_CONSTANTS } from '../constants';
 import type {
-  LevelId,
   Level,
+  LevelId,
+  LevelProgress,
+  LevelRequirements,
+  ProgressStats,
   TimestampMs,
   UserProgress,
-  LevelProgress,
-  ProgressStats,
 } from '../types';
 import {
-  createTimestampMs,
-  createDurationMs,
   calculateDuration,
+  createDurationMs,
+  createTimestampMs,
 } from '../utils/typeHelpers';
 
 // ============================================================================
@@ -65,20 +66,6 @@ export interface CompletionResult {
   readonly feedback: string;
 }
 
-/**
- * Level requirements configuration
- */
-export interface LevelRequirements {
-  /** Whether horizontal centering is required */
-  readonly requiresHorizontalCentering: boolean;
-
-  /** Whether vertical centering is required */
-  readonly requiresVerticalCentering: boolean;
-
-  /** Custom validation function for advanced requirements */
-  readonly customValidator?: (measurement: ElementMeasurement) => boolean;
-}
-
 // ============================================================================
 // GAME STATE SERVICE INTERFACE
 // ============================================================================
@@ -86,7 +73,6 @@ export interface LevelRequirements {
 export interface IGameStateService {
   measureElementCentering(iframeId: string): ElementMeasurement;
   checkLevelCompletion(level: Level, iframeId: string): CompletionResult;
-  getLevelRequirements(levelId: LevelId): LevelRequirements;
   calculateLevelProgress(
     levelId: LevelId,
     isCompleted: boolean,
@@ -191,7 +177,7 @@ export class GameStateService implements IGameStateService {
       };
     }
 
-    const requirements = this.getLevelRequirements(level.id);
+    const requirements = level.requirements;
     const tolerance = UI_CONSTANTS.COMPLETION_TOLERANCE_PX;
 
     const horizontalOffset = Math.abs(
@@ -209,14 +195,8 @@ export class GameStateService implements IGameStateService {
       !requirements.requiresHorizontalCentering || isHorizontallyCentered;
     const meetsVerticalRequirement =
       !requirements.requiresVerticalCentering || isVerticallyCentered;
-    const meetsCustomRequirement =
-      !requirements.customValidator ||
-      requirements.customValidator(measurement);
 
-    const isCompleted =
-      meetsHorizontalRequirement &&
-      meetsVerticalRequirement &&
-      meetsCustomRequirement;
+    const isCompleted = meetsHorizontalRequirement && meetsVerticalRequirement;
 
     return {
       isCompleted,
@@ -276,29 +256,6 @@ export class GameStateService implements IGameStateService {
     }
 
     return `Close! The element is ${issues.join(' and ')}.`;
-  }
-
-  /**
-   * Gets the completion requirements for a specific level
-   * @param levelId - ID of the level
-   * @returns Level-specific requirements
-   */
-  getLevelRequirements(levelId: LevelId): LevelRequirements {
-    const levelNumber = levelId as number;
-
-    // Level 1 (index 0) only requires horizontal centering
-    if (levelNumber === 0) {
-      return {
-        requiresHorizontalCentering: true,
-        requiresVerticalCentering: false,
-      };
-    }
-
-    // All other levels require both horizontal and vertical centering
-    return {
-      requiresHorizontalCentering: true,
-      requiresVerticalCentering: true,
-    };
   }
 
   /**
