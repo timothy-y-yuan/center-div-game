@@ -1,16 +1,20 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import CodeEditor from '../components/CodeEditor'
-import { ThemeProvider } from '../contexts/ThemeContext'
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import CodeEditor from '../components/CodeEditor';
+import { ThemeProvider } from '../contexts/ThemeProvider';
 
 // Mock Monaco Editor
-const mockOnChange = vi.fn()
+const mockOnChange = vi.fn();
 
 vi.mock('@monaco-editor/react', () => ({
-  default: ({ onChange, value, options }: { 
-    onChange?: (value: string) => void; 
-    value?: string; 
-    options?: { readOnly?: boolean; language?: string } 
+  default: ({
+    onChange,
+    value,
+    options,
+  }: {
+    onChange?: (value: string) => void;
+    value?: string;
+    options?: { readOnly?: boolean; language?: string };
   }) => (
     <textarea
       data-testid="monaco-editor"
@@ -19,21 +23,17 @@ vi.mock('@monaco-editor/react', () => ({
       readOnly={options?.readOnly}
       placeholder={options?.language}
     />
-  )
-}))
+  ),
+}));
 
 const renderWithTheme = (component: React.ReactElement) => {
-  return render(
-    <ThemeProvider>
-      {component}
-    </ThemeProvider>
-  )
-}
+  return render(<ThemeProvider>{component}</ThemeProvider>);
+};
 
 describe('CodeEditor Component', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
-  })
+    vi.clearAllMocks();
+  });
 
   it('should render Monaco editor with HTML language', () => {
     renderWithTheme(
@@ -45,11 +45,11 @@ describe('CodeEditor Component', () => {
         emoji="📝"
         headerClass="header-html"
       />
-    )
+    );
 
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('<div>test</div>')).toBeInTheDocument()
-  })
+    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('<div>test</div>')).toBeInTheDocument();
+  });
 
   it('should render Monaco editor with CSS language', () => {
     renderWithTheme(
@@ -61,11 +61,13 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('.test { color: red; }')).toBeInTheDocument()
-  })
+    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument();
+    expect(
+      screen.getByDisplayValue('.test { color: red; }')
+    ).toBeInTheDocument();
+  });
 
   it('should display the correct title', () => {
     renderWithTheme(
@@ -77,10 +79,10 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    expect(screen.getByText('CSS Editor')).toBeInTheDocument()
-  })
+    expect(screen.getByText('CSS Editor')).toBeInTheDocument();
+  });
 
   it('should call onChange when editor content changes', () => {
     renderWithTheme(
@@ -92,13 +94,13 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    const editor = screen.getByTestId('monaco-editor')
-    fireEvent.change(editor, { target: { value: '.new { color: blue; }' } })
+    const editor = screen.getByTestId('monaco-editor');
+    fireEvent.change(editor, { target: { value: '.new { color: blue; }' } });
 
-    expect(mockOnChange).toHaveBeenCalledWith('.new { color: blue; }')
-  })
+    expect(mockOnChange).toHaveBeenCalledWith('.new { color: blue; }');
+  });
 
   it('should render with HTML language and correct value', () => {
     renderWithTheme(
@@ -110,15 +112,15 @@ describe('CodeEditor Component', () => {
         emoji="📝"
         headerClass="header-html"
       />
-    )
+    );
 
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('<div>test</div>')).toBeInTheDocument()
-  })
+    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('<div>test</div>')).toBeInTheDocument();
+  });
 
   it('should render correctly with light theme', () => {
     // Set theme to light
-    localStorage.setItem('theme', 'light')
+    localStorage.setItem('theme', 'light');
 
     renderWithTheme(
       <CodeEditor
@@ -129,15 +131,15 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument()
-    expect(screen.getByText('CSS')).toBeInTheDocument()
-  })
+    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument();
+    expect(screen.getByText('CSS')).toBeInTheDocument();
+  });
 
   it('should render correctly with dark theme', () => {
     // Set theme to dark
-    localStorage.setItem('theme', 'dark')
+    localStorage.setItem('theme', 'dark');
 
     renderWithTheme(
       <CodeEditor
@@ -148,11 +150,11 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument()
-    expect(screen.getByText('CSS')).toBeInTheDocument()
-  })
+    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument();
+    expect(screen.getByText('CSS')).toBeInTheDocument();
+  });
 
   it('should make editor read-only when readOnly prop is true', () => {
     renderWithTheme(
@@ -165,11 +167,11 @@ describe('CodeEditor Component', () => {
         headerClass="header-html"
         readOnly={true}
       />
-    )
+    );
 
-    const editor = screen.getByTestId('monaco-editor')
-    expect(editor).toHaveAttribute('readonly')
-  })
+    const editor = screen.getByTestId('monaco-editor');
+    expect(editor).toHaveAttribute('readonly');
+  });
 
   it('should not be read-only by default', () => {
     renderWithTheme(
@@ -181,11 +183,11 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    const editor = screen.getByTestId('monaco-editor')
-    expect(editor).not.toHaveAttribute('readonly')
-  })
+    const editor = screen.getByTestId('monaco-editor');
+    expect(editor).not.toHaveAttribute('readonly');
+  });
 
   it('should have proper editor container styling', () => {
     renderWithTheme(
@@ -197,12 +199,12 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
     // The header container should have the headerClass
-    const container = screen.getByText('CSS').closest('div')
-    expect(container).toHaveClass('header-css', 'p-4')
-  })
+    const container = screen.getByText('CSS').closest('div');
+    expect(container).toHaveClass('header-css', 'p-4');
+  });
 
   it('should have proper title styling', () => {
     renderWithTheme(
@@ -214,11 +216,11 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    const title = screen.getByText('CSS Editor')
-    expect(title).toHaveClass('text-purple-700', 'dark:text-purple-200')
-  })
+    const title = screen.getByText('CSS Editor');
+    expect(title).toHaveClass('text-purple-700', 'dark:text-purple-200');
+  });
 
   it('should handle empty value', () => {
     renderWithTheme(
@@ -230,17 +232,17 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument()
-    expect(screen.getByDisplayValue('')).toBeInTheDocument()
-  })
+    expect(screen.getByTestId('monaco-editor')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('')).toBeInTheDocument();
+  });
 
   it('should handle multiline values', () => {
     const multilineCSS = `.container {
   display: flex;
   justify-content: center;
-}`
+}`;
 
     renderWithTheme(
       <CodeEditor
@@ -251,13 +253,13 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
     // Test that the textarea exists and contains the content
-    const editor = screen.getByTestId('monaco-editor')
-    expect(editor).toBeInTheDocument()
-    expect(editor).toHaveValue(multilineCSS)
-  })
+    const editor = screen.getByTestId('monaco-editor');
+    expect(editor).toBeInTheDocument();
+    expect(editor).toHaveValue(multilineCSS);
+  });
 
   it('should render with correct emoji and title', () => {
     renderWithTheme(
@@ -269,11 +271,11 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
-    expect(screen.getByText('🎨')).toBeInTheDocument()
-    expect(screen.getByText('CSS')).toBeInTheDocument()
-  })
+    expect(screen.getByText('🎨')).toBeInTheDocument();
+    expect(screen.getByText('CSS')).toBeInTheDocument();
+  });
 
   it('should handle rapid value changes', () => {
     const { rerender } = renderWithTheme(
@@ -285,7 +287,7 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
     // Rapidly change values
     rerender(
@@ -299,7 +301,7 @@ describe('CodeEditor Component', () => {
           headerClass="header-css"
         />
       </ThemeProvider>
-    )
+    );
 
     rerender(
       <ThemeProvider>
@@ -312,10 +314,10 @@ describe('CodeEditor Component', () => {
           headerClass="header-css"
         />
       </ThemeProvider>
-    )
+    );
 
-    expect(screen.getByDisplayValue('changed2')).toBeInTheDocument()
-  })
+    expect(screen.getByDisplayValue('changed2')).toBeInTheDocument();
+  });
 
   it('should handle language changes', () => {
     const { rerender } = renderWithTheme(
@@ -327,7 +329,7 @@ describe('CodeEditor Component', () => {
         emoji="🎨"
         headerClass="header-css"
       />
-    )
+    );
 
     rerender(
       <ThemeProvider>
@@ -340,9 +342,9 @@ describe('CodeEditor Component', () => {
           headerClass="header-html"
         />
       </ThemeProvider>
-    )
+    );
 
-    expect(screen.getByDisplayValue('<div></div>')).toBeInTheDocument()
-    expect(screen.getByText('HTML')).toBeInTheDocument()
-  })
-})
+    expect(screen.getByDisplayValue('<div></div>')).toBeInTheDocument();
+    expect(screen.getByText('HTML')).toBeInTheDocument();
+  });
+});
