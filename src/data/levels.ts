@@ -36,27 +36,13 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
     constraints: 'You can only modify the .target selector.',
     hint: 'Think about margins... what happens when you tell the left and right margins to figure themselves out? 🤔',
-    solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
-}
-
-.target {
-  width: 50px;
-  height: 50px;
-  background: #ff6b6b;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
+    solutionCSS: `.target {
   margin: 0 auto;
 }`,
     explanation:
@@ -90,7 +76,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -98,23 +84,9 @@ export const levels: Level[] = [
     constraints: 'You can only modify the .container selector.',
     hint: 'The container needs to become flexible... think about how to justify content and align items when things get flexed 💪',
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.target {
-  width: 50px;
-  height: 50px;
-  background: #4ecdc4;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
 }`,
     explanation:
       'Flexbox is the modern way to center! When you set "display: flex" on the container, "justify-content: center" centers horizontally and "align-items: center" centers vertically. Think of it as controlling the main axis (horizontal) and cross axis (vertical).',
@@ -146,7 +118,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -154,22 +126,8 @@ export const levels: Level[] = [
     constraints: 'You can only modify the .container selector.',
     hint: "Time to think in grids! There's a shorthand property that can place items exactly where you want them ⭐",
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   display: grid;
   place-items: center;
-}
-
-.target {
-  width: 50px;
-  height: 50px;
-  background: #45b7d1;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
 }`,
     explanation:
       'CSS Grid\'s "place-items: center" is a powerful shorthand that combines "align-items: center" and "justify-items: center". It centers grid items both horizontally and vertically in one line! Grid is especially useful for more complex layouts.',
@@ -202,7 +160,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -216,28 +174,17 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'Sometimes you need to break free from the normal flow. Position yourself halfway, then use a transformation to account for your own size 🚀',
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   position: relative;
 }
 
 .target {
-  width: 50px;
-  height: 50px;
-  background: #9b59b6;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -274,13 +221,13 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
       '.container::before': {
         lockedProperties: [],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -294,7 +241,7 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
@@ -302,10 +249,6 @@ export const levels: Level[] = [
       'You can modify .container, .container::before, and .target selectors.',
     hint: "Think old school! How do you center text? And what if your target wasn't a block? You might need a ghost friend to help with vertical alignment 👻",
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   text-align: center;
 }
 
@@ -317,13 +260,6 @@ export const levels: Level[] = [
 }
 
 .target {
-  width: 50px;
-  height: 50px;
-  background: #e67e22;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
   display: inline-block;
   vertical-align: middle;
 }`,
@@ -357,7 +293,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -371,30 +307,19 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'Before flexbox existed, how did table cells center their content? Make your container behave like one! 🔥',
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
 
 .target {
-  width: 50px;
-  height: 50px;
-  background: #e74c3c;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
   display: inline-block;
 }`,
     explanation:
@@ -428,7 +353,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -442,28 +367,17 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
     constraints: 'You can modify both .container and .target selectors.',
     hint: "Math time! If you know your element's size, you can calculate exactly where 50% minus half your size lands ⚡",
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   position: relative;
 }
 
 .target {
-  width: 50px;
-  height: 50px;
-  background: #f1c40f;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
   position: absolute;
   top: calc(50% - 25px);
   left: calc(50% - 25px);
@@ -498,7 +412,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -512,28 +426,17 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'What if you stretched your element to fill all sides, then let margins do the magic? Sometimes being everywhere means being centered 🌟',
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   position: relative;
 }
 
 .target {
-  width: 50px;
-  height: 50px;
-  background: #16a085;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  line-height: 50px;
   position: absolute;
   top: 0;
   left: 0;
@@ -572,7 +475,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -580,25 +483,10 @@ export const levels: Level[] = [
     constraints: 'You can only modify the .container selector.',
     hint: 'Multiple targets need organization! Think about direction and how to arrange them while keeping them centered as a group 🎪',
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-.target {
-  width: 40px;
-  height: 40px;
-  background: #8e44ad;
-  border-radius: 8px;
-  font-size: 16px;
-  text-align: center;
-  line-height: 40px;
-  margin: 5px;
 }`,
     explanation:
       'Flexbox shines with multiple elements! "flex-direction: column" stacks items vertically, while "justify-content: center" and "align-items: center" center the entire group as one unit. The individual margins (5px) create nice spacing between items. It\'s like centering a perfectly organized stack!',
@@ -640,7 +528,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -652,40 +540,20 @@ export const levels: Level[] = [
           'color',
           'text-align',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
     constraints: 'You can modify both .container and .target selectors.',
     hint: 'Final boss mode! Combine the power of grids with responsive sizing that clamps between boundaries. Add some shadow magic for style 🥷',
     solutionCSS: `.container {
-  width: 300px;
-  height: 300px;
-  border: 2px solid #333;
-  background: #f0f0f0;
   display: grid;
   place-items: center;
 }
 
 .target {
-  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  padding: 20px;
-  color: white;
-  text-align: center;
   width: clamp(120px, 60%, 200px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-.inner {
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-.text {
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2px;
 }`,
     explanation:
       'Welcome to CSS ninja status! This combines grid centering with modern responsive design. "clamp(120px, 60%, 200px)" creates a responsive width: minimum 120px, preferred 60% of container, maximum 200px. Add a gradient background, box-shadow, and perfect typography - you\'ve mastered both centering AND style! 🥷',
