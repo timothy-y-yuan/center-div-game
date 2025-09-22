@@ -47,7 +47,7 @@ describe('Header Component', () => {
       completedLevels: new Set([0, 1]), // 2 completed levels
     };
     render(<Header {...propsWithCompleted} />);
-    expect(screen.getByText('Stack Overflow Searcher')).toBeInTheDocument();
+    expect(screen.getByText('Stack Overflow Scholar')).toBeInTheDocument();
   });
 
   it('should show correct progress stats', () => {
