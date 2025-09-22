@@ -36,7 +36,7 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
@@ -76,7 +76,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -118,7 +118,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -160,7 +160,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -174,7 +174,7 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
@@ -221,13 +221,13 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
       '.container::before': {
         lockedProperties: [],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -241,7 +241,7 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
@@ -293,7 +293,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -307,7 +307,7 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
@@ -353,7 +353,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -367,7 +367,7 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
@@ -412,7 +412,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -426,7 +426,7 @@ export const levels: Level[] = [
           'text-align',
           'line-height',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
@@ -475,7 +475,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -528,7 +528,7 @@ export const levels: Level[] = [
     editableSelectors: {
       '.container': {
         lockedProperties: ['width', 'height', 'border', 'background'],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS:
           '  /* i just want my child to be happy and centered */',
       },
@@ -540,7 +540,7 @@ export const levels: Level[] = [
           'color',
           'text-align',
         ],
-        allowedProperties: [],
+        allowedProperties: ['*'],
         initialEditableCSS: '  /* come on. just center me. */',
       },
     },
