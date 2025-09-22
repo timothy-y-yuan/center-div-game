@@ -737,13 +737,11 @@ div.container div.target {
         'line-height',
       ],
       allowedProperties: [],
-      initialEditableCSS:
-        "  /* Those inline styles and high specificity selectors are fighting you!\n     Normal CSS won't work here... time for the nuclear option! 💥 */",
+      initialEditableCSS: '  /* come on. just center me. */',
     },
   },
-  constraints:
-    'You can only modify the .target selector. Inline styles and high specificity rules are blocking normal CSS!',
-  hint: 'When CSS specificity wars get out of hand, sometimes you need to bring out the big guns. Add some "weight" to your declarations! 💥',
+  constraints: 'You can only modify the .target selector.',
+  hint: 'Sometimes normal CSS rules get overruled by more specific selectors and inline styles. You might need to emphasize your declarations with extra authority! 💥',
   solutionCSS: `.container {
   width: 300px;
   height: 300px;
