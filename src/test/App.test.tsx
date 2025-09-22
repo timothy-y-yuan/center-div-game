@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import App from '../App'
-import { ThemeProvider } from '../contexts/ThemeContext'
+import { ThemeProvider } from '../contexts/ThemeContext.tsx'
 
 // Mock confetti
 vi.mock('canvas-confetti', () => ({
@@ -58,7 +58,9 @@ describe('App Component', () => {
     renderWithTheme(<App />)
 
     expect(screen.getByText(/Can You Center The/)).toBeInTheDocument()
-    expect(screen.getAllByTestId('monaco-editor')).toHaveLength(2) // HTML and CSS editors
+    expect(screen.getAllByTestId('monaco-editor')).toHaveLength(1) // CSS editor only
+    expect(screen.getByText('Given Code')).toBeInTheDocument() // CodeDisplay component
+    expect(screen.getByText('Your Code')).toBeInTheDocument() // CSS editor
     expect(screen.getByText('Check')).toBeInTheDocument()
     expect(screen.getByText('Hint')).toBeInTheDocument()
   })
@@ -251,7 +253,7 @@ describe('App Component', () => {
     renderWithTheme(<App />)
 
     const editors = screen.getAllByTestId('monaco-editor')
-    const cssEditor = editors[1] // CSS is the second editor
+    const cssEditor = editors[0] // CSS is the only Monaco editor now
     fireEvent.change(cssEditor, { target: { value: '.target { margin: 0 auto; }' } })
 
     expect(cssEditor).toHaveValue('.target { margin: 0 auto; }')

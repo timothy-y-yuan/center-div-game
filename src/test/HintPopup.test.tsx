@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import HintPopup from '../components/HintPopup'
-import { ThemeProvider } from '../contexts/ThemeContext'
+import { ThemeProvider } from '../contexts/ThemeContext.tsx'
 
 // Mock button element with getBoundingClientRect
 const mockButtonElement = {

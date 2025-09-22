@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import SettingsDropdown from '../components/SettingsDropdown'
-import { ThemeProvider } from '../contexts/ThemeContext'
+import { ThemeProvider } from '../contexts/ThemeContext.tsx'
 
 const mockProps = {
   onResetProgress: vi.fn()

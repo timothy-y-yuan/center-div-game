@@ -11,6 +11,7 @@ import Preview from './components/Preview';
 import ConfettiEffect from './components/ConfettiEffect';
 import { levels } from './data/levels';
 import { useGameState, useLevelContent } from './hooks';
+import CodeDisplay from './components/CodeDisplay';
 
 // ============================================================================
 // MAIN APPLICATION COMPONENT
@@ -118,16 +119,13 @@ function App() {
           <Panel defaultSize={50} minSize={30}>
             <div className="h-full flex flex-col glass rounded-2xl overflow-hidden mr-2">
               <PanelGroup direction="vertical">
-                <Panel defaultSize={25} minSize={15}>
+                <Panel defaultSize={50} minSize={30}>
                   <div className="h-full flex flex-col">
-                    <CodeEditor
-                      value={levelContent.html}
-                      language="html"
-                      onChange={() => {}} // No-op - HTML is read-only
-                      title="HTML"
-                      emoji="📝"
+                    <CodeDisplay
+                      level={currentLevel}
+                      title="Given Code"
+                      emoji="📋"
                       headerClass="header-html"
-                      readOnly={true}
                     />
                   </div>
                 </Panel>
@@ -137,14 +135,14 @@ function App() {
                   <div className="w-8 h-0.5 bg-gray-400 dark:bg-slate-500 bg-opacity-60 group-hover:bg-blue-400 group-hover:bg-opacity-80 rounded-full transition-all duration-300 relative z-10"></div>
                 </PanelResizeHandle>
 
-                <Panel defaultSize={75} minSize={30}>
+                <Panel defaultSize={50} minSize={25}>
                   <div className="h-full flex flex-col">
                     <CodeEditor
                       value={levelContent.editableCSS}
                       language="css"
                       onChange={handleCSSChange}
-                      title="CSS"
-                      emoji="🎨"
+                      title="Your Code"
+                      emoji="✏️"
                       headerClass="header-css"
                       level={currentLevel}
                       validation={levelContent.cssValidation}

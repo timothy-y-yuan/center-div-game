@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import LevelDropdown from '../components/LevelDropdown'
-import { ThemeProvider } from '../contexts/ThemeContext'
+import { ThemeProvider } from '../contexts/ThemeContext.tsx'
 import { levels } from '../data/levels'
 
 const mockProps = {
