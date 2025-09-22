@@ -37,10 +37,12 @@ export type CSSProperty =
   | 'width' | 'height' | 'max-width' | 'max-height' | 'min-width' | 'min-height'
   | 'flex' | 'flex-direction' | 'flex-wrap' | 'justify-content' | 'align-items' | 'align-content'
   | 'grid' | 'grid-template-columns' | 'grid-template-rows' | 'grid-gap' | 'grid-column' | 'grid-row'
-  | 'text-align' | 'vertical-align' | 'line-height'
+  | 'text-align' | 'vertical-align' | 'line-height' | 'font-size' | 'color'
   | 'transform' | 'transform-origin'
   | 'border' | 'border-radius' | 'background' | 'background-color'
-  | 'overflow' | 'z-index' | 'opacity' | 'visibility';
+  | 'overflow' | 'z-index' | 'opacity' | 'visibility'
+  | 'place-items' | 'justify-items' | 'content' | 'box-shadow'
+  | '*'; // Special wildcard to allow all properties
 
 // ============================================================================
 // GAME STATE TYPES
@@ -331,10 +333,12 @@ export function isCSSProperty(value: unknown): value is CSSProperty {
     'width', 'height', 'max-width', 'max-height', 'min-width', 'min-height',
     'flex', 'flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content',
     'grid', 'grid-template-columns', 'grid-template-rows', 'grid-gap', 'grid-column', 'grid-row',
-    'text-align', 'vertical-align', 'line-height',
+    'text-align', 'vertical-align', 'line-height', 'font-size', 'color',
     'transform', 'transform-origin',
     'border', 'border-radius', 'background', 'background-color',
-    'overflow', 'z-index', 'opacity', 'visibility'
+    'overflow', 'z-index', 'opacity', 'visibility',
+    'place-items', 'justify-items', 'content', 'box-shadow',
+    '*'
   ];
   return typeof value === 'string' && validProperties.includes(value as CSSProperty);
 }

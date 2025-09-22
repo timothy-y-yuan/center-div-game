@@ -4,8 +4,8 @@
  */
 
 import { STORAGE_KEYS, ERROR_MESSAGES } from '../constants';
-import type { LevelId, TimestampMs, UserProgress } from '../types';
-import { createLevelId, createTimestampMs, createLevelIdSet, levelIdSetToArray } from '../utils/typeHelpers';
+import type { LevelId, UserProgress } from '../types';
+import { createLevelId, createLevelIdSet, levelIdSetToArray } from '../utils/typeHelpers';
 
 // ============================================================================
 // STORAGE ERROR CLASSES

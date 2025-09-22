@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, waitFor, act } from '@testing-library/react'
+import { render, act } from '@testing-library/react'
 import ConfettiEffect from '../components/ConfettiEffect'
 
 // Mock createPortal to render in place for testing

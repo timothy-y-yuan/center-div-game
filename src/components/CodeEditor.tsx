@@ -94,7 +94,7 @@ const CodeEditor = memo(function CodeEditor({
               </div>
               {validation.errors.map((error, index) => (
                 <div key={index} className="text-red-700 dark:text-red-300">
-                  • {error}
+                  • {error.message}
                 </div>
               ))}
             </div>
