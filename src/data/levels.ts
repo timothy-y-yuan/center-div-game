@@ -693,3 +693,92 @@ export const levels: Level[] = [
     tags: ['grid', 'clamp', 'responsive', 'modern', 'advanced-styling'],
   },
 ];
+
+/**
+ * Secret level requiring the use of !important to override stubborn styles
+ * This level demonstrates CSS specificity and the nuclear option of !important
+ */
+export const SECRET_IMPORTANT_LEVEL: Level = {
+  id: createLevelId(999),
+  title: 'Secret: !important Override Master',
+  description:
+    'Some styles are too stubborn to override normally. Sometimes you need the nuclear option to force your centering through!',
+  initialHTML:
+    '<div class="container">\n  <div class="target" style="margin-left: 100px; margin-top: 100px;">🔥💀</div>\n</div>',
+  lockedCSS: `.container {
+  width: 300px;
+  height: 300px;
+  border: 2px solid #333;
+  background: #f0f0f0;
+  position: relative;
+}
+
+/* These ultra-specific styles are fighting your centering attempts! */
+div.container div.target {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  border-radius: 12px;
+  font-size: 32px;
+  text-align: center;
+  line-height: 80px;
+  position: absolute;
+  margin: 0;
+}`,
+  editableSelectors: {
+    '.target': {
+      lockedProperties: [
+        'width',
+        'height',
+        'background',
+        'border-radius',
+        'font-size',
+        'text-align',
+        'line-height',
+      ],
+      allowedProperties: [],
+      initialEditableCSS:
+        "  /* Those inline styles and high specificity selectors are fighting you!\n     Normal CSS won't work here... time for the nuclear option! 💥 */",
+    },
+  },
+  constraints:
+    'You can only modify the .target selector. Inline styles and high specificity rules are blocking normal CSS!',
+  hint: 'When CSS specificity wars get out of hand, sometimes you need to bring out the big guns. Add some "weight" to your declarations! 💥',
+  solutionCSS: `.container {
+  width: 300px;
+  height: 300px;
+  border: 2px solid #333;
+  background: #f0f0f0;
+  position: relative;
+}
+
+/* These ultra-specific styles are fighting your centering attempts! */
+div.container div.target {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  border-radius: 12px;
+  font-size: 32px;
+  text-align: center;
+  line-height: 80px;
+  position: absolute;
+  margin: 0;
+}
+
+.target {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+}`,
+  explanation:
+    'Welcome to the dark side of CSS! When inline styles (specificity 1000) and highly specific selectors fight your centering, normal CSS declarations lose the specificity war. The !important declaration gives your properties maximum weight, overriding even inline styles. Use sparingly - with great power comes great responsibility! ⚡',
+  difficulty: 'expert',
+  tags: [
+    'important',
+    'specificity',
+    'override',
+    'nuclear-option',
+    'inline-styles',
+  ],
+};
