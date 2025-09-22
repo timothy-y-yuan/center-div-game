@@ -283,7 +283,7 @@ describe('ThemeContext', () => {
   it('should handle missing window.matchMedia gracefully', () => {
     // Mock matchMedia to return a minimal object to prevent errors
     const originalMatchMedia = window.matchMedia
-    ;(window as typeof window & { matchMedia: typeof window.matchMedia }).matchMedia = vi.fn(() => ({
+    ;(window.matchMedia as unknown) = vi.fn(() => ({
       matches: true, // Default to dark
       addEventListener: vi.fn(),
       removeEventListener: vi.fn()

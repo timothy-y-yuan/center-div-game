@@ -10,7 +10,7 @@ vi.mock('@monaco-editor/react', () => ({
   default: ({ onChange, value, options }: { 
     onChange?: (value: string) => void; 
     value?: string; 
-    options?: { readOnly?: boolean } 
+    options?: { readOnly?: boolean; language?: string } 
   }) => (
     <textarea
       data-testid="monaco-editor"

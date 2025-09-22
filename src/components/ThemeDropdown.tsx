@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { Theme } from '../contexts/ThemeContext';
+import type { Theme } from '../contexts/themeContext';
 import { useTheme } from '../hooks/useTheme';
 
 function getSystemTheme(): 'light' | 'dark' {
