@@ -10,3 +10,4 @@ export type { UseLevelContentResult } from './useLevelContent';
 
 export { useClickOutside } from './useClickOutside';
 export { useDropdownPosition } from './useDropdownPosition';
+export { useImportantModalAnimations } from './useImportantModalAnimations';
