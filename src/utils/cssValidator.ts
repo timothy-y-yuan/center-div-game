@@ -1,37 +1,16 @@
-import type {
-  Level,
-  CSSValidationResult,
-  ValidationMessage,
-  CSSProperty,
-} from '../types';
+import type { Level, CSSValidationResult } from '../types';
 import { createValidationError } from './typeHelpers';
 
-/**
- * Checks if the given CSS contains any !important declarations
- * Returns true if !important is found anywhere in the CSS
- */
 export function containsImportant(css: string): boolean {
-  // Remove comments first to avoid false positives
-  const cleanCSS = css.replace(/\/\*[\s\S]*?\*\//g, '');
-
-  // Check for !important declarations (case insensitive)
-  return /!\s*important/i.test(cleanCSS);
+  return /!\s*important/i.test(css.replace(/\/\*[\s\S]*?\*\//g, ''));
 }
 
-/**
- * Parses CSS text into a simple object structure
- * Returns: { selector: { property: value } }
- */
 export function parseCSS(css: string): Record<string, Record<string, string>> {
   const result: Record<string, Record<string, string>> = {};
-
-  // Remove comments and normalize whitespace
   const cleanCSS = css
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\s+/g, ' ')
     .trim();
-
-  // Split into selector blocks
   const blocks = cleanCSS.split('}').filter(block => block.trim());
 
   for (const block of blocks) {
@@ -40,33 +19,28 @@ export function parseCSS(css: string): Record<string, Record<string, string>> {
 
     const selector = selectorPart.trim();
     const properties: Record<string, string> = {};
-
-    // Parse properties
     const propertyLines = propertiesPart.split(';').filter(line => line.trim());
+
     for (const line of propertyLines) {
       const [prop, value] = line.split(':');
       if (prop && value) {
         properties[prop.trim()] = value.trim();
       }
     }
-
     result[selector] = properties;
   }
-
   return result;
 }
 
-/**
- * Validates user CSS against level constraints
- */
 export function validateUserCSS(
   userCSS: string,
   level: Level
 ): CSSValidationResult {
-  const errors: ValidationMessage[] = [];
-  const warnings: ValidationMessage[] = [];
-
   try {
+    const parsedCSS = parseCSS(userCSS);
+    const errors = [];
+    const warnings = [];
+
     // Check for !important usage - only allowed on the secret level
     if (containsImportant(userCSS) && level.id !== 999) {
       errors.push(
@@ -82,149 +56,76 @@ export function validateUserCSS(
       };
     }
 
-    const parsedCSS = parseCSS(userCSS);
-
-    // Check each selector in user CSS
     for (const [selector, properties] of Object.entries(parsedCSS)) {
       const editableConfig = level.editableSelectors[selector];
-
       if (!editableConfig) {
         errors.push(
           createValidationError(
-            `Selector "${selector}" is not allowed to be modified in this level.`,
-            { selector }
+            `Selector "${selector}" is not allowed to be modified in this level.`
           )
         );
         continue;
       }
 
-      // Check each property
-      for (const [property] of Object.entries(properties)) {
-        const isLocked = editableConfig.lockedProperties.includes(
-          property as CSSProperty
-        );
+      for (const property of Object.keys(properties)) {
+        const isLocked = editableConfig.lockedProperties.includes(property);
         const isAllowed =
-          editableConfig.allowedProperties.includes(property as CSSProperty) ||
+          editableConfig.allowedProperties.includes(property) ||
           editableConfig.allowedProperties.includes('*');
 
         if (isLocked) {
           errors.push(
             createValidationError(
-              `Property "${property}" in "${selector}" cannot be modified.`,
-              { selector, property }
+              `Property "${property}" in "${selector}" cannot be modified.`
             )
           );
         } else if (!isAllowed) {
           errors.push(
             createValidationError(
-              `Property "${property}" is not allowed in "${selector}" for this level.`,
-              { selector, property }
+              `Property "${property}" in "${selector}" is not allowed.`
             )
           );
         }
       }
     }
 
-    return {
-      isValid: errors.length === 0,
-      errors,
-      warnings,
-      info: [],
-    };
+    return { isValid: errors.length === 0, errors, warnings: [], info: [] };
   } catch {
     return {
       isValid: false,
       errors: [createValidationError('Invalid CSS syntax')],
-      warnings,
+      warnings: [],
       info: [],
     };
   }
 }
 
-/**
- * Generates the complete CSS by combining locked CSS with user's editable CSS
- */
 export function generateCompleteCSS(
   userEditableCSS: string,
   level: Level
 ): string {
-  const result: string[] = [];
-
-  // Add locked CSS first
-  result.push(level.lockedCSS);
-
-  // Parse user CSS and add to appropriate selectors
+  const result = [level.lockedCSS];
   const parsedUserCSS = parseCSS(userEditableCSS);
 
-  for (const [selector] of Object.entries(level.editableSelectors)) {
-    const userProperties = parsedUserCSS[selector] || {};
-
-    if (Object.keys(userProperties).length > 0) {
+  for (const selector of Object.keys(level.editableSelectors)) {
+    const userProperties = parsedUserCSS[selector];
+    if (userProperties && Object.keys(userProperties).length > 0) {
       result.push(`\n${selector} {`);
-
-      // Add user's properties
       for (const [property, value] of Object.entries(userProperties)) {
         result.push(`  ${property}: ${value};`);
       }
-
       result.push('}');
     }
   }
-
   return result.join('\n');
 }
 
-/**
- * Gets the initial editable CSS that the user starts with
- */
 export function getInitialEditableCSS(level: Level): string {
-  const result: string[] = [];
-
+  const result = [];
   for (const [selector, config] of Object.entries(level.editableSelectors)) {
     if (config.initialEditableCSS.trim()) {
-      result.push(`${selector} {`);
-      result.push(config.initialEditableCSS);
-      result.push('}');
-      result.push('');
+      result.push(`${selector} {\n${config.initialEditableCSS}\n}\n`);
     }
   }
-
-  return result.join('\n').trim();
-}
-
-/**
- * Generates a visual representation showing what's locked vs editable
- */
-export function generateEditableTemplate(level: Level): string {
-  const result: string[] = [];
-
-  // Add locked CSS with comments
-  result.push('/* ===== LOCKED CSS (Cannot be modified) ===== */');
-  result.push(level.lockedCSS);
-  result.push('');
-  result.push('/* ===== EDITABLE SECTION ===== */');
-  result.push(`/* ${level.constraints} */`);
-  result.push('');
-
-  // Add editable sections
-  for (const [selector, config] of Object.entries(level.editableSelectors)) {
-    result.push(`${selector} {`);
-    if (config.initialEditableCSS.trim()) {
-      result.push(config.initialEditableCSS);
-    } else {
-      result.push('  /* Add your CSS properties here */');
-      if (
-        config.allowedProperties.length > 0 &&
-        !config.allowedProperties.includes('*')
-      ) {
-        result.push(
-          `  /* Allowed properties: ${config.allowedProperties.join(', ')} */`
-        );
-      }
-    }
-    result.push('}');
-    result.push('');
-  }
-
-  return result.join('\n');
+  return result.join('').trim();
 }

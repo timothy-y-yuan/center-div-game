@@ -7,9 +7,9 @@ import { ThemeProvider } from '../contexts/ThemeProvider';
 const mockButtonElement = {
   getBoundingClientRect: vi.fn(() => ({
     bottom: 100,
-    right: 200,
+    right: 200, // left + width = 100 + 100 = 200
     left: 100,
-    top: 80,
+    top: 80, // bottom - height = 100 - 20 = 80
     width: 100,
     height: 20,
     x: 100,
@@ -80,7 +80,7 @@ describe('HintPopup Component', () => {
   it('should call onRevealAnswer when dumbass button is clicked', () => {
     renderWithTheme(<HintPopup {...mockProps} />);
 
-    fireEvent.click(screen.getByText(/I'm a dumbass/));
+    fireEvent.click(screen.getByTestId('reveal-answer-button'));
 
     expect(mockProps.onRevealAnswer).toHaveBeenCalledTimes(1);
   });
@@ -345,9 +345,14 @@ describe('HintPopup Component', () => {
         getBoundingClientRect: () => ({
           bottom: 100,
           left: 50,
+          right: 130, // left + width = 50 + 80 = 130
+          top: 60, // bottom - height = 100 - 40 = 60
           width: 80,
           height: 40,
+          x: 50,
+          y: 60,
         }),
+        contains: vi.fn(() => false),
       },
     } as React.RefObject<HTMLButtonElement>;
 
@@ -360,5 +365,12 @@ describe('HintPopup Component', () => {
 
     // Should render without errors and position correctly
     expect(screen.getByText('This is a test hint')).toBeInTheDocument();
+
+    // Verify positioning calculation works (no NaN in styles)
+    const popupElement = screen
+      .getByText('This is a test hint')
+      .closest('.w-80');
+    expect(popupElement).toHaveStyle('position: fixed');
+    expect(popupElement).not.toHaveStyle('right: NaN');
   });
 });

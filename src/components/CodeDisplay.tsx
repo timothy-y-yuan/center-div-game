@@ -18,6 +18,7 @@ interface CodeDisplayProps {
  */
 const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
   const { actualTheme } = useTheme();
+  const syntaxClassName = `syntax-highlighter ${actualTheme === 'dark' ? 'dark-theme' : 'light-theme'}`;
 
   return (
     <div className='h-full flex flex-col overflow-hidden'>
@@ -27,8 +28,8 @@ const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
           <SyntaxHighlighter
             language='html'
             useInlineStyles={false}
-            className={`syntax-highlighter ${actualTheme === 'dark' ? 'dark-theme' : 'light-theme'}`}
-            wrapLongLines={true}
+            className={syntaxClassName}
+            wrapLongLines
           >
             {level.initialHTML}
           </SyntaxHighlighter>
@@ -39,8 +40,8 @@ const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
           <SyntaxHighlighter
             language='css'
             useInlineStyles={false}
-            className={`syntax-highlighter ${actualTheme === 'dark' ? 'dark-theme' : 'light-theme'}`}
-            wrapLongLines={true}
+            className={syntaxClassName}
+            wrapLongLines
           >
             {level.lockedCSS}
           </SyntaxHighlighter>

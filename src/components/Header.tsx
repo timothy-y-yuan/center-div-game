@@ -8,6 +8,15 @@ import HintPopup from './HintPopup';
 import LevelDropdown from './LevelDropdown';
 import SettingsDropdown from './SettingsDropdown';
 
+// Simple inline utility functions
+const isLevelCompleted = (
+  levelIndex: number,
+  completedLevels: Set<number>,
+  failedLevels: Set<number>
+) => completedLevels.has(levelIndex) && !failedLevels.has(levelIndex);
+const isLevelFailed = (levelIndex: number, failedLevels: Set<number>) =>
+  failedLevels.has(levelIndex);
+
 interface HeaderProps {
   levels: Level[];
   currentLevelIndex: number;
@@ -60,10 +69,12 @@ const Header = memo(function Header({
   };
 
   const playerTitle = getPlayerTitle(completedLevels.size);
-  const isCurrentLevelCompleted =
-    completedLevels.has(currentLevelIndex) &&
-    !failedLevels.has(currentLevelIndex);
-  const isCurrentLevelFailed = failedLevels.has(currentLevelIndex);
+  const isCurrentLevelCompleted = isLevelCompleted(
+    currentLevelIndex,
+    completedLevels,
+    failedLevels
+  );
+  const isCurrentLevelFailed = isLevelFailed(currentLevelIndex, failedLevels);
   const showNextButton =
     (isCurrentLevelCompleted || isCurrentLevelFailed) &&
     currentLevelIndex < levels.length - 1;
@@ -88,6 +99,7 @@ const Header = memo(function Header({
             onLevelSelect={onLevelSelect}
           />
           <button
+            data-testid='hint-button'
             ref={hintButtonRef}
             onClick={onToggleHint}
             className={`flex items-center gap-3 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 ${
@@ -100,6 +112,7 @@ const Header = memo(function Header({
             <span>Hint</span>
           </button>
           <button
+            data-testid='check-button'
             onClick={onCheck}
             className='flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors'
           >
@@ -108,6 +121,7 @@ const Header = memo(function Header({
           </button>
           {showNextButton && (
             <button
+              data-testid='header-next-level-button'
               onClick={onNextLevel}
               className='flex items-center gap-3 bg-green-600 hover:bg-green-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors'
             >
@@ -161,11 +175,8 @@ const Header = memo(function Header({
         onClose={onToggleHint}
         buttonRef={hintButtonRef as React.RefObject<HTMLButtonElement>}
         onRevealAnswer={onRevealAnswer}
-        isCompleted={
-          completedLevels.has(currentLevelIndex) &&
-          !failedLevels.has(currentLevelIndex)
-        }
-        isFailed={failedLevels.has(currentLevelIndex)}
+        isCompleted={isCurrentLevelCompleted}
+        isFailed={isCurrentLevelFailed}
         solutionCSS={currentLevel.solutionCSS}
         explanation={currentLevel.explanation}
       />

@@ -1,9 +1,8 @@
 import type { Level } from '../types';
-import { createLevelId } from '../utils/typeHelpers';
 
 export const levels: Level[] = [
   {
-    id: createLevelId(1),
+    id: 1,
     title: "1: Baby's First Center",
     description:
       'Center this div horizontally using margins. The most basic centering technique!',
@@ -51,11 +50,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'The magic of "margin: 0 auto" works because when you set left and right margins to "auto", they automatically calculate equal values to center the element horizontally within its container. The "0" sets top and bottom margins to zero.',
-    difficulty: 'beginner',
     tags: ['margin', 'horizontal-centering', 'basics'],
   },
   {
-    id: createLevelId(2),
+    id: 2,
     title: '2: Add Vertical Too',
     description:
       'Center both horizontally AND vertically using flexbox on the container.',
@@ -98,11 +96,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'Flexbox is the modern way to center! When you set "display: flex" on the container, "justify-content: center" centers horizontally and "align-items: center" centers vertically. Think of it as controlling the main axis (horizontal) and cross axis (vertical).',
-    difficulty: 'beginner',
     tags: ['flexbox', 'justify-content', 'align-items', 'modern'],
   },
   {
-    id: createLevelId(3),
+    id: 3,
     title: '3: Grid Power',
     description: 'Center using CSS Grid - the most powerful layout system!',
     initialHTML:
@@ -143,11 +140,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'CSS Grid\'s "place-items: center" is a powerful shorthand that combines "align-items: center" and "justify-items: center". It centers grid items both horizontally and vertically in one line! Grid is especially useful for more complex layouts.',
-    difficulty: 'beginner',
     tags: ['grid', 'place-items', 'modern', 'shorthand'],
   },
   {
-    id: createLevelId(4),
+    id: 4,
     title: '4: Absolute Beginner',
     description:
       'Center using absolute positioning and transforms - break free from normal flow!',
@@ -208,11 +204,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'This classic technique uses absolute positioning to place the element at 50% from top and left, then uses "transform: translate(-50%, -50%)" to shift it back by half its own width and height. It works because transform percentages are relative to the element itself!',
-    difficulty: 'intermediate',
     tags: ['absolute-positioning', 'transform', 'translate', 'classic'],
   },
   {
-    id: createLevelId(5),
+    id: 5,
     title: '5: Text-Align Hack',
     description:
       'Center using old-school text-align and inline-block techniques.',
@@ -285,11 +280,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'This old-school trick uses "text-align: center" for horizontal centering, then creates an invisible pseudo-element (::before) that\'s as tall as the container. Both the pseudo-element and target use "vertical-align: middle" to center vertically. It\'s like having an invisible tall friend help you center!',
-    difficulty: 'intermediate',
     tags: ['text-align', 'pseudo-elements', 'vertical-align', 'old-school'],
   },
   {
-    id: createLevelId(6),
+    id: 6,
     title: '6: Table Cell Vibes',
     description: 'Center using table-cell display - old but reliable!',
     initialHTML:
@@ -348,11 +342,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'By making the container behave like a table cell with "display: table-cell", you can use table centering properties! "text-align: center" handles horizontal centering and "vertical-align: middle" handles vertical. This was a popular pre-flexbox technique.',
-    difficulty: 'intermediate',
     tags: ['table-cell', 'text-align', 'vertical-align', 'legacy'],
   },
   {
-    id: createLevelId(7),
+    id: 7,
     title: '7: CSS Calc() Wizard',
     description:
       'Center using calc() with absolute positioning - math meets CSS!',
@@ -412,11 +405,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'CSS calc() lets you do math! Here we calculate "50% - 25px" where 50% is the center point and 25px is half the element\'s width/height (50px ÷ 2). This positions the top-left corner of our element so that its center aligns with the container\'s center. Math FTW!',
-    difficulty: 'advanced',
     tags: ['calc', 'absolute-positioning', 'math', 'precise'],
   },
   {
-    id: createLevelId(8),
+    id: 8,
     title: '8: Margin Auto Magic',
     description: 'Advanced absolute positioning with margin auto on all sides.',
     initialHTML:
@@ -478,11 +470,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'This is a clever absolute positioning trick! By setting all four directions (top, left, right, bottom) to 0, you\'re telling the element to stretch to fill the entire container. But since it has a fixed width/height, "margin: auto" resolves the conflict by centering it perfectly. Mind = blown! 🤯',
-    difficulty: 'advanced',
     tags: ['absolute-positioning', 'margin-auto', 'all-directions', 'clever'],
   },
   {
-    id: createLevelId(9),
+    id: 9,
     title: '9: Multiple Targets',
     description: 'Center multiple elements as a group using flexbox.',
     initialHTML:
@@ -526,11 +517,10 @@ export const levels: Level[] = [
 }`,
     explanation:
       'Flexbox shines with multiple elements! "flex-direction: column" stacks items vertically, while "justify-content: center" and "align-items: center" center the entire group as one unit. The individual margins (5px) create nice spacing between items. It\'s like centering a perfectly organized stack!',
-    difficulty: 'advanced',
     tags: ['flexbox', 'multiple-elements', 'flex-direction', 'stacking'],
   },
   {
-    id: createLevelId(10),
+    id: 10,
     title: '10: CSS Ninja Final Boss',
     description:
       'Master-level centering with grid, responsive sizing, and modern CSS!',
@@ -597,7 +587,6 @@ export const levels: Level[] = [
 }`,
     explanation:
       'Welcome to CSS ninja status! This combines grid centering with modern responsive design. "clamp(120px, 60%, 200px)" creates a responsive width: minimum 120px, preferred 60% of container, maximum 200px. Add a gradient background, box-shadow, and perfect typography - you\'ve mastered both centering AND style! 🥷',
-    difficulty: 'expert',
     tags: ['grid', 'clamp', 'responsive', 'modern', 'advanced-styling'],
   },
 ];
@@ -607,7 +596,7 @@ export const levels: Level[] = [
  * This level demonstrates CSS specificity and the nuclear option of !important
  */
 export const SECRET_IMPORTANT_LEVEL: Level = {
-  id: createLevelId(999),
+  id: 999,
   title: 'Secret: !important Override Master',
   description:
     'Some styles are too stubborn to override normally. Sometimes you need the nuclear option to force your centering through!',
@@ -683,7 +672,6 @@ div.container div.target {
 }`,
   explanation:
     'Welcome to the dark side of CSS! When inline styles (specificity 1000) and highly specific selectors fight your centering, normal CSS declarations lose the specificity war. The !important declaration gives your properties maximum weight, overriding even inline styles. Use sparingly - with great power comes great responsibility! ⚡',
-  difficulty: 'expert',
   tags: [
     'important',
     'specificity',

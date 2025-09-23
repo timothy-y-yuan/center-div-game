@@ -43,6 +43,7 @@ const Preview = memo(function Preview({
       {isCompleted && currentLevel < totalLevels - 1 && (
         <div className='p-6 bg-emerald-600 bg-opacity-10 border-t border-emerald-500 border-opacity-20'>
           <button
+            data-testid='preview-next-level-button'
             onClick={onNextLevel}
             className='btn-success w-full flex items-center justify-center gap-3'
           >

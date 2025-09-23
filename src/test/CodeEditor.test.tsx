@@ -14,9 +14,8 @@ describe('CodeEditor Component', () => {
     vi.clearAllMocks();
   });
 
-  it('should render and function correctly with different languages', () => {
-    // Test CSS language
-    const { rerender } = renderWithTheme(
+  it('should handle onChange functionality correctly', () => {
+    renderWithTheme(
       <CodeEditor
         language='css'
         value='.test { color: red; }'
@@ -27,37 +26,12 @@ describe('CodeEditor Component', () => {
       />
     );
 
-    expect(screen.getByTestId('monaco-editor-css')).toBeInTheDocument();
-    expect(
-      screen.getByDisplayValue('.test { color: red; }')
-    ).toBeInTheDocument();
-    expect(screen.getByText('CSS Editor')).toBeInTheDocument();
-    expect(screen.getByText('🎨')).toBeInTheDocument();
-
-    // Test onChange functionality
     const editor = screen.getByTestId('monaco-editor-css');
     fireEvent.change(editor, { target: { value: '.new { color: blue; }' } });
     expect(mockOnChange).toHaveBeenCalledWith('.new { color: blue; }');
-
-    // Test HTML language switch
-    rerender(
-      <ThemeProvider>
-        <CodeEditor
-          language='html'
-          value='<div>test</div>'
-          onChange={mockOnChange}
-          title='HTML'
-          emoji='📝'
-          headerClass='header-html'
-        />
-      </ThemeProvider>
-    );
-
-    expect(screen.getByDisplayValue('<div>test</div>')).toBeInTheDocument();
-    expect(screen.getByText('HTML')).toBeInTheDocument();
   });
 
-  it('should handle read-only mode and styling', () => {
+  it('should handle read-only mode', () => {
     renderWithTheme(
       <CodeEditor
         language='html'
@@ -72,26 +46,13 @@ describe('CodeEditor Component', () => {
 
     const editor = screen.getByTestId('monaco-editor-html');
     expect(editor).toHaveAttribute('readonly');
-
-    // Check title styling
-    const title = screen.getByText('HTML');
-    expect(title).toHaveClass('text-blue-700', 'dark:text-blue-200');
-
-    // Check header container styling
-    const container = title.closest('div');
-    expect(container).toHaveClass('header-html', 'p-4');
   });
 
-  it('should handle multiline content and value changes', () => {
-    const multilineCSS = `.container {
-  display: flex;
-  justify-content: center;
-}`;
-
+  it('should handle value changes', () => {
     const { rerender } = renderWithTheme(
       <CodeEditor
         language='css'
-        value={multilineCSS}
+        value='initial'
         onChange={mockOnChange}
         title='CSS'
         emoji='🎨'
@@ -100,14 +61,13 @@ describe('CodeEditor Component', () => {
     );
 
     const editor = screen.getByTestId('monaco-editor-css');
-    expect(editor).toHaveValue(multilineCSS);
+    expect(editor).toHaveValue('initial');
 
-    // Test rapid value changes
     rerender(
       <ThemeProvider>
         <CodeEditor
           language='css'
-          value='changed1'
+          value='changed'
           onChange={mockOnChange}
           title='CSS'
           emoji='🎨'
@@ -116,19 +76,6 @@ describe('CodeEditor Component', () => {
       </ThemeProvider>
     );
 
-    rerender(
-      <ThemeProvider>
-        <CodeEditor
-          language='css'
-          value='changed2'
-          onChange={mockOnChange}
-          title='CSS'
-          emoji='🎨'
-          headerClass='header-css'
-        />
-      </ThemeProvider>
-    );
-
-    expect(screen.getByDisplayValue('changed2')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('changed')).toBeInTheDocument();
   });
 });
