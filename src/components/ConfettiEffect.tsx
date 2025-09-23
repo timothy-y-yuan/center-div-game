@@ -42,7 +42,6 @@ const ConfettiEffect = memo(function ConfettiEffect({
       return;
     }
 
-    // Create confetti pieces
     const newPieces: ConfettiPiece[] = [];
     for (let i = 0; i < 50; i++) {
       newPieces.push({
@@ -63,7 +62,6 @@ const ConfettiEffect = memo(function ConfettiEffect({
     }
     setPieces(newPieces);
 
-    // Animation loop
     const animate = () => {
       setPieces(currentPieces =>
         currentPieces
@@ -72,15 +70,14 @@ const ConfettiEffect = memo(function ConfettiEffect({
             x: piece.x + piece.vx,
             y: piece.y + piece.vy,
             rotation: piece.rotation + piece.rotationSpeed,
-            vy: piece.vy + 0.1, // gravity
+            vy: piece.vy + 0.1,
           }))
           .filter(piece => piece.y < window.innerHeight + 50)
       );
     };
 
-    const interval = setInterval(animate, 16); // ~60fps
+    const interval = setInterval(animate, 16);
 
-    // Auto-complete after 3 seconds
     const timeout = setTimeout(() => {
       onComplete?.();
     }, 3000);

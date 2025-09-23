@@ -12,9 +12,6 @@ import type {
   CSSProperty,
 } from '../types';
 
-// ============================================================================
-// BRANDED TYPE CONSTRUCTORS
-// ============================================================================
 
 export function createLevelId(value: number): LevelId {
   if (!Number.isInteger(value) || value < 0) {
@@ -41,9 +38,6 @@ export function createDurationMs(value: number): DurationMs {
   return value as DurationMs;
 }
 
-// ============================================================================
-// VALIDATION MESSAGE HELPERS
-// ============================================================================
 
 export function createValidationError(
   message: string,
@@ -96,9 +90,6 @@ export function createValidationInfo(
   };
 }
 
-// ============================================================================
-// COLLECTION HELPERS
-// ============================================================================
 
 export function createLevelIdSet(
   values: readonly number[]
@@ -113,9 +104,6 @@ export function levelIdSetToArray(
   return Array.from(levelIds).map(id => id as number);
 }
 
-// ============================================================================
-// TIME HELPERS
-// ============================================================================
 
 export function calculateDuration(
   start: TimestampMs,
@@ -168,9 +156,6 @@ export function formatTimestamp(
   return date.toLocaleDateString(undefined, formatOptions);
 }
 
-// ============================================================================
-// VALIDATION HELPERS
-// ============================================================================
 
 export function validateNonEmptyString(
   value: unknown,
@@ -225,9 +210,6 @@ export function validateUniqueArray<T>(
   return array;
 }
 
-// ============================================================================
-// DEEP EQUALITY HELPERS
-// ============================================================================
 
 export function deepEqual(a: unknown, b: unknown): boolean {
   if (a === b) {

@@ -19,9 +19,6 @@ import {
   createTimestampMs,
 } from '../utils/typeHelpers';
 
-// ============================================================================
-// COMPLETION MEASUREMENT TYPES
-// ============================================================================
 
 /**
  * Result of measuring element positioning for completion check
@@ -46,9 +43,6 @@ export interface CompletionResult {
   readonly feedback: string;
 }
 
-// ============================================================================
-// GAME STATE SERVICE INTERFACE
-// ============================================================================
 
 export interface IGameStateService {
   measureElementCentering(iframeId: string): ElementMeasurement;
@@ -78,9 +72,6 @@ export interface IGameStateService {
   ): UserProgress;
 }
 
-// ============================================================================
-// GAME STATE SERVICE IMPLEMENTATION
-// ============================================================================
 
 /**
  * Service for managing game state and level completion logic
@@ -155,7 +146,6 @@ export class GameStateService implements IGameStateService {
     const isHorizontallyCentered = horizontalOffset <= tolerance;
     const isVerticallyCentered = verticalOffset <= tolerance;
 
-    // Check level-specific requirements
     const meetsHorizontalRequirement =
       !requirements.requiresHorizontalCentering || isHorizontallyCentered;
     const meetsVerticalRequirement =
@@ -237,12 +227,12 @@ export class GameStateService implements IGameStateService {
 
     return {
       completed: isCompleted,
-      attempts: 1, // This would be incremented by the calling code
+      attempts: 1,
       completionTime,
       firstAttemptTime: startTime,
       completedTime: isCompleted ? now : null,
       hintsUsed,
-      successfulSolution: null, // This would be set by the calling code
+      successfulSolution: null,
       answersRevealed,
     };
   }
@@ -260,7 +250,6 @@ export class GameStateService implements IGameStateService {
       0
     );
 
-    // Calculate total play time and average completion time
     const completedLevels = progressArray.filter(
       p => p.completed && p.completionTime !== null
     );
@@ -366,9 +355,6 @@ export class GameStateService implements IGameStateService {
   }
 }
 
-// ============================================================================
-// SERVICE FACTORY
-// ============================================================================
 
 export function createGameStateService(): IGameStateService {
   return new GameStateService();

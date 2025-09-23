@@ -3,9 +3,7 @@
  * Centralized location for all magic numbers, strings, and configuration
  */
 
-// ============================================================================
 // UI CONSTANTS
-// ============================================================================
 
 /**
  * User interface related constants
@@ -20,9 +18,7 @@ export const UI_CONSTANTS = {
   CONFETTI_PIECE_COUNT: 50,
 } as const;
 
-// ============================================================================
 // STORAGE KEYS
-// ============================================================================
 
 /**
  * LocalStorage keys for persisting data
@@ -36,9 +32,7 @@ export const STORAGE_KEYS = {
   SETTINGS: 'settings',
 } as const;
 
-// ============================================================================
 // GAME CONFIGURATION
-// ============================================================================
 
 /**
  * Core game mechanics configuration
@@ -51,9 +45,7 @@ export const GAME_CONFIG = {
   ANSWER_REVEAL_PENALTY: 0.5,
 } as const;
 
-// ============================================================================
 // CSS VALIDATION CONSTANTS
-// ============================================================================
 
 /**
  * CSS parsing and validation configuration
@@ -66,9 +58,7 @@ export const CSS_CONSTANTS = {
   MAX_CSS_LENGTH: 10000,
 } as const;
 
-// ============================================================================
 // EDUCATIONAL CONTENT
-// ============================================================================
 
 /**
  * Educational messaging and content
@@ -104,9 +94,7 @@ export const EDUCATIONAL_CONTENT = {
   },
 } as const;
 
-// ============================================================================
 // THEME CONFIGURATION
-// ============================================================================
 
 /**
  * Theme and styling configuration
@@ -121,9 +109,7 @@ export const THEME_CONFIG = {
   DARK_MODE_MEDIA_QUERY: '(prefers-color-scheme: dark)',
 } as const;
 
-// ============================================================================
 // PERFORMANCE CONSTANTS
-// ============================================================================
 
 /**
  * Performance optimization configuration
@@ -135,9 +121,7 @@ export const PERFORMANCE_CONFIG = {
   IFRAME_LOAD_TIMEOUT_MS: 5000,
 } as const;
 
-// ============================================================================
 // ACCESSIBILITY CONSTANTS
-// ============================================================================
 
 /**
  * Accessibility and usability configuration
@@ -154,9 +138,7 @@ export const A11Y_CONFIG = {
   },
 } as const;
 
-// ============================================================================
 // ERROR MESSAGES
-// ============================================================================
 
 /**
  * Standardized error messages
@@ -183,9 +165,7 @@ export const ERROR_MESSAGES = {
   },
 } as const;
 
-// ============================================================================
 // FEATURE FLAGS
-// ============================================================================
 
 /**
  * Feature flags for enabling/disabling functionality
@@ -198,9 +178,7 @@ export const FEATURE_FLAGS = {
   ACCESSIBILITY_ENHANCEMENTS: true,
 } as const;
 
-// ============================================================================
 // TYPE EXPORTS
-// ============================================================================
 
 // Export types for the constants to ensure type safety
 export type StorageKey = keyof typeof STORAGE_KEYS;
