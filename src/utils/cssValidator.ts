@@ -67,8 +67,8 @@ export function validateUserCSS(
   const warnings: ValidationMessage[] = [];
 
   try {
-    // Check for !important usage first - this should fail validation
-    if (containsImportant(userCSS)) {
+    // Check for !important usage - only allowed on the secret level
+    if (containsImportant(userCSS) && level.id !== 999) {
       errors.push(
         createValidationError(
           'Using !important is not allowed in this game. Try to solve the level using proper CSS techniques instead!'

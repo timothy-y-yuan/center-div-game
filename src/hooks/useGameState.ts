@@ -32,6 +32,9 @@ export interface UseGameStateResult {
   /** Set of failed level IDs */
   readonly failedLevels: ReadonlySet<LevelId>;
 
+  /** Whether the secret level has been unlocked */
+  readonly isSecretLevelUnlocked: boolean;
+
   /** Changes to a specific level */
   readonly changeLevel: (levelIndex: number) => void;
 
@@ -52,6 +55,9 @@ export interface UseGameStateResult {
 
   /** Clears confetti animation */
   readonly clearConfetti: () => void;
+
+  /** Unlocks secret level and switches to it */
+  readonly unlockSecretLevel: () => void;
 }
 
 // ============================================================================
@@ -80,6 +86,10 @@ export function useGameState(): UseGameStateResult {
     storageService.getFailedLevels()
   );
 
+  const [isSecretLevelUnlocked, setIsSecretLevelUnlocked] = useState(() =>
+    storageService.getSecretLevelUnlocked()
+  );
+
   // ============================================================================
   // STATE MANAGEMENT FUNCTIONS
   // ============================================================================
@@ -97,7 +107,6 @@ export function useGameState(): UseGameStateResult {
         completedLevels.has(levelId) && !failedLevels.has(levelId)
       );
 
-      // Persist the change
       storageService.setCurrentLevel(levelId);
     },
     [completedLevels, failedLevels]
@@ -133,7 +142,6 @@ export function useGameState(): UseGameStateResult {
     setFailedLevels(newFailedLevels);
     setShowHint(false);
 
-    // Persist the failed level
     storageService.setFailedLevels(newFailedLevels);
   }, [currentLevel, failedLevels]);
 
@@ -183,6 +191,15 @@ export function useGameState(): UseGameStateResult {
     setShowConfetti(false);
   }, []);
 
+  /**
+   * Unlocks the secret level and immediately switches to it
+   */
+  const unlockSecretLevel = useCallback(() => {
+    setIsSecretLevelUnlocked(true);
+    storageService.setSecretLevelUnlocked(true);
+    changeLevel(999);
+  }, [changeLevel]);
+
   // ============================================================================
   // RETURN INTERFACE
   // ============================================================================
@@ -194,6 +211,7 @@ export function useGameState(): UseGameStateResult {
     showConfetti,
     completedLevels,
     failedLevels,
+    isSecretLevelUnlocked,
     changeLevel,
     nextLevel,
     toggleHint,
@@ -201,5 +219,6 @@ export function useGameState(): UseGameStateResult {
     resetProgress,
     checkCompletion,
     clearConfetti,
+    unlockSecretLevel,
   };
 }
