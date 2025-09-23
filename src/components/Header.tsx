@@ -11,17 +11,17 @@ import SettingsDropdown from './SettingsDropdown';
 // Simple inline utility functions
 const isLevelCompleted = (
   levelIndex: number,
-  completedLevels: Set<number>,
-  failedLevels: Set<number>
+  completedLevels: ReadonlySet<number>,
+  failedLevels: ReadonlySet<number>
 ) => completedLevels.has(levelIndex) && !failedLevels.has(levelIndex);
-const isLevelFailed = (levelIndex: number, failedLevels: Set<number>) =>
+const isLevelFailed = (levelIndex: number, failedLevels: ReadonlySet<number>) =>
   failedLevels.has(levelIndex);
 
 interface HeaderProps {
   levels: Level[];
   currentLevelIndex: number;
-  completedLevels: Set<number>;
-  failedLevels: Set<number>;
+  completedLevels: ReadonlySet<number>;
+  failedLevels: ReadonlySet<number>;
   showHint: boolean;
   onToggleHint: () => void;
   onCheck: () => void;

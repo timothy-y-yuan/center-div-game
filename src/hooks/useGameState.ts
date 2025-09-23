@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { Level } from '../types';
+import type { Level, LevelId } from '../types';
 import { storageService } from '../services/StorageService';
 import { checkLevelCompletion } from '../services/GameStateService';
 

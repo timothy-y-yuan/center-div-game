@@ -1,4 +1,4 @@
-import type { Level, CSSValidationResult } from '../types';
+import type { Level, CSSValidationResult, ValidationMessage } from '../types';
 import { createValidationError } from './typeHelpers';
 
 export function containsImportant(css: string): boolean {
@@ -38,8 +38,8 @@ export function validateUserCSS(
 ): CSSValidationResult {
   try {
     const parsedCSS = parseCSS(userCSS);
-    const errors = [];
-    const warnings = [];
+    const errors: ValidationMessage[] = [];
+    const warnings: ValidationMessage[] = [];
 
     // Check for !important usage - only allowed on the secret level
     if (containsImportant(userCSS) && level.id !== 999) {

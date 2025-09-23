@@ -7,8 +7,8 @@ import { CheckIcon, ScrollChevronIcon } from './Icon';
 // Simple inline function
 const getLevelStatus = (
   levelIndex: number,
-  completedLevels: Set<number>,
-  failedLevels: Set<number>
+  completedLevels: ReadonlySet<number>,
+  failedLevels: ReadonlySet<number>
 ) => {
   if (completedLevels.has(levelIndex) && !failedLevels.has(levelIndex))
     return 'completed';
@@ -19,8 +19,8 @@ const getLevelStatus = (
 interface LevelDropdownProps {
   levels: Level[];
   currentLevelIndex: number;
-  completedLevels: Set<number>;
-  failedLevels: Set<number>;
+  completedLevels: ReadonlySet<number>;
+  failedLevels: ReadonlySet<number>;
   onLevelSelect: (index: number) => void;
 }
 

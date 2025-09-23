@@ -33,7 +33,7 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should render confetti pieces when isVisible is true', () => {
-    let container: HTMLElement;
+    let container!: HTMLElement;
     act(() => {
       const result = render(
         <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
@@ -77,7 +77,7 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should create multiple confetti pieces', () => {
-    let container: HTMLElement;
+    let container!: HTMLElement;
     act(() => {
       const result = render(
         <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
@@ -105,7 +105,7 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should clean up when isVisible becomes false', () => {
-    let container: HTMLElement, rerender: (ui: React.ReactElement) => void;
+    let container!: HTMLElement, rerender!: (ui: React.ReactElement) => void;
     act(() => {
       const result = render(
         <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
@@ -138,7 +138,7 @@ describe('ConfettiEffect Component', () => {
     const clearIntervalSpy = vi.spyOn(global, 'clearInterval');
     const clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
 
-    let unmount: () => void;
+    let unmount!: () => void;
     act(() => {
       const result = render(
         <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
@@ -155,7 +155,7 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should have proper styling classes', () => {
-    let container: HTMLElement;
+    let container!: HTMLElement;
     act(() => {
       const result = render(
         <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
@@ -174,7 +174,7 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should render both emoji and colored pieces', () => {
-    let container: HTMLElement;
+    let container!: HTMLElement;
     act(() => {
       const result = render(
         <ConfettiEffect isVisible={true} onComplete={vi.fn()} />

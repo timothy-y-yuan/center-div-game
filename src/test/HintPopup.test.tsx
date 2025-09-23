@@ -353,7 +353,7 @@ describe('HintPopup Component', () => {
           y: 60,
         }),
         contains: vi.fn(() => false),
-      },
+      } as unknown as HTMLButtonElement,
     } as React.RefObject<HTMLButtonElement>;
 
     const propsWithButtonRef = {
