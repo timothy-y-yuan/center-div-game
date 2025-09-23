@@ -192,7 +192,12 @@ describe('HintPopup Component', () => {
 
     // Find the content container with theme-specific classes
     const popup = screen.getByText('Hint').closest('.relative');
-    expect(popup).toHaveClass('bg-gray-800', 'border-gray-600');
+    expect(popup).toHaveClass(
+      'bg-white',
+      'dark:bg-gray-800',
+      'border-gray-200',
+      'dark:border-gray-600'
+    );
   });
 
   it('should show correct styling for light theme', () => {

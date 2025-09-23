@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useTheme } from '../hooks/useTheme';
 
 interface HintPopupProps {
   isOpen: boolean;
@@ -25,7 +24,6 @@ export default function HintPopup({
   solutionCSS,
   explanation,
 }: HintPopupProps) {
-  const { actualTheme } = useTheme();
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,13 +65,7 @@ export default function HintPopup({
       <div className='absolute -top-2 right-4 w-4 h-4 rotate-45 bg-amber-400'></div>
 
       {/* Popup content */}
-      <div
-        className={`relative rounded-xl shadow-xl overflow-hidden ${
-          actualTheme === 'dark'
-            ? 'bg-gray-800 border border-gray-600'
-            : 'bg-white border border-gray-200'
-        }`}
-      >
+      <div className='relative rounded-xl shadow-xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600'>
         {/* Header */}
         <div
           className={`p-4 ${
@@ -98,41 +90,21 @@ export default function HintPopup({
         <div className='p-4 pb-2'>
           {isCompleted || isFailed ? (
             <div>
-              <p
-                className={`text-sm leading-relaxed mb-3 ${
-                  actualTheme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-                }`}
-              >
+              <p className='text-sm leading-relaxed mb-3 text-gray-700 dark:text-gray-200'>
                 {isCompleted
                   ? "You already solved this like a nerd! Here's the solution:"
                   : "Okay dumbass, here's how it's done:"}
               </p>
-              <pre
-                className={`text-xs p-3 rounded-lg overflow-x-auto mb-3 ${
-                  actualTheme === 'dark'
-                    ? 'bg-gray-900 text-green-300 border border-gray-700'
-                    : 'bg-gray-100 text-green-700 border border-gray-300'
-                }`}
-              >
+              <pre className='text-xs p-3 rounded-lg overflow-x-auto mb-3 bg-gray-100 dark:bg-gray-900 text-green-700 dark:text-green-300 border border-gray-300 dark:border-gray-700'>
                 <code>{solutionCSS}</code>
               </pre>
-              <div
-                className={`text-sm leading-relaxed p-3 rounded-lg ${
-                  actualTheme === 'dark'
-                    ? 'bg-blue-900/30 text-blue-200 border border-blue-700/50'
-                    : 'bg-blue-50 text-blue-800 border border-blue-200'
-                }`}
-              >
+              <div className='text-sm leading-relaxed p-3 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-700/50'>
                 <div className='font-semibold mb-1'>💡 Why it works:</div>
                 <div>{explanation}</div>
               </div>
             </div>
           ) : (
-            <p
-              className={`text-sm leading-relaxed ${
-                actualTheme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}
-            >
+            <p className='text-sm leading-relaxed text-gray-700 dark:text-gray-200'>
               {hint}
             </p>
           )}
@@ -140,11 +112,7 @@ export default function HintPopup({
 
         {/* Footer with reveal button (only if not completed and not failed) */}
         {!isCompleted && !isFailed && (
-          <div
-            className={`p-4 pt-2 border-t ${
-              actualTheme === 'dark' ? 'border-gray-700' : 'border-gray-200'
-            }`}
-          >
+          <div className='p-4 pt-2 border-t border-gray-200 dark:border-gray-700'>
             <button
               data-testid='reveal-answer-button'
               onClick={onRevealAnswer}

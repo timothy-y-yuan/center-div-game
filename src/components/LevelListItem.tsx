@@ -8,7 +8,6 @@ interface LevelListItemProps {
   isCompleted: boolean;
   isFailed: boolean;
   isCurrent: boolean;
-  actualTheme: string;
   onLevelSelect: (index: number) => void;
 }
 
@@ -18,33 +17,22 @@ export default function LevelListItem({
   isCompleted,
   isFailed,
   isCurrent,
-  actualTheme,
   onLevelSelect,
 }: LevelListItemProps) {
-  const isDark = actualTheme === 'dark';
   const baseClasses =
-    'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors first:rounded-t-lg last:rounded-b-lg';
-  const hoverClasses = isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100';
+    'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors first:rounded-t-lg last:rounded-b-lg hover:bg-gray-100 dark:hover:bg-gray-700';
   const currentClasses = isCurrent
-    ? isDark
-      ? 'bg-blue-900/20 text-blue-300'
-      : 'bg-blue-50 text-blue-700'
-    : isDark
-      ? 'text-gray-200'
-      : 'text-gray-700';
+    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+    : 'text-gray-700 dark:text-gray-200';
 
   return (
     <button
       key={level.id}
       onClick={() => onLevelSelect(index)}
-      className={`${baseClasses} ${hoverClasses} ${currentClasses}`}
+      className={`${baseClasses} ${currentClasses}`}
     >
       <div className='flex-shrink-0'>
-        <LevelStatusIcon
-          isCompleted={isCompleted}
-          isFailed={isFailed}
-          actualTheme={actualTheme}
-        />
+        <LevelStatusIcon isCompleted={isCompleted} isFailed={isFailed} />
       </div>
       <div className='flex-1 min-w-0'>
         <div
@@ -58,11 +46,7 @@ export default function LevelListItem({
         >
           {level.title}
         </div>
-        <div
-          className={`text-xs mt-1 truncate ${
-            actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-          }`}
-        >
+        <div className='text-xs mt-1 truncate text-gray-600 dark:text-gray-300'>
           {level.description}
         </div>
       </div>

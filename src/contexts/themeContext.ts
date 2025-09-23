@@ -11,7 +11,6 @@ export interface ThemeContextType {
   actualTheme: 'light' | 'dark';
   systemTheme: 'light' | 'dark';
   setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
 }
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(

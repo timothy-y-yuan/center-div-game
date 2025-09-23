@@ -5,7 +5,6 @@
 
 import { useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { useTheme } from '../hooks/useTheme';
 import { useClickOutside, useDropdownPosition } from '../hooks';
 import { ChevronDownIcon } from './Icon';
 
@@ -38,7 +37,6 @@ export default function BaseDropdown({
   isOpen: controlledIsOpen,
   onClose,
 }: BaseDropdownProps) {
-  const { actualTheme } = useTheme();
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -81,11 +79,7 @@ export default function BaseDropdown({
     }
   };
 
-  const baseDropdownClasses = `fixed ${dropdownWidth} rounded-lg shadow-xl z-[10000] ${
-    actualTheme === 'dark'
-      ? 'bg-gray-800 border border-gray-600'
-      : 'bg-white border border-gray-200'
-  } ${dropdownClassName}`;
+  const baseDropdownClasses = `fixed ${dropdownWidth} rounded-lg shadow-xl z-[10000] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 ${dropdownClassName}`;
 
   const dropdownStyle = {
     top: position.top,

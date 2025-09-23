@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTheme } from '../hooks/useTheme';
 import BaseDropdown from './BaseDropdown';
 import ThemeSelector from './ThemeSelector';
 import ResetConfirmation from './ResetConfirmation';
@@ -12,7 +11,6 @@ interface SettingsDropdownProps {
 export default function SettingsDropdown({
   onResetProgress,
 }: SettingsDropdownProps) {
-  const { actualTheme } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleToggle = (isOpen: boolean) => {
@@ -26,29 +24,20 @@ export default function SettingsDropdown({
   const dropdownContent = (
     <div>
       {/* Header */}
-      <div
-        className={`px-4 py-3 border-b ${
-          actualTheme === 'dark' ? 'border-gray-700' : 'border-gray-200'
-        }`}
-      >
-        <h3
-          className={`font-semibold text-sm ${
-            actualTheme === 'dark' ? 'text-white' : 'text-gray-900'
-          }`}
-        >
+      <div className='px-4 py-3 border-b border-gray-200 dark:border-gray-700'>
+        <h3 className='font-semibold text-sm text-gray-900 dark:text-white'>
           ⚙️ Settings
         </h3>
       </div>
 
-      <ThemeSelector actualTheme={actualTheme} />
+      <ThemeSelector />
 
       <ResetConfirmation
-        actualTheme={actualTheme}
         onResetProgress={onResetProgress}
         onClose={handleClose}
       />
 
-      <CreditsSection actualTheme={actualTheme} />
+      <CreditsSection />
     </div>
   );
 

@@ -1,33 +1,17 @@
-interface CreditsSectionProps {
-  actualTheme: string;
-}
-
-export default function CreditsSection({ actualTheme }: CreditsSectionProps) {
+export default function CreditsSection() {
   return (
     <div className='px-4 py-3'>
-      <div
-        className={`text-sm font-medium mb-2 ${
-          actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-        }`}
-      >
+      <div className='text-sm font-medium mb-2 text-gray-700 dark:text-gray-300'>
         👨‍💻 Credits
       </div>
-      <div
-        className={`text-xs leading-relaxed ${
-          actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-        }`}
-      >
+      <div className='text-xs leading-relaxed text-gray-600 dark:text-gray-300'>
         <div className='mb-1'>
           <strong>Game Design & Development:</strong>{' '}
           <a
             href='https://github.com/timothy-y-yuan'
             target='_blank'
             rel='noopener noreferrer'
-            className={`font-medium transition-colors ${
-              actualTheme === 'dark'
-                ? 'text-blue-300 hover:text-blue-200'
-                : 'text-blue-600 hover:text-blue-700'
-            }`}
+            className='font-medium transition-colors text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200'
           >
             @timothy-y-yuan
           </a>

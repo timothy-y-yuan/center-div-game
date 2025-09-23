@@ -44,18 +44,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.classList.toggle('dark', actualTheme === 'dark');
   }, [actualTheme]);
 
-  const toggleTheme = () => {
-    setTheme(current => {
-      if (current === 'system')
-        return systemTheme === 'dark' ? 'light' : 'dark';
-      if (current === 'dark') return 'light';
-      return 'dark';
-    });
-  };
-
   return (
     <ThemeContext.Provider
-      value={{ theme, actualTheme, systemTheme, setTheme, toggleTheme }}
+      value={{ theme, actualTheme, systemTheme, setTheme }}
     >
       {children}
     </ThemeContext.Provider>

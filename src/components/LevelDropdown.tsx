@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTheme } from '../hooks/useTheme';
 import type { Level } from '../types';
 import BaseDropdown from './BaseDropdown';
 import LevelListItem from './LevelListItem';
@@ -33,7 +32,6 @@ export default function LevelDropdown({
   failedLevels,
   onLevelSelect,
 }: LevelDropdownProps) {
-  const { actualTheme } = useTheme();
   const [canScroll, setCanScroll] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -64,14 +62,7 @@ export default function LevelDropdown({
   const isCurrentFailed = currentStatus === 'failed';
 
   const dropdownContent = (
-    <div
-      className='max-h-64 overflow-y-auto'
-      style={{
-        scrollbarWidth: 'thin',
-        scrollbarColor:
-          actualTheme === 'dark' ? '#4B5563 #1F2937' : '#9CA3AF #F3F4F6',
-      }}
-    >
+    <div className='max-h-64 overflow-y-auto'>
       {levels.map((level, index) => {
         const status = getLevelStatus(index, completedLevels, failedLevels);
         const isCompleted = status === 'completed';
@@ -86,7 +77,6 @@ export default function LevelDropdown({
             isCompleted={isCompleted}
             isFailed={isFailed}
             isCurrent={isCurrent}
-            actualTheme={actualTheme}
             onLevelSelect={handleLevelSelect}
           />
         );
@@ -94,19 +84,9 @@ export default function LevelDropdown({
 
       {/* Scroll indicator fade - only show when scrollable */}
       {canScroll && (
-        <div
-          className={`absolute bottom-0 left-0 right-0 h-8 pointer-events-none rounded-b-lg ${
-            actualTheme === 'dark'
-              ? 'bg-gradient-to-t from-gray-800 via-gray-800/60 to-transparent'
-              : 'bg-gradient-to-t from-white via-white/60 to-transparent'
-          }`}
-        >
+        <div className='absolute bottom-0 left-0 right-0 h-8 pointer-events-none rounded-b-lg bg-gradient-to-t from-white via-white/60 to-transparent dark:from-gray-800 dark:via-gray-800/60 dark:to-transparent'>
           {/* Subtle scroll icon */}
-          <div
-            className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 ${
-              actualTheme === 'dark' ? 'text-gray-500' : 'text-gray-400'
-            }`}
-          >
+          <div className='absolute bottom-2 left-1/2 transform -translate-x-1/2 text-gray-400 dark:text-gray-500'>
             <ScrollChevronIcon />
           </div>
         </div>
@@ -136,7 +116,6 @@ export default function LevelDropdown({
       <LevelStatusIcon
         isCompleted={isCurrentCompleted}
         isFailed={isCurrentFailed}
-        actualTheme={actualTheme}
       />
     </BaseDropdown>
   );

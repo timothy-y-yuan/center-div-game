@@ -1,13 +1,11 @@
 interface LevelStatusIconProps {
   isCompleted: boolean;
   isFailed: boolean;
-  actualTheme: string;
 }
 
 export default function LevelStatusIcon({
   isCompleted,
   isFailed,
-  actualTheme,
 }: LevelStatusIconProps) {
   if (isCompleted) {
     return (
@@ -26,10 +24,6 @@ export default function LevelStatusIcon({
   }
 
   return (
-    <div
-      className={`w-6 h-6 rounded-full border-2 ${
-        actualTheme === 'dark' ? 'border-gray-500' : 'border-gray-300'
-      }`}
-    />
+    <div className='w-6 h-6 rounded-full border-2 border-gray-300 dark:border-gray-500' />
   );
 }

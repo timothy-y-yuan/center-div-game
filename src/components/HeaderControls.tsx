@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { type RefObject } from 'react';
 
 interface HeaderControlsProps {
   showHint: boolean;
@@ -6,8 +6,8 @@ interface HeaderControlsProps {
   onCheck: () => void;
   onNextLevel: () => void;
   showNextButton: boolean;
-  hintButtonRef: RefObject<HTMLButtonElement>;
-  checkButtonRef: RefObject<HTMLButtonElement>;
+  hintButtonRef: RefObject<HTMLButtonElement | null>;
+  checkButtonRef: RefObject<HTMLButtonElement | null>;
 }
 
 export default function HeaderControls({

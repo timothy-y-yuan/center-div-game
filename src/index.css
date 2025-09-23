@@ -2,6 +2,9 @@
 
 @import 'tailwindcss';
 
+/* Required for Tailwind v4 dark mode - as per docs */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   * {
     font-family:

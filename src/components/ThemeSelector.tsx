@@ -1,10 +1,6 @@
 import { useTheme } from '../hooks/useTheme';
 import { CheckIcon } from './Icon';
 
-interface ThemeSelectorProps {
-  actualTheme: string;
-}
-
 const getThemeIcon = (theme: string) =>
   theme === 'light' ? '☀️' : theme === 'dark' ? '🌙' : '💻';
 
@@ -13,20 +9,12 @@ const getThemeLabel = (theme: string, systemTheme: string) =>
     ? `System (${systemTheme})`
     : theme.charAt(0).toUpperCase() + theme.slice(1);
 
-export default function ThemeSelector({ actualTheme }: ThemeSelectorProps) {
+export default function ThemeSelector() {
   const { theme, setTheme, systemTheme } = useTheme();
 
   return (
-    <div
-      className={`px-4 py-3 border-b ${
-        actualTheme === 'dark' ? 'border-gray-700' : 'border-gray-200'
-      }`}
-    >
-      <div
-        className={`text-sm font-medium mb-2 ${
-          actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-        }`}
-      >
+    <div className='px-4 py-3 border-b border-gray-200 dark:border-gray-700'>
+      <div className='text-sm font-medium mb-2 text-gray-700 dark:text-gray-300'>
         🎨 Theme
       </div>
       <div className='space-y-1'>
@@ -36,12 +24,8 @@ export default function ThemeSelector({ actualTheme }: ThemeSelectorProps) {
             onClick={() => setTheme(themeOption)}
             className={`w-full flex items-center gap-3 px-3 py-2 text-left rounded-lg transition-colors text-sm ${
               theme === themeOption
-                ? actualTheme === 'dark'
-                  ? 'bg-blue-900/50 text-blue-300'
-                  : 'bg-blue-50 text-blue-700'
-                : actualTheme === 'dark'
-                  ? 'hover:bg-gray-700 text-gray-200'
-                  : 'hover:bg-gray-100 text-gray-700'
+                ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
+                : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200'
             }`}
           >
             <span className='text-base'>{getThemeIcon(themeOption)}</span>

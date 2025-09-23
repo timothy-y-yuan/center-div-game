@@ -2,6 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Preview from '../components/Preview';
 
+// Mock the useTheme hook
+vi.mock('../hooks/useTheme', () => ({
+  useTheme: () => ({
+    theme: 'light',
+    setTheme: vi.fn(),
+    actualTheme: 'light',
+  }),
+}));
+
 describe('Preview Component', () => {
   const defaultProps = {
     content:

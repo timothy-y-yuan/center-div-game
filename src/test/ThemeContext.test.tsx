@@ -5,7 +5,7 @@ import { useTheme } from '../hooks/useTheme';
 
 // Test component that uses the theme context
 const TestComponent = () => {
-  const { theme, actualTheme, systemTheme, setTheme, toggleTheme } = useTheme();
+  const { theme, actualTheme, systemTheme, setTheme } = useTheme();
 
   return (
     <div>
@@ -15,7 +15,6 @@ const TestComponent = () => {
       <button onClick={() => setTheme('light')}>Set Light</button>
       <button onClick={() => setTheme('dark')}>Set Dark</button>
       <button onClick={() => setTheme('system')}>Set System</button>
-      <button onClick={toggleTheme}>Toggle</button>
     </div>
   );
 };
@@ -175,43 +174,6 @@ describe('ThemeContext', () => {
 
     // Should default to system
     expect(screen.getByTestId('theme')).toHaveTextContent('system');
-  });
-
-  it('should toggle theme correctly', () => {
-    // Mock light system preference
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: vi.fn().mockImplementation(query => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
-    });
-
-    render(
-      <ThemeProvider>
-        <TestComponent />
-      </ThemeProvider>
-    );
-
-    // Start with system (light)
-    expect(screen.getByTestId('theme')).toHaveTextContent('system');
-    expect(screen.getByTestId('actual-theme')).toHaveTextContent('light');
-
-    // Toggle should go to dark (since system is light)
-    fireEvent.click(screen.getByText('Toggle'));
-    expect(screen.getByTestId('theme')).toHaveTextContent('dark');
-
-    // Toggle should go to light
-    fireEvent.click(screen.getByText('Toggle'));
-    expect(screen.getByTestId('theme')).toHaveTextContent('light');
-
-    // Toggle should go to dark
-    fireEvent.click(screen.getByText('Toggle'));
-    expect(screen.getByTestId('theme')).toHaveTextContent('dark');
   });
 
   it('should apply dark class to document element', () => {

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useTheme } from '../hooks/useTheme';
 import type { ValidationFeedback as ValidationFeedbackData } from '../types';
 import FeedbackMessage from './FeedbackMessage';
 import CenteringRequirements from './CenteringRequirements';
@@ -18,7 +17,6 @@ export default function ValidationFeedback({
   onClose,
   buttonRef,
 }: ValidationFeedbackProps) {
-  const { actualTheme } = useTheme();
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -76,13 +74,7 @@ export default function ValidationFeedback({
       ></div>
 
       {/* Popup content */}
-      <div
-        className={`relative rounded-xl shadow-xl overflow-hidden ${
-          actualTheme === 'dark'
-            ? 'bg-gray-800 border border-gray-600'
-            : 'bg-white border border-gray-200'
-        }`}
-      >
+      <div className='relative rounded-xl shadow-xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600'>
         {/* Header */}
         <div className={`p-4 ${getHeaderColor()}`}>
           <div className='flex items-center gap-3'>
@@ -95,11 +87,8 @@ export default function ValidationFeedback({
 
         {/* Content */}
         <div className='p-4'>
-          <FeedbackMessage feedback={feedback} actualTheme={actualTheme} />
-          <CenteringRequirements
-            feedback={feedback}
-            actualTheme={actualTheme}
-          />
+          <FeedbackMessage feedback={feedback} />
+          <CenteringRequirements feedback={feedback} />
         </div>
       </div>
     </div>,

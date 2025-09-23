@@ -5,7 +5,6 @@
 
 import { memo } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { useTheme } from '../hooks/useTheme';
 import type { Level } from '../types';
 
 interface CodeDisplayProps {
@@ -17,9 +16,6 @@ interface CodeDisplayProps {
  * Uses react-syntax-highlighter with Prism for syntax highlighting
  */
 const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
-  const { actualTheme } = useTheme();
-  const syntaxClassName = `syntax-highlighter ${actualTheme === 'dark' ? 'dark-theme' : 'light-theme'}`;
-
   return (
     <div className='h-full flex flex-col overflow-hidden'>
       <div className='flex-1 overflow-auto'>
@@ -28,7 +24,7 @@ const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
           <SyntaxHighlighter
             language='html'
             useInlineStyles={false}
-            className={syntaxClassName}
+            className='syntax-highlighter'
             wrapLongLines
           >
             {level.initialHTML}
@@ -40,7 +36,7 @@ const CodeDisplay = memo(function CodeDisplay({ level }: CodeDisplayProps) {
           <SyntaxHighlighter
             language='css'
             useInlineStyles={false}
-            className={syntaxClassName}
+            className='syntax-highlighter'
             wrapLongLines
           >
             {level.lockedCSS}

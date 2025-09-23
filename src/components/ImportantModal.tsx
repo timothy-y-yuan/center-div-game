@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useTheme } from '../hooks/useTheme';
 import { useImportantModalAnimations } from '../hooks/useImportantModalAnimations';
 import ImportantModalHeader from './ImportantModalHeader';
 import ImportantModalContent from './ImportantModalContent';
@@ -14,7 +13,6 @@ export default function ImportantModal({
   isOpen,
   onClose,
 }: ImportantModalProps) {
-  const { actualTheme } = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
   const { shake, bounceTitle } = useImportantModalAnimations(isOpen);
 
@@ -58,11 +56,7 @@ export default function ImportantModal({
         <div
           className={`relative rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 ${
             shake ? 'scale-105 rotate-1' : 'scale-100 rotate-0'
-          } ${
-            actualTheme === 'dark'
-              ? 'bg-gray-900 border-4 border-red-500'
-              : 'bg-white border-4 border-red-600'
-          }`}
+          } bg-white dark:bg-gray-900 border-4 border-red-600 dark:border-red-500`}
           style={{
             boxShadow: `
               0 25px 50px -12px rgba(239, 68, 68, 0.8), 
@@ -79,7 +73,7 @@ export default function ImportantModal({
           <ImportantModalHeader bounceTitle={bounceTitle} />
 
           {/* Content with dramatic styling and educational message */}
-          <ImportantModalContent actualTheme={actualTheme} onClose={onClose} />
+          <ImportantModalContent onClose={onClose} />
         </div>
       </div>
     </div>,

@@ -2,13 +2,9 @@ import type { ValidationFeedback as ValidationFeedbackData } from '../types';
 
 interface FeedbackMessageProps {
   feedback: ValidationFeedbackData;
-  actualTheme: string;
 }
 
-export default function FeedbackMessage({
-  feedback,
-  actualTheme,
-}: FeedbackMessageProps) {
+export default function FeedbackMessage({ feedback }: FeedbackMessageProps) {
   const generateFeedbackMessage = (): string => {
     if (feedback.isCompleted) {
       return 'Perfect! Your element is properly centered! 🎉';
@@ -34,11 +30,7 @@ export default function FeedbackMessage({
   };
 
   return (
-    <p
-      className={`text-sm leading-relaxed mb-3 ${
-        actualTheme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-      }`}
-    >
+    <p className='text-sm leading-relaxed mb-3 text-gray-700 dark:text-gray-200'>
       {generateFeedbackMessage()}
     </p>
   );
