@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import type { Level } from '../types';
 import BaseDropdown from './BaseDropdown';
-import { CheckIcon, ScrollChevronIcon } from './Icon';
+import LevelListItem from './LevelListItem';
+import LevelStatusIcon from './LevelStatusIcon';
+import { ScrollChevronIcon } from './Icon';
 
 // Simple inline function
 const getLevelStatus = (
@@ -76,67 +78,17 @@ export default function LevelDropdown({
         const isFailed = status === 'failed';
         const isCurrent = index === currentLevelIndex;
 
-        const isDark = actualTheme === 'dark';
-        const baseClasses =
-          'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors first:rounded-t-lg last:rounded-b-lg';
-        const hoverClasses = isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100';
-        const currentClasses = isCurrent
-          ? isDark
-            ? 'bg-blue-900/20 text-blue-300'
-            : 'bg-blue-50 text-blue-700'
-          : isDark
-            ? 'text-gray-200'
-            : 'text-gray-700';
-
         return (
-          <button
+          <LevelListItem
             key={level.id}
-            onClick={() => handleLevelSelect(index)}
-            className={`${baseClasses} ${hoverClasses} ${currentClasses}`}
-          >
-            <div className='flex-shrink-0'>
-              {isCompleted ? (
-                <div className='w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-sm'>
-                  🎉
-                </div>
-              ) : isFailed ? (
-                <div className='w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-sm'>
-                  😭
-                </div>
-              ) : (
-                <div
-                  className={`w-6 h-6 rounded-full border-2 ${
-                    actualTheme === 'dark'
-                      ? 'border-gray-500'
-                      : 'border-gray-300'
-                  }`}
-                />
-              )}
-            </div>
-            <div className='flex-1 min-w-0'>
-              <div
-                className={`font-medium text-sm truncate ${
-                  isCompleted
-                    ? 'text-emerald-600 dark:text-emerald-400'
-                    : isFailed
-                      ? 'text-red-600 dark:text-red-400'
-                      : ''
-                }`}
-              >
-                {level.title}
-              </div>
-              <div
-                className={`text-xs mt-1 truncate ${
-                  actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-                }`}
-              >
-                {level.description}
-              </div>
-            </div>
-            {index === currentLevelIndex && (
-              <CheckIcon className='w-4 h-4 ml-2 flex-shrink-0' />
-            )}
-          </button>
+            level={level}
+            index={index}
+            isCompleted={isCompleted}
+            isFailed={isFailed}
+            isCurrent={isCurrent}
+            actualTheme={actualTheme}
+            onLevelSelect={handleLevelSelect}
+          />
         );
       })}
 
@@ -181,14 +133,11 @@ export default function LevelDropdown({
       >
         {currentLevel.title}
       </span>
-      {isCurrentCompleted && (
-        <span className='text-emerald-600 dark:text-emerald-300 text-sm'>
-          🎉
-        </span>
-      )}
-      {isCurrentFailed && (
-        <span className='text-red-600 dark:text-red-400 text-sm'>😭</span>
-      )}
+      <LevelStatusIcon
+        isCompleted={isCurrentCompleted}
+        isFailed={isCurrentFailed}
+        actualTheme={actualTheme}
+      />
     </BaseDropdown>
   );
 }

@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTheme } from '../hooks/useTheme';
 import type { ValidationFeedback as ValidationFeedbackData } from '../types';
+import FeedbackMessage from './FeedbackMessage';
+import CenteringRequirements from './CenteringRequirements';
 
 interface ValidationFeedbackProps {
   isOpen: boolean;
@@ -46,30 +48,6 @@ export default function ValidationFeedback({
     top: buttonRect.bottom + window.scrollY + 8,
     right: window.innerWidth - buttonRect.right,
     zIndex: 9999,
-  };
-
-  const generateFeedbackMessage = (): string => {
-    if (feedback.isCompleted) {
-      return 'Perfect! Your element is properly centered! 🎉';
-    }
-
-    const issues: string[] = [];
-
-    if (feedback.requiresHorizontal && !feedback.horizontalCentered) {
-      issues.push(
-        `horizontally off by ${feedback.horizontalOffset.toFixed(1)}px`
-      );
-    }
-
-    if (feedback.requiresVertical && !feedback.verticallyCentered) {
-      issues.push(`vertically off by ${feedback.verticalOffset.toFixed(1)}px`);
-    }
-
-    if (issues.length === 0) {
-      return 'Hmm, something went wrong with the validation...';
-    }
-
-    return `Close! Your element is ${issues.join(' and ')}.`;
   };
 
   const getIcon = (): string => {
@@ -117,71 +95,11 @@ export default function ValidationFeedback({
 
         {/* Content */}
         <div className='p-4'>
-          <p
-            className={`text-sm leading-relaxed mb-3 ${
-              actualTheme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-            }`}
-          >
-            {generateFeedbackMessage()}
-          </p>
-
-          {/* Requirements breakdown */}
-          {!feedback.isCompleted && (
-            <div
-              className={`text-xs p-3 rounded-lg ${
-                actualTheme === 'dark'
-                  ? 'bg-gray-900 border border-gray-700'
-                  : 'bg-gray-100 border border-gray-300'
-              }`}
-            >
-              <div className='font-semibold mb-2 text-gray-600 dark:text-gray-400'>
-                Centering Requirements:
-              </div>
-              <div className='space-y-1'>
-                {feedback.requiresHorizontal && (
-                  <div className='flex items-center gap-2'>
-                    <span className={feedback.horizontalCentered ? '✅' : '❌'}>
-                      {feedback.horizontalCentered ? '✅' : '❌'}
-                    </span>
-                    <span
-                      className={
-                        actualTheme === 'dark'
-                          ? 'text-gray-300'
-                          : 'text-gray-600'
-                      }
-                    >
-                      Horizontal centering{' '}
-                      {feedback.horizontalCentered
-                        ? '(Perfect!)'
-                        : `(Off by ${feedback.horizontalOffset.toFixed(1)}px)`}
-                    </span>
-                  </div>
-                )}
-                {feedback.requiresVertical && (
-                  <div className='flex items-center gap-2'>
-                    <span className={feedback.verticallyCentered ? '✅' : '❌'}>
-                      {feedback.verticallyCentered ? '✅' : '❌'}
-                    </span>
-                    <span
-                      className={
-                        actualTheme === 'dark'
-                          ? 'text-gray-300'
-                          : 'text-gray-600'
-                      }
-                    >
-                      Vertical centering{' '}
-                      {feedback.verticallyCentered
-                        ? '(Perfect!)'
-                        : `(Off by ${feedback.verticalOffset.toFixed(1)}px)`}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div className='mt-2 text-xs text-gray-500 dark:text-gray-400'>
-                💡 Tolerance: Elements within 5px are considered centered
-              </div>
-            </div>
-          )}
+          <FeedbackMessage feedback={feedback} actualTheme={actualTheme} />
+          <CenteringRequirements
+            feedback={feedback}
+            actualTheme={actualTheme}
+          />
         </div>
       </div>
     </div>,
