@@ -18,8 +18,7 @@ export default function ImportantModalContent({
             actualTheme === 'dark' ? 'text-red-200' : 'text-red-800'
           }`}
           style={{
-            textShadow:
-              '0 0 10px currentColor, 0 0 20px red, 0 0 30px orange',
+            textShadow: '0 0 10px currentColor, 0 0 20px red, 0 0 30px orange',
           }}
         >
           <span className='text-3xl mr-2 animate-spin inline-block'>🛑</span>
