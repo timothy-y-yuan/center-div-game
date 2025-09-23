@@ -180,20 +180,25 @@ export default function SettingsDropdown({
           }`}
         >
           <div className='mb-1'>
-            <strong>Game Design & Development:</strong> Timothy (that's you!)
-          </div>
-          <div className='mb-1'>
-            <strong>Powered by:</strong> React, TypeScript, Tailwind CSS
-          </div>
-          <div className='mb-1'>
-            <strong>Code Editor:</strong> Monaco Editor
-          </div>
-          <div className='mb-1'>
-            <strong>AI Assistant:</strong> Claude (Anthropic)
+            <strong>Game Design & Development:</strong>{' '}
+            <a
+              href='https://github.com/timothy-y-yuan'
+              target='_blank'
+              rel='noopener noreferrer'
+              className={`font-medium transition-colors ${
+                actualTheme === 'dark'
+                  ? 'text-blue-300 hover:text-blue-200'
+                  : 'text-blue-600 hover:text-blue-700'
+              }`}
+            >
+              @timothy-y-yuan
+            </a>
           </div>
           <div className='text-xs text-center mt-3 pt-2 border-t border-gray-600 dark:border-gray-700'>
-            Made with 💻 and way too much ☕<br />
-            <em>Vibe coded with Claude Code ✨</em>
+            <em>Vibe coded with Claude Code ✨</em> <br />
+            <em>
+              (sort of? i kinda got invested and started doing things myself)
+            </em>
           </div>
         </div>
       </div>

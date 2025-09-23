@@ -2,11 +2,16 @@
  * @fileoverview Header component with level controls and navigation
  */
 
-import { memo, useRef } from 'react';
-import type { Level } from '../types';
+import { memo, useRef, useState } from 'react';
+import type {
+  Level,
+  ValidationFeedback as ValidationFeedbackData,
+} from '../types';
 import HintPopup from './HintPopup';
+import ValidationFeedback from './ValidationFeedback';
 import LevelDropdown from './LevelDropdown';
 import SettingsDropdown from './SettingsDropdown';
+import { calculateCenteringMetrics } from '../services/GameStateService';
 
 // Simple inline utility functions
 const isLevelCompleted = (
@@ -50,6 +55,10 @@ const Header = memo(function Header({
 }: HeaderProps) {
   const currentLevel = levels[currentLevelIndex];
   const hintButtonRef = useRef<HTMLButtonElement>(null);
+  const checkButtonRef = useRef<HTMLButtonElement>(null);
+  const [showValidationFeedback, setShowValidationFeedback] = useState(false);
+  const [validationFeedback, setValidationFeedback] =
+    useState<ValidationFeedbackData | null>(null);
 
   const getPlayerTitle = (completedCount: number) => {
     const titles = [
@@ -78,6 +87,17 @@ const Header = memo(function Header({
   const showNextButton =
     (isCurrentLevelCompleted || isCurrentLevelFailed) &&
     currentLevelIndex < levels.length - 1;
+
+  const handleCheck = () => {
+    const feedback = calculateCenteringMetrics(currentLevel, 'preview');
+    setValidationFeedback(feedback);
+
+    if (feedback && !feedback.isCompleted) {
+      setShowValidationFeedback(true);
+    }
+
+    onCheck();
+  };
 
   return (
     <header className='relative z-10 glass border-b border-gray-200 dark:border-white border-opacity-10 dark:border-opacity-10 px-6 py-4'>
@@ -113,7 +133,8 @@ const Header = memo(function Header({
           </button>
           <button
             data-testid='check-button'
-            onClick={onCheck}
+            ref={checkButtonRef}
+            onClick={handleCheck}
             className='flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors'
           >
             <span>🎯</span>
@@ -179,6 +200,13 @@ const Header = memo(function Header({
         isFailed={isCurrentLevelFailed}
         solutionCSS={currentLevel.solutionCSS}
         explanation={currentLevel.explanation}
+      />
+
+      <ValidationFeedback
+        isOpen={showValidationFeedback}
+        feedback={validationFeedback}
+        onClose={() => setShowValidationFeedback(false)}
+        buttonRef={checkButtonRef as React.RefObject<HTMLButtonElement>}
       />
     </header>
   );

@@ -48,6 +48,16 @@ export interface CSSValidationResult {
   readonly info: readonly ValidationMessage[];
 }
 
+export interface ValidationFeedback {
+  readonly isCompleted: boolean;
+  readonly horizontalCentered: boolean;
+  readonly verticallyCentered: boolean;
+  readonly horizontalOffset: number;
+  readonly verticalOffset: number;
+  readonly requiresHorizontal: boolean;
+  readonly requiresVertical: boolean;
+}
+
 // Simplified progress tracking - removing over-engineered tracking
 export interface UserProgress {
   readonly completedLevels: Set<number>;

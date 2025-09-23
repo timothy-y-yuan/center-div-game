@@ -2,27 +2,24 @@
  * @fileoverview Simple completion checking logic
  */
 
-import type { Level } from '../types';
+import type { Level, ValidationFeedback } from '../types';
 
 const TOLERANCE_PX = 5;
 
-export function checkLevelCompletion(level: Level, iframeId: string): boolean {
+export function calculateCenteringMetrics(
+  level: Level,
+  iframeId: string
+): ValidationFeedback | null {
   try {
     const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
     if (!iframe?.contentDocument) {
-      console.log(
-        '🔍 Verification failed: iframe or contentDocument not found'
-      );
-      return false;
+      return null;
     }
 
     const target = iframe.contentDocument.querySelector('.target');
     const container = iframe.contentDocument.querySelector('.container');
     if (!target || !container) {
-      console.log(
-        '🔍 Verification failed: target or container element not found'
-      );
-      return false;
+      return null;
     }
 
     const targetRect = target.getBoundingClientRect();
@@ -33,47 +30,34 @@ export function checkLevelCompletion(level: Level, iframeId: string): boolean {
     const containerCenterX = containerRect.left + containerRect.width / 2;
     const containerCenterY = containerRect.top + containerRect.height / 2;
 
-    const horizontalDiff = Math.abs(targetCenterX - containerCenterX);
-    const verticalDiff = Math.abs(targetCenterY - containerCenterY);
+    const horizontalOffset = Math.abs(targetCenterX - containerCenterX);
+    const verticalOffset = Math.abs(targetCenterY - containerCenterY);
 
-    const horizontalCentered = horizontalDiff <= TOLERANCE_PX;
-    const verticallyCentered = verticalDiff <= TOLERANCE_PX;
+    const horizontalCentered = horizontalOffset <= TOLERANCE_PX;
+    const verticallyCentered = verticalOffset <= TOLERANCE_PX;
 
     const meetsHorizontal =
       !level.requirements.requiresHorizontalCentering || horizontalCentered;
     const meetsVertical =
       !level.requirements.requiresVerticalCentering || verticallyCentered;
 
-    const result = meetsHorizontal && meetsVertical;
-
-    console.log(`🎯 Level ${level.id} Verification Results`);
-    console.log(`✅ Level completed: ${result}`);
-    console.log(
-      `📏 Horizontal centering: ${horizontalCentered ? '✅ Correct' : `❌ Off by ${horizontalDiff.toFixed(1)}px`}`
-    );
-    console.log(
-      `📐 Vertical centering: ${verticallyCentered ? '✅ Correct' : `❌ Off by ${verticalDiff.toFixed(1)}px`}`
-    );
-    console.log(
-      `💬 Feedback: ${result ? 'Perfect!' : 'Close! ' + (!horizontalCentered ? `The element is horizontally off by ${horizontalDiff.toFixed(1)}px.` : '') + (!verticallyCentered ? `The element is vertically off by ${verticalDiff.toFixed(1)}px.` : '')}`
-    );
-    console.log(`📋 Requirements:`);
-    console.log(
-      `  - Horizontal centering required: ${level.requirements.requiresHorizontalCentering}`
-    );
-    console.log(
-      `  - Vertical centering required: ${level.requirements.requiresVerticalCentering}`
-    );
-    console.log(`🔍 Debug Logic:`);
-    console.log(`  - Meets horizontal requirement: ${meetsHorizontal}`);
-    console.log(`  - Meets vertical requirement: ${meetsVertical}`);
-    console.log(`  - Should be completed: ${result}`);
-
-    return result;
+    return {
+      isCompleted: meetsHorizontal && meetsVertical,
+      horizontalCentered,
+      verticallyCentered,
+      horizontalOffset,
+      verticalOffset,
+      requiresHorizontal: level.requirements.requiresHorizontalCentering,
+      requiresVertical: level.requirements.requiresVerticalCentering,
+    };
   } catch (error) {
-    console.log('🔍 Verification failed with error:', error);
-    return false;
+    console.log('🔍 Centering calculation failed with error:', error);
+    return null;
   }
+}
+
+export function checkLevelCompletion(level: Level, iframeId: string): boolean {
+  return calculateCenteringMetrics(level, iframeId)?.isCompleted ?? false;
 }
 
 export function getPlayerTitle(completedCount: number): string {
