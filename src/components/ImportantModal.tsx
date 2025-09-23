@@ -36,15 +36,6 @@ export default function ImportantModal({
   }, [isOpen]);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    }
-
     function handleEscapeKey(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         onClose();
@@ -52,10 +43,8 @@ export default function ImportantModal({
     }
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
       document.addEventListener('keydown', handleEscapeKey);
       return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
         document.removeEventListener('keydown', handleEscapeKey);
       };
     }
@@ -64,7 +53,10 @@ export default function ImportantModal({
   if (!isOpen) return null;
 
   return createPortal(
-    <div className='fixed inset-0 z-[9999] flex items-center justify-center animate-in fade-in duration-200'>
+    <div
+      className='fixed inset-0 z-[9999] flex items-center justify-center animate-in fade-in duration-200'
+      data-testid='important-modal'
+    >
       {/* ENHANCED Dramatic backdrop with multiple flashing colors */}
       <div className='absolute inset-0 bg-gradient-to-br from-red-500/70 via-orange-500/70 to-red-600/70 animate-pulse'></div>
       <div className='absolute inset-0 bg-gradient-to-tr from-yellow-400/30 via-red-500/30 to-pink-500/30 animate-ping'></div>
@@ -72,7 +64,7 @@ export default function ImportantModal({
 
       <div
         ref={modalRef}
-        className={`w-96 max-w-md mx-4 animate-in zoom-in-95 duration-200 relative ${
+        className={`w-150 max-w-md mx-4 animate-in zoom-in-95 duration-200 relative ${
           shake ? 'animate-bounce' : ''
         }`}
         style={{
@@ -115,7 +107,7 @@ export default function ImportantModal({
               <h3
                 className={`font-bold text-white text-xl tracking-wide ${bounceTitle ? 'animate-pulse' : ''}`}
               >
-                🔥💀 !IMPORTANT NUCLEAR ALERT! 💀🔥
+                🔥💀 Well, aren't YOU !important?? 💀🔥
               </h3>
               <span
                 className={`text-3xl ${bounceTitle ? 'animate-bounce' : ''} rotate-12`}
@@ -147,17 +139,13 @@ export default function ImportantModal({
                 <span className='text-3xl mr-2 animate-spin inline-block'>
                   🛑
                 </span>
-                <strong>STOP RIGHT THERE, CSS CRIMINAL!</strong> Using{' '}
+                Using{' '}
                 <code
                   className={`px-3 py-2 rounded-md font-bold text-lg animate-bounce ${
                     actualTheme === 'dark'
                       ? 'bg-red-900 text-red-100 border-2 border-red-400'
                       : 'bg-red-100 text-red-900 border-2 border-red-500'
                   }`}
-                  style={{
-                    boxShadow:
-                      '0 0 20px red, 0 0 40px orange, inset 0 0 10px rgba(255,0,0,0.3)',
-                  }}
                 >
                   !important
                 </code>{' '}
@@ -179,19 +167,11 @@ export default function ImportantModal({
                       : 'text-orange-800'
                   }`}
                 >
-                  <strong>🎓 EDUCATIONAL NUCLEAR MELTDOWN:</strong> The ENTIRE
-                  point of this game is to learn <em>proper</em> CSS techniques!
-                  Using <code>!important</code> is like cheating on your
-                  homework while the teacher is staring right at you!
-                  <br />
-                  <br />
-                  <span className='text-2xl animate-spin inline-block'>
-                    🤯
-                  </span>{' '}
-                  You've just activated CSS HARD MODE!
-                  <span className='text-2xl animate-bounce inline-block ml-2'>
-                    💀
-                  </span>
+                  <strong>🎓 EDUCATIONAL MELTDOWN:</strong> Think this popup is
+                  annoying?? <code>!important</code> is{' '}
+                  <strong>EVEN MORE ANNOYING</strong> for your codebase and
+                  fellow devs! It breaks the natural flow of CSS, making your
+                  stylesheets a nightmare to maintain.
                 </p>
               </div>
 
@@ -206,11 +186,12 @@ export default function ImportantModal({
                   }`}
                 >
                   <span className='text-base mr-1'>💡</span>
-                  <strong>Pro tip:</strong>{' '}
+                  <strong>In all seriousness:</strong>{' '}
                   <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
                     !important
-                  </code>{' '}
-                  breaks CSS's natural cascade and specificity rules, making
+                  </code>
+                  should be reserved for rare edge cases, not everyday styling.
+                  It breaks CSS's natural cascade and specificity rules, making
                   your code harder to maintain and debug. It creates a hierarchy
                   where only more{' '}
                   <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
@@ -220,10 +201,6 @@ export default function ImportantModal({
                   codebase. Instead, master specificity, understand the cascade,
                   and use proper CSS architecture - your future self (and your
                   team) will thank you!
-                  <code className='mx-1 px-1 py-0.5 rounded text-xs bg-gray-200 dark:bg-gray-700'>
-                    !important
-                  </code>
-                  should be reserved for rare edge cases, not everyday styling.
                 </p>
               </div>
 
@@ -231,21 +208,17 @@ export default function ImportantModal({
               <div className='flex justify-center gap-3'>
                 <button
                   onClick={onClose}
+                  data-testid='important-modal-close'
                   className={`px-8 py-4 rounded-lg font-bold text-xl transition-all duration-200 transform hover:scale-110 animate-pulse ${
                     actualTheme === 'dark'
                       ? 'bg-gradient-to-r from-red-600 via-red-500 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-lg hover:shadow-red-500/50'
                       : 'bg-gradient-to-r from-red-500 via-red-600 to-red-500 hover:from-red-400 hover:to-red-500 text-white shadow-lg hover:shadow-red-500/50'
                   }`}
-                  style={{
-                    boxShadow:
-                      '0 8px 32px rgba(239, 68, 68, 0.8), 0 0 20px red, 0 0 40px orange',
-                    textShadow: '0 0 10px white',
-                  }}
                 >
                   <span className='mr-3 text-2xl animate-bounce inline-block'>
                     😤
                   </span>
-                  I'LL CODE IT PROPERLY!
+                  I'm a real developer who can do it the RIGHT way!
                   <span
                     className='ml-3 text-2xl animate-bounce inline-block'
                     style={{ animationDelay: '0.2s' }}

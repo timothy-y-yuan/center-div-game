@@ -219,7 +219,32 @@ We welcome feature suggestions! Please use our [feature request template](.githu
 - **React**: Functional components with hooks
 - **CSS**: Use Tailwind CSS classes
 - **Testing**: Write tests for new functionality
-- **Comments**: Document complex logic
+- **Comments**: ONLY document complex logic, business rules, or non-obvious decisions
+
+### Comment Guidelines
+
+**❌ DO NOT write comments that merely describe what code does:**
+
+```typescript
+// Set the theme to dark mode
+setTheme('dark');
+
+/** The current level number */
+currentLevel: number;
+```
+
+**✅ DO write comments that explain why, when, or complex reasoning:**
+
+```typescript
+// Debounce validation to avoid excessive API calls during typing
+const debouncedValidation = debounce(validateInput, 300);
+
+// Level 1 intentionally only checks horizontal centering to reduce
+// initial complexity for new players
+if (isFirstLevel) {
+  return validateHorizontalCenteringOnly();
+}
+```
 
 ## 🚦 Pull Request Process
 
