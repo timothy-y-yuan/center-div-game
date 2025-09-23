@@ -1,8 +1,3 @@
-/**
- * @fileoverview Main application component
- * Orchestrates the Center Div Game with clean architecture and custom hooks
- */
-
 import { useMemo, useState } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import Header from './components/Header';
@@ -15,14 +10,6 @@ import { useGameState, useLevelContent } from './hooks';
 import { containsImportant } from './utils/cssValidator';
 import CodeDisplay from './components/CodeDisplay';
 
-// ============================================================================
-// MAIN APPLICATION COMPONENT
-// ============================================================================
-
-/**
- * Main application component providing the Center Div Game interface
- * Uses custom hooks for clean separation of concerns
- */
 function App() {
   // ============================================================================
   // HOOK INTEGRATION
@@ -61,13 +48,6 @@ function App() {
   // ============================================================================
 
   /**
-   * Handles level completion checking with enhanced feedback
-   */
-  const handleCheckCompletion = () => {
-    gameState.checkCompletion(currentLevel, 'preview');
-  };
-
-  /**
    * Handles revealing the answer for the current level
    */
   const handleRevealAnswer = () => {
@@ -75,9 +55,6 @@ function App() {
     levelContent.setSolutionCSS(currentLevel);
   };
 
-  /**
-   * Handles level selection with content reset
-   */
   const handleLevelChange = (newLevelIndex: number) => {
     // Check if this is the secret level (last item in allLevels when unlocked)
     if (
@@ -96,9 +73,6 @@ function App() {
     }
   };
 
-  /**
-   * Handles moving to the next level
-   */
   const handleNextLevel = () => {
     // If we're on the secret level, there's no next level
     if (gameState.currentLevel === 999) {
@@ -111,17 +85,11 @@ function App() {
     }
   };
 
-  /**
-   * Handles resetting all progress
-   */
   const handleResetProgress = () => {
     gameState.resetProgress();
     levelContent.resetForLevel(levels[0]);
   };
 
-  /**
-   * Handles CSS changes with validation and !important detection
-   */
   const handleCSSChange = (newEditableCSS: string) => {
     // Check for !important usage
     if (containsImportant(newEditableCSS)) {
@@ -141,13 +109,6 @@ function App() {
     levelContent.updateCSS(newEditableCSS);
   };
 
-  /**
-   * Handles closing the !important modal
-   */
-  const handleCloseImportantModal = () => {
-    setShowImportantModal(false);
-  };
-
   return (
     <div className='h-screen bg-main text-gray-900 dark:text-white flex flex-col relative overflow-hidden'>
       {/* Background decoration */}
@@ -157,15 +118,11 @@ function App() {
       <Header
         levels={allLevels}
         currentLevelIndex={currentLevelIndex}
-        completedLevels={
-          new Set(Array.from(gameState.completedLevels).map(id => id as number))
-        }
-        failedLevels={
-          new Set(Array.from(gameState.failedLevels).map(id => id as number))
-        }
+        completedLevels={gameState.completedLevels}
+        failedLevels={gameState.failedLevels}
         showHint={gameState.showHint}
         onToggleHint={gameState.toggleHint}
-        onCheck={handleCheckCompletion}
+        onCheck={() => gameState.checkCompletion(currentLevel, 'preview')}
         onLevelSelect={handleLevelChange}
         onRevealAnswer={handleRevealAnswer}
         onResetProgress={handleResetProgress}
@@ -227,7 +184,7 @@ function App() {
 
       <ImportantModal
         isOpen={showImportantModal}
-        onClose={handleCloseImportantModal}
+        onClose={() => setShowImportantModal(false)}
       />
     </div>
   );

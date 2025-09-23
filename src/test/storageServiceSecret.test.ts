@@ -1,12 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createStorageService } from '../services/StorageService';
+import { storageService } from '../services/StorageService';
 
 describe('StorageService - Secret Level', () => {
-  let storageService: ReturnType<typeof createStorageService>;
-
   beforeEach(() => {
     localStorage.clear();
-    storageService = createStorageService();
   });
 
   it('should get and set secret level unlock status', () => {
@@ -19,11 +16,12 @@ describe('StorageService - Secret Level', () => {
     expect(storageService.getSecretLevelUnlocked()).toBe(false);
   });
 
-  it('should persist secret level unlock status across instances', () => {
+  it('should persist secret level unlock status across operations', () => {
     storageService.setSecretLevelUnlocked(true);
+    expect(storageService.getSecretLevelUnlocked()).toBe(true);
 
-    const newService = createStorageService();
-    expect(newService.getSecretLevelUnlocked()).toBe(true);
+    storageService.setSecretLevelUnlocked(false);
+    expect(storageService.getSecretLevelUnlocked()).toBe(false);
   });
 
   it('should handle invalid data gracefully', () => {

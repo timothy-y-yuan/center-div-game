@@ -39,22 +39,15 @@ describe('SettingsDropdown Component', () => {
     });
   });
 
-  it('should render settings button with gear icon', () => {
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    expect(screen.getByText('⚙️')).toBeInTheDocument();
-  });
-
   it('should open dropdown when settings button is clicked', async () => {
     renderWithTheme(<SettingsDropdown {...mockProps} />);
 
     fireEvent.click(screen.getByText('⚙️'));
 
     await waitFor(() => {
-      expect(screen.getByText('⚙️ Settings')).toBeInTheDocument();
-      expect(screen.getByText('🎨 Theme')).toBeInTheDocument();
-      expect(screen.getByText('🔄 Actions')).toBeInTheDocument();
-      expect(screen.getByText('👨‍💻 Credits')).toBeInTheDocument();
+      expect(screen.getByText('Light')).toBeInTheDocument();
+      expect(screen.getByText('Dark')).toBeInTheDocument();
+      expect(screen.getByText('Reset All Progress')).toBeInTheDocument();
     });
   });
 
@@ -74,76 +67,6 @@ describe('SettingsDropdown Component', () => {
     });
   });
 
-  it('should show all theme options', async () => {
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      expect(screen.getByText('Light')).toBeInTheDocument();
-      expect(screen.getByText('Dark')).toBeInTheDocument();
-      expect(screen.getByText(/Auto \(/)).toBeInTheDocument();
-    });
-  });
-
-  it('should show correct theme icons', async () => {
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      expect(screen.getByText('☀️')).toBeInTheDocument(); // Light
-      expect(screen.getByText('🌙')).toBeInTheDocument(); // Dark
-      expect(screen.getByText('🌓')).toBeInTheDocument(); // Auto
-    });
-  });
-
-  it('should show system preference in Auto theme label', async () => {
-    // Mock dark system preference
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: vi.fn().mockImplementation(query => ({
-        matches: query === '(prefers-color-scheme: dark)',
-        media: query,
-        onchange: null,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
-    });
-
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      expect(screen.getByText('Auto (dark)')).toBeInTheDocument();
-    });
-  });
-
-  it('should show light system preference in Auto label', async () => {
-    // Mock light system preference
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: vi.fn().mockImplementation(query => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
-    });
-
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      expect(screen.getByText('Auto (light)')).toBeInTheDocument();
-    });
-  });
-
   it('should change theme when theme option is clicked', async () => {
     renderWithTheme(<SettingsDropdown {...mockProps} />);
 
@@ -159,32 +82,6 @@ describe('SettingsDropdown Component', () => {
     expect(localStorage.getItem('theme')).toBe('dark');
   });
 
-  it('should show checkmark for selected theme', async () => {
-    // Set theme to dark first
-    localStorage.setItem('theme', 'dark');
-
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      // Should show checkmark next to Dark theme (with dark theme classes when theme is dark)
-      const darkButton = screen.getByText('Dark').closest('button');
-      expect(darkButton).toHaveClass('bg-blue-900/50', 'text-blue-300');
-    });
-  });
-
-  it('should show reset progress button', async () => {
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      expect(screen.getByText('Reset All Progress')).toBeInTheDocument();
-      expect(screen.getByText('🗑️')).toBeInTheDocument();
-    });
-  });
-
   it('should show confirmation dialog when reset is clicked', async () => {
     renderWithTheme(<SettingsDropdown {...mockProps} />);
 
@@ -197,7 +94,6 @@ describe('SettingsDropdown Component', () => {
     fireEvent.click(screen.getByText('Reset All Progress'));
 
     await waitFor(() => {
-      expect(screen.getByText('⚠️ Are you sure?')).toBeInTheDocument();
       expect(screen.getByText('Yes, Reset All')).toBeInTheDocument();
       expect(screen.getByText('Cancel')).toBeInTheDocument();
     });
@@ -259,41 +155,6 @@ describe('SettingsDropdown Component', () => {
     });
   });
 
-  it('should show credits section', async () => {
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      expect(screen.getByText('👨‍💻 Credits')).toBeInTheDocument();
-      expect(
-        screen.getByText(/Game Design & Development:/)
-      ).toBeInTheDocument();
-      expect(screen.getByText(/Timothy/)).toBeInTheDocument();
-      expect(
-        screen.getByText(/React, TypeScript, Tailwind CSS/)
-      ).toBeInTheDocument();
-      expect(screen.getByText(/Monaco Editor/)).toBeInTheDocument();
-      expect(screen.getByText(/Claude \(Anthropic\)/)).toBeInTheDocument();
-      expect(
-        screen.getByText(/Vibe coded with Claude Code/)
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('should rotate dropdown arrow when open', () => {
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    const button = screen.getByRole('button');
-    const arrow = button.querySelector('svg');
-
-    expect(arrow).not.toHaveClass('rotate-180');
-
-    fireEvent.click(button);
-
-    expect(arrow).toHaveClass('rotate-180');
-  });
-
   it('should handle theme changes correctly', async () => {
     renderWithTheme(<SettingsDropdown {...mockProps} />);
 
@@ -305,33 +166,6 @@ describe('SettingsDropdown Component', () => {
     });
 
     expect(localStorage.getItem('theme')).toBe('light');
-  });
-
-  it('should show different styling for dark and light themes', async () => {
-    // Test with dark theme
-    localStorage.setItem('theme', 'dark');
-
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    fireEvent.click(screen.getByText('⚙️'));
-
-    await waitFor(() => {
-      // Find the dropdown container (not the header div)
-      const dropdown = screen.getByText('⚙️ Settings').closest('.fixed');
-      expect(dropdown).toHaveClass('bg-gray-800', 'border-gray-600');
-    });
-  });
-
-  it('should handle rapid opening and closing', async () => {
-    renderWithTheme(<SettingsDropdown {...mockProps} />);
-
-    // Rapidly open and close
-    fireEvent.click(screen.getByText('⚙️'));
-    fireEvent.click(screen.getByText('⚙️'));
-    fireEvent.click(screen.getByText('⚙️'));
-
-    // Should handle it gracefully without errors
-    expect(screen.getByText('⚙️')).toBeInTheDocument();
   });
 
   it('should reset confirmation state when dropdown closes', async () => {

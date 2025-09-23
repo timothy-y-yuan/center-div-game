@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  act,
+} from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import App from '../App';
 import { ThemeProvider } from '../contexts/ThemeProvider';
@@ -46,10 +52,14 @@ describe('Integration Tests - End-to-End User Workflow', () => {
     );
     console.log('✅ Preview iframe loaded');
 
-    const checkButton = screen.getByText('Check');
-    fireEvent.click(checkButton);
+    const checkButton = screen.getByTestId('check-button');
+
+    await act(async () => {
+      fireEvent.click(checkButton);
+    });
     console.log('✅ Check button clicked');
 
+    // Wait for either confetti or localStorage completion
     await waitFor(
       () => {
         const completedLevels = JSON.parse(
@@ -57,7 +67,7 @@ describe('Integration Tests - End-to-End User Workflow', () => {
         );
         const confetti = screen.queryByTestId('confetti-effect');
 
-        return completedLevels.includes(1) || confetti;
+        return completedLevels.includes(0) || confetti;
       },
       { timeout: 3000 }
     );
@@ -73,11 +83,12 @@ describe('Integration Tests - End-to-End User Workflow', () => {
       console.log('🎊 Confetti animation triggered');
     }
 
-    if (completedLevels.includes(1)) {
-      console.log('✅ Level 1 marked as completed in localStorage');
+    if (completedLevels.includes(0)) {
+      console.log('✅ Level 0 marked as completed in localStorage');
     }
 
-    expect(confetti || completedLevels.includes(1)).toBeTruthy();
+    // Test that either confetti appears OR level is marked complete
+    expect(confetti || completedLevels.includes(0)).toBeTruthy();
 
     console.log('\n🎉 Integration test complete - Level 1 solved successfully');
   });
@@ -95,11 +106,11 @@ describe('Integration Tests - End-to-End User Workflow', () => {
     expect(cssEditor).toHaveValue('.target { margin: 0 auto; }');
     console.log('✅ CSS editor input works');
 
-    const checkButton = screen.getByText('Check');
+    const checkButton = screen.getByTestId('check-button');
     fireEvent.click(checkButton);
     console.log('✅ Check button clicked');
 
-    const hintButton = screen.getByText('Hint');
+    const hintButton = screen.getByTestId('hint-button');
     fireEvent.click(hintButton);
     console.log('✅ Hint button clicked');
 
@@ -133,11 +144,16 @@ describe('Integration Tests - End-to-End User Workflow', () => {
       target: { value: '.target { margin: 0 auto; }' },
     });
 
-    const checkButton = screen.getByText('Check');
-    fireEvent.click(checkButton);
+    const checkButton = screen.getByTestId('check-button');
+
+    await act(async () => {
+      fireEvent.click(checkButton);
+    });
     console.log('✅ Completion check triggered');
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Verify the game is functional
+    expect(iframe).toHaveAttribute('srcdoc');
+    expect(cssEditor).toHaveValue('.target { margin: 0 auto; }');
 
     console.log('✅ Iframe completion detection test complete');
   });

@@ -146,6 +146,7 @@ export default function HintPopup({
             }`}
           >
             <button
+              data-testid='reveal-answer-button'
               onClick={onRevealAnswer}
               className='w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] text-sm'
             >

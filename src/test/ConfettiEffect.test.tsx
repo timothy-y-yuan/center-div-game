@@ -33,9 +33,13 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should render confetti pieces when isVisible is true', () => {
-    const { container } = render(
-      <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
-    );
+    let container!: HTMLElement;
+    act(() => {
+      const result = render(
+        <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
+      );
+      container = result.container;
+    });
 
     // Should create confetti container
     expect(container.querySelector('.fixed')).toBeInTheDocument();
@@ -73,9 +77,13 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should create multiple confetti pieces', () => {
-    const { container } = render(
-      <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
-    );
+    let container!: HTMLElement;
+    act(() => {
+      const result = render(
+        <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
+      );
+      container = result.container;
+    });
 
     // Should have multiple confetti pieces
     const confettiPieces = container.querySelectorAll('.absolute');
@@ -89,26 +97,37 @@ describe('ConfettiEffect Component', () => {
 
     expect(container.querySelector('.fixed')).not.toBeInTheDocument();
 
-    rerender(<ConfettiEffect isVisible={true} onComplete={vi.fn()} />);
+    act(() => {
+      rerender(<ConfettiEffect isVisible={true} onComplete={vi.fn()} />);
+    });
 
     expect(container.querySelector('.fixed')).toBeInTheDocument();
   });
 
   it('should clean up when isVisible becomes false', () => {
-    const { container, rerender } = render(
-      <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
-    );
+    let container!: HTMLElement, rerender!: (ui: React.ReactElement) => void;
+    act(() => {
+      const result = render(
+        <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
+      );
+      container = result.container;
+      rerender = result.rerender;
+    });
 
     expect(container.querySelector('.fixed')).toBeInTheDocument();
 
-    rerender(<ConfettiEffect isVisible={false} onComplete={vi.fn()} />);
+    act(() => {
+      rerender(<ConfettiEffect isVisible={false} onComplete={vi.fn()} />);
+    });
 
     expect(container.querySelector('.fixed')).not.toBeInTheDocument();
   });
 
   it('should handle missing onComplete callback', () => {
     expect(() => {
-      render(<ConfettiEffect isVisible={true} />);
+      act(() => {
+        render(<ConfettiEffect isVisible={true} />);
+      });
       act(() => {
         vi.advanceTimersByTime(3000);
       });
@@ -119,20 +138,30 @@ describe('ConfettiEffect Component', () => {
     const clearIntervalSpy = vi.spyOn(global, 'clearInterval');
     const clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
 
-    const { unmount } = render(
-      <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
-    );
+    let unmount!: () => void;
+    act(() => {
+      const result = render(
+        <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
+      );
+      unmount = result.unmount;
+    });
 
-    unmount();
+    act(() => {
+      unmount();
+    });
 
     expect(clearIntervalSpy).toHaveBeenCalled();
     expect(clearTimeoutSpy).toHaveBeenCalled();
   });
 
   it('should have proper styling classes', () => {
-    const { container } = render(
-      <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
-    );
+    let container!: HTMLElement;
+    act(() => {
+      const result = render(
+        <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
+      );
+      container = result.container;
+    });
 
     const confettiContainer = container.querySelector('.fixed');
     expect(confettiContainer).toHaveClass(
@@ -145,9 +174,13 @@ describe('ConfettiEffect Component', () => {
   });
 
   it('should render both emoji and colored pieces', () => {
-    const { container } = render(
-      <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
-    );
+    let container!: HTMLElement;
+    act(() => {
+      const result = render(
+        <ConfettiEffect isVisible={true} onComplete={vi.fn()} />
+      );
+      container = result.container;
+    });
 
     // Pieces should be created immediately when isVisible becomes true
     const pieces = container.querySelectorAll('.absolute');
