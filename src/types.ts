@@ -3,28 +3,12 @@
  * Provides comprehensive type safety with branded types and strict constraints
  */
 
-// ============================================================================
-// BRANDED TYPES
-// ============================================================================
-
-/**
- * Branded type for level identifiers to prevent mixing with regular numbers
- */
 export type LevelId = number & { readonly __brand: unique symbol };
 
-/**
- * Branded type for timestamp values in milliseconds
- */
 export type TimestampMs = number & { readonly __brand: unique symbol };
 
-/**
- * Branded type for time duration values in milliseconds
- */
 export type DurationMs = number & { readonly __brand: unique symbol };
 
-/**
- * Type-safe CSS selector string that must start with . or #
- */
 export type CSSSelector = `.${string}` | `#${string}` | string;
 
 /**

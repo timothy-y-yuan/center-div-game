@@ -1,17 +1,8 @@
-/**
- * @fileoverview Custom hook for managing overall game state
- * Provides centralized game state management with service layer integration
- */
-
 import { useState, useCallback } from 'react';
 import type { LevelId, Level } from '../types';
 import { createLevelId } from '../utils/typeHelpers';
 import { storageService } from '../services/StorageService';
 import { gameStateService } from '../services/GameStateService';
-
-// ============================================================================
-// HOOK INTERFACE
-// ============================================================================
 
 export interface UseGameStateResult {
   readonly currentLevel: number;
@@ -29,15 +20,7 @@ export interface UseGameStateResult {
   readonly clearConfetti: () => void;
 }
 
-// ============================================================================
-// HOOK IMPLEMENTATION
-// ============================================================================
-
-/**
- * Custom hook for managing overall game state with persistence
- */
 export function useGameState(): UseGameStateResult {
-  // Initialize state from storage
   const [currentLevel, setCurrentLevel] = useState(
     () => storageService.getCurrentLevel() as number
   );
@@ -54,10 +37,6 @@ export function useGameState(): UseGameStateResult {
     storageService.getFailedLevels()
   );
 
-  // ============================================================================
-  // STATE MANAGEMENT FUNCTIONS
-  // ============================================================================
-
   const changeLevel = useCallback(
     (levelIndex: number) => {
       const levelId = createLevelId(levelIndex);
@@ -68,7 +47,6 @@ export function useGameState(): UseGameStateResult {
         completedLevels.has(levelId) && !failedLevels.has(levelId)
       );
 
-      // Persist the change
       storageService.setCurrentLevel(levelId);
     },
     [completedLevels, failedLevels]
@@ -95,7 +73,6 @@ export function useGameState(): UseGameStateResult {
     setFailedLevels(newFailedLevels);
     setShowHint(false);
 
-    // Persist the failed level
     storageService.setFailedLevels(newFailedLevels);
   }, [currentLevel, failedLevels]);
 
@@ -112,14 +89,11 @@ export function useGameState(): UseGameStateResult {
       const result = gameStateService.checkLevelCompletion(level, iframeId);
       const levelId = createLevelId(currentLevel);
 
-      // Only allow completion if level wasn't previously failed
       const canComplete = result.isCompleted && !failedLevels.has(levelId);
 
       if (canComplete && !isCompleted) {
-        // Trigger confetti on first completion
         setShowConfetti(true);
 
-        // Mark level as completed
         const newCompletedLevels = new Set(completedLevels);
         newCompletedLevels.add(levelId);
 
@@ -135,10 +109,6 @@ export function useGameState(): UseGameStateResult {
   const clearConfetti = useCallback(() => {
     setShowConfetti(false);
   }, []);
-
-  // ============================================================================
-  // RETURN INTERFACE
-  // ============================================================================
 
   return {
     currentLevel,

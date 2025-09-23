@@ -1,15 +1,6 @@
-/**
- * @fileoverview Custom hook for level completion checking and feedback
- * Provides completion validation and feedback messaging
- */
-
 import { useCallback } from 'react';
 import { gameStateService } from '../services/GameStateService';
 import type { Level } from '../types';
-
-// ============================================================================
-// HOOK INTERFACE
-// ============================================================================
 
 export interface UseLevelCompletionResult {
   readonly checkCompletion: (
@@ -38,21 +29,7 @@ export interface CompletionCheckResult {
   readonly measurement: import('../services/GameStateService').ElementMeasurement;
 }
 
-// ============================================================================
-// HOOK IMPLEMENTATION
-// ============================================================================
-
-/**
- * Custom hook for level completion logic
- */
 export function useLevelCompletion(): UseLevelCompletionResult {
-  // ============================================================================
-  // COMPLETION CHECKING
-  // ============================================================================
-
-  /**
-   * Checks if a level is completed and provides detailed feedback
-   */
   const checkCompletion = useCallback(
     (level: Level, iframeId: string): CompletionCheckResult => {
       try {
@@ -71,7 +48,6 @@ export function useLevelCompletion(): UseLevelCompletionResult {
       } catch (error) {
         console.error('Error checking level completion:', error);
 
-        // Return safe fallback result
         return {
           isCompleted: false,
           isHorizontallyCentered: false,
@@ -92,10 +68,6 @@ export function useLevelCompletion(): UseLevelCompletionResult {
     },
     []
   );
-
-  // ============================================================================
-  // MESSAGE GENERATION
-  // ============================================================================
 
   const getCompletionMessage = useCallback(
     (
@@ -119,10 +91,6 @@ export function useLevelCompletion(): UseLevelCompletionResult {
   const getPlayerTitle = useCallback((completedLevelsCount: number): string => {
     return gameStateService.getPlayerTitle(completedLevelsCount);
   }, []);
-
-  // ============================================================================
-  // RETURN INTERFACE
-  // ============================================================================
 
   return {
     checkCompletion,
