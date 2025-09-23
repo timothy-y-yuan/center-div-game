@@ -1,8 +1,3 @@
-/**
- * @fileoverview Custom hook for managing level content and CSS editing
- * Handles HTML/CSS state and validation with level-specific constraints
- */
-
 import { useState, useCallback, useMemo } from 'react';
 import type { Level, CSSValidationResult } from '../types';
 import {
@@ -11,42 +6,17 @@ import {
   generateCompleteCSS,
 } from '../utils/cssValidator';
 
-// ============================================================================
-// HOOK INTERFACE
-// ============================================================================
-
 export interface UseLevelContentResult {
-  /** Current HTML content */
   readonly html: string;
-
-  /** Current editable CSS content */
   readonly editableCSS: string;
-
-  /** CSS validation result */
   readonly cssValidation: CSSValidationResult;
-
-  /** Complete CSS combining locked and editable parts */
   readonly completeCSS: string;
-
-  /** Complete HTML document for preview iframe */
   readonly previewContent: string;
-
-  /** Updates the HTML content */
   readonly setHTML: (html: string) => void;
-
-  /** Updates the editable CSS and triggers validation */
   readonly updateCSS: (css: string) => void;
-
-  /** Sets the CSS to the level's solution */
   readonly setSolutionCSS: (level: Level) => void;
-
-  /** Resets content for a new level */
   readonly resetForLevel: (level: Level) => void;
 }
-
-// ============================================================================
-// HOOK IMPLEMENTATION
-// ============================================================================
 
 /**
  * Custom hook for managing level content with validation

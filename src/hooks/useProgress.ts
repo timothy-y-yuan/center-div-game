@@ -1,8 +1,3 @@
-/**
- * @fileoverview Custom hook for managing user progress and achievements
- * Handles progress tracking, statistics, and achievement calculations
- */
-
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import type {
   LevelId,
@@ -16,35 +11,18 @@ import { createTimestampMs } from '../utils/typeHelpers';
 import { storageService } from '../services/StorageService';
 import { gameStateService } from '../services/GameStateService';
 
-// ============================================================================
-// HOOK INTERFACE
-// ============================================================================
-
 export interface UseProgressResult {
-  /** Complete user progress data */
   readonly userProgress: UserProgress | null;
-
-  /** Overall progress statistics */
   readonly progressStats: ProgressStats;
-
-  /** Player title based on completion count */
   readonly playerTitle: string;
-
-  /** Whether progress has been loaded from storage */
   readonly isLoaded: boolean;
-
-  /** Records completion of a level */
   readonly recordLevelCompletion: (
     levelId: LevelId,
     hintsUsed: boolean,
     answersRevealed: number,
     startTime: TimestampMs
   ) => void;
-
-  /** Records an attempt on a level */
   readonly recordLevelAttempt: (levelId: LevelId) => void;
-
-  /** Gets progress for a specific level */
   readonly getLevelProgress: (levelId: LevelId) => LevelProgress | null;
 
   /** Clears all progress data */

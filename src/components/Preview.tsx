@@ -1,7 +1,3 @@
-/**
- * @fileoverview Live preview component with iframe rendering
- */
-
 import { memo } from 'react';
 
 interface PreviewProps {
@@ -12,10 +8,6 @@ interface PreviewProps {
   onNextLevel: () => void;
 }
 
-/**
- * Live preview component showing the rendered HTML/CSS
- * Memoized to prevent unnecessary iframe re-renders
- */
 const Preview = memo(function Preview({
   content,
   isCompleted,

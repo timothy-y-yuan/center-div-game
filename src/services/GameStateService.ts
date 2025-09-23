@@ -19,27 +19,15 @@ import {
   createTimestampMs,
 } from '../utils/typeHelpers';
 
-// ============================================================================
-// COMPLETION MEASUREMENT TYPES
-// ============================================================================
 
 /**
  * Result of measuring element positioning for completion check
  */
 export interface ElementMeasurement {
-  /** Element's center X coordinate */
   readonly centerX: number;
-
-  /** Element's center Y coordinate */
   readonly centerY: number;
-
-  /** Container's center X coordinate */
   readonly containerCenterX: number;
-
-  /** Container's center Y coordinate */
   readonly containerCenterY: number;
-
-  /** Whether the element exists and is measurable */
   readonly isValid: boolean;
 }
 
@@ -47,28 +35,14 @@ export interface ElementMeasurement {
  * Result of checking level completion requirements
  */
 export interface CompletionResult {
-  /** Whether the level is completed */
   readonly isCompleted: boolean;
-
-  /** Whether horizontal centering requirement is met */
   readonly isHorizontallyCentered: boolean;
-
-  /** Whether vertical centering requirement is met */
   readonly isVerticallyCentered: boolean;
-
-  /** Distance from perfect horizontal center in pixels */
   readonly horizontalOffset: number;
-
-  /** Distance from perfect vertical center in pixels */
   readonly verticalOffset: number;
-
-  /** Human-readable feedback about the completion status */
   readonly feedback: string;
 }
 
-// ============================================================================
-// GAME STATE SERVICE INTERFACE
-// ============================================================================
 
 export interface IGameStateService {
   measureElementCentering(iframeId: string): ElementMeasurement;
@@ -98,19 +72,11 @@ export interface IGameStateService {
   ): UserProgress;
 }
 
-// ============================================================================
-// GAME STATE SERVICE IMPLEMENTATION
-// ============================================================================
 
 /**
  * Service for managing game state and level completion logic
  */
 export class GameStateService implements IGameStateService {
-  /**
-   * Measures the positioning of the target element within its container
-   * @param iframeId - ID of the iframe containing the preview
-   * @returns Measurement data for completion checking
-   */
   measureElementCentering(iframeId: string): ElementMeasurement {
     try {
       const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
@@ -142,10 +108,6 @@ export class GameStateService implements IGameStateService {
     }
   }
 
-  /**
-   * Creates an invalid measurement result
-   * @returns Invalid measurement with default values
-   */
   private createInvalidMeasurement(): ElementMeasurement {
     return {
       centerX: 0,
@@ -156,12 +118,6 @@ export class GameStateService implements IGameStateService {
     };
   }
 
-  /**
-   * Checks if a level's completion requirements are met
-   * @param level - The level to check
-   * @param iframeId - ID of the iframe containing the preview
-   * @returns Detailed completion result
-   */
   checkLevelCompletion(level: Level, iframeId: string): CompletionResult {
     const measurement = this.measureElementCentering(iframeId);
 
@@ -190,7 +146,6 @@ export class GameStateService implements IGameStateService {
     const isHorizontallyCentered = horizontalOffset <= tolerance;
     const isVerticallyCentered = verticalOffset <= tolerance;
 
-    // Check level-specific requirements
     const meetsHorizontalRequirement =
       !requirements.requiresHorizontalCentering || isHorizontallyCentered;
     const meetsVerticalRequirement =
@@ -258,15 +213,6 @@ export class GameStateService implements IGameStateService {
     return `Close! The element is ${issues.join(' and ')}.`;
   }
 
-  /**
-   * Calculates level progress statistics
-   * @param levelId - ID of the level
-   * @param isCompleted - Whether the level was completed
-   * @param startTime - When the level attempt started
-   * @param hintsUsed - Whether hints were used
-   * @param answersRevealed - Number of times the answer was revealed
-   * @returns Complete level progress data
-   */
   calculateLevelProgress(
     _levelId: LevelId,
     isCompleted: boolean,
@@ -281,21 +227,16 @@ export class GameStateService implements IGameStateService {
 
     return {
       completed: isCompleted,
-      attempts: 1, // This would be incremented by the calling code
+      attempts: 1,
       completionTime,
       firstAttemptTime: startTime,
       completedTime: isCompleted ? now : null,
       hintsUsed,
-      successfulSolution: null, // This would be set by the calling code
+      successfulSolution: null,
       answersRevealed,
     };
   }
 
-  /**
-   * Calculates overall progress statistics from individual level progress
-   * @param levelProgress - Progress data for all levels
-   * @returns Aggregated statistics
-   */
   calculateOverallStats(
     levelProgress: Record<LevelId, LevelProgress>
   ): ProgressStats {
@@ -309,7 +250,6 @@ export class GameStateService implements IGameStateService {
       0
     );
 
-    // Calculate total play time and average completion time
     const completedLevels = progressArray.filter(
       p => p.completed && p.completionTime !== null
     );
@@ -333,11 +273,6 @@ export class GameStateService implements IGameStateService {
     };
   }
 
-  /**
-   * Gets the player title based on completion progress
-   * @param completedLevelsCount - Number of completed levels
-   * @returns Player title string
-   */
   getPlayerTitle(completedLevelsCount: number): string {
     const clampedCount = Math.max(
       0,
@@ -348,13 +283,6 @@ export class GameStateService implements IGameStateService {
     ];
   }
 
-  /**
-   * Gets an appropriate completion message based on performance
-   * @param isCompleted - Whether the level was completed
-   * @param hintsUsed - Whether hints were used
-   * @param answersRevealed - Number of times the answer was revealed
-   * @returns Completion message
-   */
   getCompletionMessage(
     isCompleted: boolean,
     hintsUsed: boolean,
@@ -375,11 +303,6 @@ export class GameStateService implements IGameStateService {
     return EDUCATIONAL_CONTENT.COMPLETION_MESSAGES.PERFECT;
   }
 
-  /**
-   * Gets an appropriate failure message based on attempt number
-   * @param attemptNumber - Current attempt number (1-based)
-   * @returns Failure message
-   */
   getFailureMessage(attemptNumber: number): string {
     switch (attemptNumber) {
       case 1:
@@ -393,10 +316,6 @@ export class GameStateService implements IGameStateService {
     }
   }
 
-  /**
-   * Creates initial user progress data for a new player
-   * @returns Fresh user progress structure
-   */
   createInitialUserProgress(): UserProgress {
     const now = createTimestampMs();
 
@@ -415,13 +334,6 @@ export class GameStateService implements IGameStateService {
     };
   }
 
-  /**
-   * Updates user progress with new level completion data
-   * @param currentProgress - Current user progress
-   * @param levelId - ID of the completed level
-   * @param levelProgress - New progress data for the level
-   * @returns Updated user progress
-   */
   updateUserProgress(
     currentProgress: UserProgress,
     levelId: LevelId,
@@ -443,14 +355,7 @@ export class GameStateService implements IGameStateService {
   }
 }
 
-// ============================================================================
-// SERVICE FACTORY
-// ============================================================================
 
-/**
- * Creates a game state service instance
- * @returns Game state service instance
- */
 export function createGameStateService(): IGameStateService {
   return new GameStateService();
 }

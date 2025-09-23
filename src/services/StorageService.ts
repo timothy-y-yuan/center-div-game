@@ -1,8 +1,3 @@
-/**
- * @fileoverview Local storage service with type safety and error handling
- * Provides a consistent interface for persisting game data
- */
-
 import { STORAGE_KEYS, ERROR_MESSAGES } from '../constants';
 import type { LevelId, UserProgress } from '../types';
 import {
@@ -11,20 +6,10 @@ import {
   levelIdSetToArray,
 } from '../utils/typeHelpers';
 
-// ============================================================================
-// STORAGE ERROR CLASSES
-// ============================================================================
-
-/**
- * Base class for storage-related errors
- */
 export abstract class StorageError extends Error {
   abstract readonly code: string;
 }
 
-/**
- * Error thrown when storage quota is exceeded
- */
 export class StorageQuotaExceededError extends StorageError {
   readonly code = 'STORAGE_QUOTA_EXCEEDED';
 
@@ -34,9 +19,6 @@ export class StorageQuotaExceededError extends StorageError {
   }
 }
 
-/**
- * Error thrown when storage access is denied
- */
 export class StorageAccessDeniedError extends StorageError {
   readonly code = 'STORAGE_ACCESS_DENIED';
 
@@ -46,9 +28,6 @@ export class StorageAccessDeniedError extends StorageError {
   }
 }
 
-/**
- * Error thrown when stored data is invalid
- */
 export class InvalidStorageDataError extends StorageError {
   readonly code = 'INVALID_STORAGE_DATA';
 
@@ -58,13 +37,6 @@ export class InvalidStorageDataError extends StorageError {
   }
 }
 
-// ============================================================================
-// STORAGE SERVICE INTERFACE
-// ============================================================================
-
-/**
- * Interface for storage operations
- */
 export interface IStorageService {
   getCurrentLevel(): LevelId;
   setCurrentLevel(levelId: LevelId): void;
@@ -78,13 +50,6 @@ export interface IStorageService {
   isStorageAvailable(): boolean;
 }
 
-// ============================================================================
-// STORAGE SERVICE IMPLEMENTATION
-// ============================================================================
-
-/**
- * Local storage service implementation with comprehensive error handling
- */
 export class StorageService implements IStorageService {
   private readonly storage: Storage;
 
@@ -92,10 +57,6 @@ export class StorageService implements IStorageService {
     this.storage = storage;
   }
 
-  /**
-   * Checks if storage is available and accessible
-   * @returns True if storage can be used
-   */
   isStorageAvailable(): boolean {
     try {
       const testKey = '__storage_test__';
@@ -107,11 +68,6 @@ export class StorageService implements IStorageService {
     }
   }
 
-  /**
-   * Safely gets an item from storage with error handling
-   * @param key - Storage key
-   * @returns The stored value or null if not found/invalid
-   */
   private safeGetItem(key: string): string | null {
     try {
       return this.storage.getItem(key);
@@ -121,12 +77,6 @@ export class StorageService implements IStorageService {
     }
   }
 
-  /**
-   * Safely sets an item in storage with error handling
-   * @param key - Storage key
-   * @param value - Value to store
-   * @throws {StorageError} If storage operation fails
-   */
   private safeSetItem(key: string, value: string): void {
     try {
       this.storage.setItem(key, value);
@@ -181,10 +131,6 @@ export class StorageService implements IStorageService {
   // LEVEL MANAGEMENT
   // ============================================================================
 
-  /**
-   * Gets the current level ID from storage
-   * @returns Current level ID (defaults to 0 if not set)
-   */
   getCurrentLevel(): LevelId {
     const data = this.safeGetItem(STORAGE_KEYS.CURRENT_LEVEL);
 
@@ -201,18 +147,10 @@ export class StorageService implements IStorageService {
     }
   }
 
-  /**
-   * Sets the current level ID in storage
-   * @param levelId - Level ID to store
-   */
   setCurrentLevel(levelId: LevelId): void {
     this.safeSetItem(STORAGE_KEYS.CURRENT_LEVEL, String(levelId));
   }
 
-  /**
-   * Gets completed level IDs from storage
-   * @returns Set of completed level IDs
-   */
   getCompletedLevels(): ReadonlySet<LevelId> {
     const data = this.safeGetItem(STORAGE_KEYS.COMPLETED_LEVELS);
 
@@ -239,10 +177,6 @@ export class StorageService implements IStorageService {
     }
   }
 
-  /**
-   * Sets completed level IDs in storage
-   * @param levelIds - Set of completed level IDs
-   */
   setCompletedLevels(levelIds: ReadonlySet<LevelId>): void {
     const array = levelIdSetToArray(levelIds);
     this.safeSetItem(STORAGE_KEYS.COMPLETED_LEVELS, JSON.stringify(array));

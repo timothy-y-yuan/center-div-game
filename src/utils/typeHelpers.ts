@@ -12,16 +12,7 @@ import type {
   CSSProperty,
 } from '../types';
 
-// ============================================================================
-// BRANDED TYPE CONSTRUCTORS
-// ============================================================================
 
-/**
- * Creates a LevelId from a number with validation
- * @param value - The numeric value to convert
- * @returns A validated LevelId
- * @throws {Error} If the value is not a valid level ID
- */
 export function createLevelId(value: number): LevelId {
   if (!Number.isInteger(value) || value < 0) {
     throw new Error(
@@ -31,12 +22,6 @@ export function createLevelId(value: number): LevelId {
   return value as LevelId;
 }
 
-/**
- * Creates a TimestampMs from a number with validation
- * @param value - The timestamp value in milliseconds
- * @returns A validated TimestampMs
- * @throws {Error} If the value is not a valid timestamp
- */
 export function createTimestampMs(value: number = Date.now()): TimestampMs {
   if (!Number.isInteger(value) || value <= 0) {
     throw new Error(`Invalid timestamp: ${value}. Must be a positive integer.`);
@@ -44,12 +29,6 @@ export function createTimestampMs(value: number = Date.now()): TimestampMs {
   return value as TimestampMs;
 }
 
-/**
- * Creates a DurationMs from a number with validation
- * @param value - The duration value in milliseconds
- * @returns A validated DurationMs
- * @throws {Error} If the value is not a valid duration
- */
 export function createDurationMs(value: number): DurationMs {
   if (!Number.isInteger(value) || value < 0) {
     throw new Error(
@@ -59,16 +38,7 @@ export function createDurationMs(value: number): DurationMs {
   return value as DurationMs;
 }
 
-// ============================================================================
-// VALIDATION MESSAGE HELPERS
-// ============================================================================
 
-/**
- * Creates a validation error message
- * @param message - The error message text
- * @param options - Additional context for the error
- * @returns A formatted ValidationMessage
- */
 export function createValidationError(
   message: string,
   options: {
@@ -86,12 +56,6 @@ export function createValidationError(
   };
 }
 
-/**
- * Creates a validation warning message
- * @param message - The warning message text
- * @param options - Additional context for the warning
- * @returns A formatted ValidationMessage
- */
 export function createValidationWarning(
   message: string,
   options: {
@@ -109,12 +73,6 @@ export function createValidationWarning(
   };
 }
 
-/**
- * Creates a validation info message
- * @param message - The info message text
- * @param options - Additional context for the info
- * @returns A formatted ValidationMessage
- */
 export function createValidationInfo(
   message: string,
   options: {
@@ -132,15 +90,7 @@ export function createValidationInfo(
   };
 }
 
-// ============================================================================
-// COLLECTION HELPERS
-// ============================================================================
 
-/**
- * Safely converts a numeric array to a Set of LevelIds
- * @param values - Array of numbers to convert
- * @returns A Set of validated LevelIds
- */
 export function createLevelIdSet(
   values: readonly number[]
 ): ReadonlySet<LevelId> {
@@ -148,27 +98,13 @@ export function createLevelIdSet(
   return new Set(validatedIds);
 }
 
-/**
- * Safely converts a Set of LevelIds to a numeric array
- * @param levelIds - Set of LevelIds to convert
- * @returns Array of numbers
- */
 export function levelIdSetToArray(
   levelIds: ReadonlySet<LevelId>
 ): readonly number[] {
   return Array.from(levelIds).map(id => id as number);
 }
 
-// ============================================================================
-// TIME HELPERS
-// ============================================================================
 
-/**
- * Calculates the duration between two timestamps
- * @param start - Start timestamp
- * @param end - End timestamp
- * @returns Duration in milliseconds
- */
 export function calculateDuration(
   start: TimestampMs,
   end: TimestampMs
@@ -177,11 +113,6 @@ export function calculateDuration(
   return createDurationMs(Math.max(0, durationValue));
 }
 
-/**
- * Formats a duration for human-readable display
- * @param duration - Duration in milliseconds
- * @returns Formatted string (e.g., "1m 30s", "45s")
- */
 export function formatDuration(duration: DurationMs): string {
   const totalSeconds = Math.floor((duration as number) / 1000);
 
@@ -202,12 +133,6 @@ export function formatDuration(duration: DurationMs): string {
   return remainingMinutes > 0 ? `${hours}h ${remainingMinutes}m` : `${hours}h`;
 }
 
-/**
- * Formats a timestamp for human-readable display
- * @param timestamp - Timestamp in milliseconds
- * @param options - Formatting options
- * @returns Formatted date string
- */
 export function formatTimestamp(
   timestamp: TimestampMs,
   options: {
@@ -231,17 +156,7 @@ export function formatTimestamp(
   return date.toLocaleDateString(undefined, formatOptions);
 }
 
-// ============================================================================
-// VALIDATION HELPERS
-// ============================================================================
 
-/**
- * Validates that a value is a non-empty string
- * @param value - Value to validate
- * @param fieldName - Name of the field for error messages
- * @returns The validated string
- * @throws {Error} If validation fails
- */
 export function validateNonEmptyString(
   value: unknown,
   fieldName: string
@@ -252,15 +167,6 @@ export function validateNonEmptyString(
   return value.trim();
 }
 
-/**
- * Validates that a value is within a numeric range
- * @param value - Value to validate
- * @param min - Minimum allowed value (inclusive)
- * @param max - Maximum allowed value (inclusive)
- * @param fieldName - Name of the field for error messages
- * @returns The validated number
- * @throws {Error} If validation fails
- */
 export function validateNumberRange(
   value: unknown,
   min: number,
@@ -280,13 +186,6 @@ export function validateNumberRange(
   return value;
 }
 
-/**
- * Validates that an array contains only unique values
- * @param array - Array to validate
- * @param fieldName - Name of the field for error messages
- * @returns The validated array
- * @throws {Error} If the array contains duplicates
- */
 export function validateUniqueArray<T>(
   array: readonly T[],
   fieldName: string
@@ -311,16 +210,7 @@ export function validateUniqueArray<T>(
   return array;
 }
 
-// ============================================================================
-// DEEP EQUALITY HELPERS
-// ============================================================================
 
-/**
- * Performs a deep equality check on two values
- * @param a - First value
- * @param b - Second value
- * @returns True if values are deeply equal
- */
 export function deepEqual(a: unknown, b: unknown): boolean {
   if (a === b) {
     return true;
@@ -368,12 +258,6 @@ export function deepEqual(a: unknown, b: unknown): boolean {
   );
 }
 
-/**
- * Creates a shallow copy of an object with selected properties
- * @param source - Source object
- * @param keys - Keys to include in the copy
- * @returns New object with selected properties
- */
 export function pick<T extends Record<string, unknown>, K extends keyof T>(
   source: T,
   keys: readonly K[]
@@ -389,12 +273,6 @@ export function pick<T extends Record<string, unknown>, K extends keyof T>(
   return result;
 }
 
-/**
- * Creates a shallow copy of an object excluding selected properties
- * @param source - Source object
- * @param keys - Keys to exclude from the copy
- * @returns New object without excluded properties
- */
 export function omit<T extends Record<string, unknown>, K extends keyof T>(
   source: T,
   keys: readonly K[]

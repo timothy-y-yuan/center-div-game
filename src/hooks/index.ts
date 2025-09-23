@@ -1,8 +1,3 @@
-/**
- * @fileoverview Custom hooks exports
- * Provides centralized exports for all custom hooks
- */
-
 export { useGameState } from './useGameState';
 export type { UseGameStateResult } from './useGameState';
 
