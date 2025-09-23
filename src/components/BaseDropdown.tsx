@@ -24,7 +24,7 @@ interface BaseDropdownProps {
 
 /**
  * Reusable dropdown component that eliminates duplication across
- * LevelDropdown, SettingsDropdown, and ThemeDropdown
+ * LevelDropdown and SettingsDropdown
  */
 export default function BaseDropdown({
   children,
