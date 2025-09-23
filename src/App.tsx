@@ -31,9 +31,13 @@ function App() {
   const gameState = useGameState();
   const [showImportantModal, setShowImportantModal] = useState(false);
 
-  const allLevels = useMemo(() => 
-    gameState.isSecretLevelUnlocked ? [...levels, SECRET_IMPORTANT_LEVEL] : levels
-  , [gameState.isSecretLevelUnlocked]);
+  const allLevels = useMemo(
+    () =>
+      gameState.isSecretLevelUnlocked
+        ? [...levels, SECRET_IMPORTANT_LEVEL]
+        : levels,
+    [gameState.isSecretLevelUnlocked]
+  );
 
   const currentLevel = useMemo(() => {
     if (gameState.currentLevel === 999 && gameState.isSecretLevelUnlocked) {
@@ -42,11 +46,13 @@ function App() {
     return levels[gameState.currentLevel] || levels[0];
   }, [gameState.currentLevel, gameState.isSecretLevelUnlocked]);
 
-  const currentLevelIndex = useMemo(() => 
-    gameState.currentLevel === 999 && gameState.isSecretLevelUnlocked 
-      ? allLevels.length - 1 
-      : gameState.currentLevel
-  , [gameState.currentLevel, gameState.isSecretLevelUnlocked, allLevels.length]);
+  const currentLevelIndex = useMemo(
+    () =>
+      gameState.currentLevel === 999 && gameState.isSecretLevelUnlocked
+        ? allLevels.length - 1
+        : gameState.currentLevel,
+    [gameState.currentLevel, gameState.isSecretLevelUnlocked, allLevels.length]
+  );
 
   const levelContent = useLevelContent(currentLevel);
 
@@ -74,12 +80,15 @@ function App() {
    */
   const handleLevelChange = (newLevelIndex: number) => {
     // Check if this is the secret level (last item in allLevels when unlocked)
-    if (gameState.isSecretLevelUnlocked && newLevelIndex === allLevels.length - 1) {
+    if (
+      gameState.isSecretLevelUnlocked &&
+      newLevelIndex === allLevels.length - 1
+    ) {
       gameState.changeLevel(999);
       levelContent.resetForLevel(SECRET_IMPORTANT_LEVEL);
       return;
     }
-    
+
     // Handle normal level selection
     if (newLevelIndex >= 0 && newLevelIndex < levels.length) {
       gameState.changeLevel(newLevelIndex);
@@ -95,7 +104,7 @@ function App() {
     if (gameState.currentLevel === 999) {
       return;
     }
-    
+
     gameState.nextLevel(levels.length);
     if (gameState.currentLevel < levels.length - 1) {
       levelContent.resetForLevel(levels[gameState.currentLevel + 1]);

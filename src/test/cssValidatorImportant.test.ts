@@ -48,7 +48,8 @@ describe('validateUserCSS with !important detection', () => {
   });
 
   it('should allow !important usage on the secret level', () => {
-    const userCSS = '.target { top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important; }';
+    const userCSS =
+      '.target { top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important; }';
     const result = validateUserCSS(userCSS, SECRET_IMPORTANT_LEVEL);
 
     expect(result.isValid).toBe(true);

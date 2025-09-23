@@ -345,7 +345,7 @@ export class StorageService implements IStorageService {
    */
   getSecretLevelUnlocked(): boolean {
     const data = this.safeGetItem(STORAGE_KEYS.SECRET_LEVEL_UNLOCKED);
-    
+
     try {
       const unlocked = this.parseAndValidate(
         data,
@@ -364,7 +364,10 @@ export class StorageService implements IStorageService {
    * @param unlocked - Boolean indicating if secret level should be unlocked
    */
   setSecretLevelUnlocked(unlocked: boolean): void {
-    this.safeSetItem(STORAGE_KEYS.SECRET_LEVEL_UNLOCKED, JSON.stringify(unlocked));
+    this.safeSetItem(
+      STORAGE_KEYS.SECRET_LEVEL_UNLOCKED,
+      JSON.stringify(unlocked)
+    );
   }
 
   // ============================================================================
